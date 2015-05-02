@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
     :git => 'https://github.com/delannoyk/Soundcloud.git',
     :tag => s.version.to_s
   }
-  s.source_files = 'sources/SoundcloudSDK/**/.swift'
+  s.source_files = 'sources/SoundcloudSDK/**/*.swift'
   s.framework    =  'UIKit'
 
   s.requires_arc = true
