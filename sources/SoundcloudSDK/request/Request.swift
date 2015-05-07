@@ -83,6 +83,14 @@ internal extension JSONObject {
         }
         return date ?? nil
     }
+    
+    internal func arrayValue<T>(mapping: JSONObject -> T?) -> [T]? {
+        if let actualJsonArray =  value as? [AnyObject] {
+            let values = actualJsonArray.map { mapping(JSONObject($0)) }
+            return compact(values)
+        }
+        return nil
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////
