@@ -7,6 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		461FA2CC1AFBC6DD00F585C8 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461FA2CB1AFBC6DD00F585C8 /* StringExtension.swift */; };
+		461FA2CD1AFBC78000F585C8 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BC1AEBC58100D3B495 /* DictionaryExtension.swift */; };
+		461FA2CE1AFBC78000F585C8 /* NSURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */; };
+		461FA2CF1AFBC78000F585C8 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0C41AEBF2EB00D3B495 /* ArrayExtension.swift */; };
+		461FA2D01AFBC78000F585C8 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461FA2CB1AFBC6DD00F585C8 /* StringExtension.swift */; };
+		461FA2D11AFBC78500F585C8 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465308A91AB5C73700766A62 /* Request.swift */; };
+		461FA2D21AFBC79700F585C8 /* Soundcloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0CB1AEC04F800D3B495 /* Soundcloud.swift */; };
+		461FA2D31AFBC7A700F585C8 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8F1A9D098300319B94 /* Enums.swift */; };
+		461FA2D41AFBC7A700F585C8 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8D1A9CF0DC00319B94 /* App.swift */; };
+		461FA2D51AFBC7A700F585C8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE871A9CF0A800319B94 /* User.swift */; };
+		461FA2D61AFBC7A700F585C8 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE891A9CF0BE00319B94 /* Track.swift */; };
+		461FA2D71AFBC7A700F585C8 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8B1A9CF0CD00319B94 /* Playlist.swift */; };
+		461FA2D81AFBC7A700F585C8 /* ImageURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4626792D1AED041B003771C9 /* ImageURLs.swift */; };
+		461FA2D91AFBC7AC00F585C8 /* TrackRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0C01AEBD01900D3B495 /* TrackRequest.swift */; };
+		461FA2DA1AFBC7AC00F585C8 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0C21AEBD0FA00D3B495 /* UserRequest.swift */; };
 		4626792E1AED041B003771C9 /* ImageURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4626792D1AED041B003771C9 /* ImageURLs.swift */; };
 		4644B0BD1AEBC58100D3B495 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BC1AEBC58100D3B495 /* DictionaryExtension.swift */; };
 		4644B0BF1AEBC76E00D3B495 /* NSURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */; };
@@ -35,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		461FA2CB1AFBC6DD00F585C8 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		4626792D1AED041B003771C9 /* ImageURLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageURLs.swift; sourceTree = "<group>"; };
 		462679661AED57FC003771C9 /* Soundcloud.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Soundcloud.h; sourceTree = "<group>"; };
 		4644B0BC1AEBC58100D3B495 /* DictionaryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
@@ -81,6 +97,7 @@
 				4644B0BC1AEBC58100D3B495 /* DictionaryExtension.swift */,
 				4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */,
 				4644B0C41AEBF2EB00D3B495 /* ArrayExtension.swift */,
+				461FA2CB1AFBC6DD00F585C8 /* StringExtension.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -288,6 +305,7 @@
 				4656CE8A1A9CF0BE00319B94 /* Track.swift in Sources */,
 				4656CE901A9D098300319B94 /* Enums.swift in Sources */,
 				4644B0BD1AEBC58100D3B495 /* DictionaryExtension.swift in Sources */,
+				461FA2CC1AFBC6DD00F585C8 /* StringExtension.swift in Sources */,
 				4626792E1AED041B003771C9 /* ImageURLs.swift in Sources */,
 				4656CE8C1A9CF0CD00319B94 /* Playlist.swift in Sources */,
 				4644B0C31AEBD0FA00D3B495 /* UserRequest.swift in Sources */,
@@ -300,7 +318,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				461FA2D41AFBC7A700F585C8 /* App.swift in Sources */,
+				461FA2D61AFBC7A700F585C8 /* Track.swift in Sources */,
+				461FA2D21AFBC79700F585C8 /* Soundcloud.swift in Sources */,
 				4656CE7D1A9CF05600319B94 /* SoundcloudSDKTests.swift in Sources */,
+				461FA2D11AFBC78500F585C8 /* Request.swift in Sources */,
+				461FA2D91AFBC7AC00F585C8 /* TrackRequest.swift in Sources */,
+				461FA2CE1AFBC78000F585C8 /* NSURLExtension.swift in Sources */,
+				461FA2D01AFBC78000F585C8 /* StringExtension.swift in Sources */,
+				461FA2DA1AFBC7AC00F585C8 /* UserRequest.swift in Sources */,
+				461FA2CD1AFBC78000F585C8 /* DictionaryExtension.swift in Sources */,
+				461FA2D81AFBC7A700F585C8 /* ImageURLs.swift in Sources */,
+				461FA2D31AFBC7A700F585C8 /* Enums.swift in Sources */,
+				461FA2D51AFBC7A700F585C8 /* User.swift in Sources */,
+				461FA2CF1AFBC78000F585C8 /* ArrayExtension.swift in Sources */,
+				461FA2D71AFBC7A700F585C8 /* Playlist.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

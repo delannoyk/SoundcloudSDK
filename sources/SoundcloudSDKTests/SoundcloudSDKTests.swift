@@ -10,27 +10,54 @@ import UIKit
 import XCTest
 
 class SoundcloudSDKTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    // MARK: HTTPParametersConvertible
+    ////////////////////////////////////////////////////////////////////////////
+
+    func testGETString() {
+        let method = HTTPMethod.GET
+        let URL = NSURL(string: "http://github.com")!
+        let parameters = "test=123"
+        let URLRequest = method.URLRequest(URL, parameters: parameters)
+
+        let expectedValue = URL.absoluteString! + "?" + parameters
+
+        XCTAssert(URLRequest.URL?.absoluteString! == expectedValue, "Test failed: URLRequest.URL isn't what it's supposed to be.")
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+
+    func testGETDictionary() {
+        let method = HTTPMethod.GET
+        let URL = NSURL(string: "http://github.com")!
+        let parameters = ["test": "123"]
+        let URLRequest = method.URLRequest(URL, parameters: parameters)
+
+        let expectedValue = URL.absoluteString! + "?" + parameters.queryString
+
+        XCTAssert(URLRequest.URL?.absoluteString! == expectedValue, "Test failed: URLRequest.URL isn't what it's supposed to be.")
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+
+    func testPOSTString() {
+        let method = HTTPMethod.POST
+        let URL = NSURL(string: "http://github.com")!
+        let parameters = "test=123"
+        let URLRequest = method.URLRequest(URL, parameters: parameters)
+
+        let expectedValue = parameters.dataUsingEncoding(NSUTF8StringEncoding)!
+
+        XCTAssert(URLRequest.URL == URL, "Test failed: URLRequest.URL isn't what it's supposed to be.")
+        XCTAssert(URLRequest.HTTPBody == expectedValue, "Test failed: URLRequest.HTTPBody isn't what it's supposed to be.")
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
-        }
+
+    func testPOSTDictionary() {
+        let method = HTTPMethod.POST
+        let URL = NSURL(string: "http://github.com")!
+        let parameters = ["test": "123"]
+        let URLRequest = method.URLRequest(URL, parameters: parameters)
+
+        let expectedValue = parameters.queryString.dataUsingEncoding(NSUTF8StringEncoding)!
+
+        XCTAssert(URLRequest.URL == URL, "Test failed: URLRequest.URL isn't what it's supposed to be.")
+        XCTAssert(URLRequest.HTTPBody == expectedValue, "Test failed: URLRequest.HTTPBody isn't what it's supposed to be.")
     }
-    
+
+    ////////////////////////////////////////////////////////////////////////////
 }

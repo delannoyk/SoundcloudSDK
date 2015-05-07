@@ -149,15 +149,15 @@ internal enum HTTPMethod: String {
     case PUT = "PUT"
     case DELETE = "DELETE"
 
-    func URLRequest(URL: NSURL, parameters: [String: AnyObject]? = nil) -> NSURLRequest {
+    func URLRequest(URL: NSURL, parameters: HTTPParametersConvertible? = nil) -> NSURLRequest {
         let URLRequestInfo: (URL: NSURL, HTTPBody: NSData?) = {
             if let parameters = parameters {
                 if self == .GET {
-                    return (URL: URL.URLByAppendingQueryString(parameters.queryString), HTTPBody: nil)
+                    return (URL: URL.URLByAppendingQueryString(parameters.stringValue), HTTPBody: nil)
                 }
-                return (URL: URL, HTTPBody: parameters.queryString.dataUsingEncoding(NSUTF8StringEncoding))
+                return (URL: URL, HTTPBody: parameters.dataValue)
             }
-            return (URL: URL, HTTPBody: parameters?.queryString.dataUsingEncoding(NSUTF8StringEncoding))
+            return (URL: URL, HTTPBody: nil)
         }()
 
         let URLRequest = NSMutableURLRequest(URL: URLRequestInfo.URL)
@@ -170,13 +170,24 @@ internal enum HTTPMethod: String {
 ////////////////////////////////////////////////////////////////////////////
 
 
+// MARK: - Parameters
+////////////////////////////////////////////////////////////////////////////
+
+internal protocol HTTPParametersConvertible {
+    var stringValue: String { get }
+    var dataValue: NSData { get }
+}
+
+////////////////////////////////////////////////////////////////////////////
+
+
 // MARK: - Request
 ////////////////////////////////////////////////////////////////////////////
 
 internal struct Request<T> {
     private let dataTask: NSURLSessionDataTask
 
-    init(URL: NSURL, method: HTTPMethod, parameters: [String: AnyObject]?, parse: JSONObject -> Result<T>, completion: Result<T> -> Void) {
+    init(URL: NSURL, method: HTTPMethod, parameters: HTTPParametersConvertible?, parse: JSONObject -> Result<T>, completion: Result<T> -> Void) {
         let URLRequest = method.URLRequest(URL, parameters: parameters)
 
         dataTask = NSURLSession.sharedSession().dataTaskWithRequest(URLRequest, completionHandler: { (data, response, error) -> Void in
