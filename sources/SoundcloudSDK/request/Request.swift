@@ -86,7 +86,7 @@ internal extension JSONObject {
     
     internal func arrayValue<T>(mapping: JSONObject -> T?) -> [T]? {
         if let actualJsonArray =  value as? [AnyObject] {
-            var values = actualJsonArray.map { mapping(JSONObject($0)) }
+            let values = actualJsonArray.map { mapping(JSONObject($0)) }
             return compact(values)
         }
         return nil
