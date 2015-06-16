@@ -25,11 +25,23 @@ public extension Track {
     }
 
     internal static func tracks(identifiers: [Int], completion: Result<[Track]> -> Void) {
-        //GET	/tracks.json?{ids}	tracks
+        let URL = BaseURL.URLByAppendingPathComponent("tracks.json")
+        let parameters = [
+            "client_id": Soundcloud.clientIdentifier!,
+            "ids": ",".join(identifiers.map { "\($0)" })
+        ]
+
+        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
+            let tracks = $0.map { return Track(JSON: $0) }
+            if let tracks = tracks {
+                return .Success(Box(compact(tracks)))
+            }
+            return .Failure(ParsingError)
+        }, completion: completion)
+        request.start()
     }
 
     public func comments(completion: Void) {
         //GET	/tracks/{id}/comments.json	comments for the track
-
     }
 }
