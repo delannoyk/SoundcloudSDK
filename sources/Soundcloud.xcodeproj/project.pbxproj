@@ -23,6 +23,7 @@
 		461FA2D91AFBC7AC00F585C8 /* TrackRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0C01AEBD01900D3B495 /* TrackRequest.swift */; };
 		461FA2DA1AFBC7AC00F585C8 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0C21AEBD0FA00D3B495 /* UserRequest.swift */; };
 		4626792E1AED041B003771C9 /* ImageURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4626792D1AED041B003771C9 /* ImageURLs.swift */; };
+		4637FD8A1B30A39700286C14 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4637FD891B30A39700286C14 /* Comment.swift */; };
 		4644B0BD1AEBC58100D3B495 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BC1AEBC58100D3B495 /* DictionaryExtension.swift */; };
 		4644B0BF1AEBC76E00D3B495 /* NSURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */; };
 		4644B0C11AEBD01900D3B495 /* TrackRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0C01AEBD01900D3B495 /* TrackRequest.swift */; };
@@ -53,6 +54,7 @@
 		461FA2CB1AFBC6DD00F585C8 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		4626792D1AED041B003771C9 /* ImageURLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageURLs.swift; sourceTree = "<group>"; };
 		462679661AED57FC003771C9 /* Soundcloud.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Soundcloud.h; sourceTree = "<group>"; };
+		4637FD891B30A39700286C14 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		4644B0BC1AEBC58100D3B495 /* DictionaryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLExtension.swift; sourceTree = "<group>"; };
 		4644B0C01AEBD01900D3B495 /* TrackRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackRequest.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 		4656CE861A9CF07E00319B94 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				4637FD891B30A39700286C14 /* Comment.swift */,
 				4656CE8F1A9D098300319B94 /* Enums.swift */,
 				4656CE8D1A9CF0DC00319B94 /* App.swift */,
 				4656CE871A9CF0A800319B94 /* User.swift */,
@@ -307,6 +310,7 @@
 				4644B0BD1AEBC58100D3B495 /* DictionaryExtension.swift in Sources */,
 				461FA2CC1AFBC6DD00F585C8 /* StringExtension.swift in Sources */,
 				4626792E1AED041B003771C9 /* ImageURLs.swift in Sources */,
+				4637FD8A1B30A39700286C14 /* Comment.swift in Sources */,
 				4656CE8C1A9CF0CD00319B94 /* Playlist.swift in Sources */,
 				4644B0C31AEBD0FA00D3B495 /* UserRequest.swift in Sources */,
 				4644B0C11AEBD01900D3B495 /* TrackRequest.swift in Sources */,
