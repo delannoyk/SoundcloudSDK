@@ -38,6 +38,7 @@
 		4656CE8C1A9CF0CD00319B94 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8B1A9CF0CD00319B94 /* Playlist.swift */; };
 		4656CE8E1A9CF0DC00319B94 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8D1A9CF0DC00319B94 /* App.swift */; };
 		4656CE901A9D098300319B94 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8F1A9D098300319B94 /* Enums.swift */; };
+		4697CE1A1B36D11E00052DF1 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4637FD891B30A39700286C14 /* Comment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -333,6 +334,7 @@
 				461FA2DA1AFBC7AC00F585C8 /* UserRequest.swift in Sources */,
 				461FA2CD1AFBC78000F585C8 /* DictionaryExtension.swift in Sources */,
 				461FA2D81AFBC7A700F585C8 /* ImageURLs.swift in Sources */,
+				4697CE1A1B36D11E00052DF1 /* Comment.swift in Sources */,
 				461FA2D31AFBC7A700F585C8 /* Enums.swift in Sources */,
 				461FA2D51AFBC7A700F585C8 /* User.swift in Sources */,
 				461FA2CF1AFBC78000F585C8 /* ArrayExtension.swift in Sources */,

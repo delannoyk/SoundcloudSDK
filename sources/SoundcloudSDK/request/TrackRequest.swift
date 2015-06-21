@@ -41,7 +41,17 @@ public extension Track {
         request.start()
     }
 
-    public func comments(completion: Void) {
-        //GET	/tracks/{id}/comments.json	comments for the track
+    public func comments(completion: Result<[Comment]> -> Void) {
+        let URL = Track.BaseURL.URLByAppendingPathComponent("\(identifier)/comments.json")
+        let parameters = ["client_id": Soundcloud.clientIdentifier!]
+
+        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
+            let comments = $0.map { return Comment(JSON: $0) }
+            if let comments = comments {
+                return .Success(Box(compact(comments)))
+            }
+            return .Failure(ParsingError)
+        }, completion: completion)
+        request.start()
     }
 }
