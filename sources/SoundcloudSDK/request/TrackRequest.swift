@@ -25,7 +25,7 @@ public extension Track {
     }
 
     internal static func tracks(identifiers: [Int], completion: Result<[Track]> -> Void) {
-        let URL = BaseURL.URLByAppendingPathComponent("tracks.json")
+        let URL = BaseURL
         let parameters = [
             "client_id": Soundcloud.clientIdentifier!,
             "ids": ",".join(identifiers.map { "\($0)" })
