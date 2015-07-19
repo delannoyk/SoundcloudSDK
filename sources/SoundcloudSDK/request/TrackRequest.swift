@@ -9,7 +9,7 @@
 import UIKit
 
 public extension Track {
-    private static let BaseURL = NSURL(string: "https://api.soundcloud.com/tracks")!
+    internal static let BaseURL = NSURL(string: "https://api.soundcloud.com/tracks")!
 
     /**
     Load track with a specific identifier

@@ -9,7 +9,7 @@
 import UIKit
 
 public extension User {
-    private static let BaseURL = NSURL(string: "https://api.soundcloud.com/users")!
+    internal static let BaseURL = NSURL(string: "https://api.soundcloud.com/users")!
 
     /**
     Loads an user profile
