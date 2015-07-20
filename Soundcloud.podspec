@@ -16,6 +16,7 @@ Pod::Spec.new do |s|
   }
   s.source_files = 'sources/SoundcloudSDK/**/*.swift'
   s.framework    =  'UIKit'
-
+  s.dependency 'UICKeyChainStore', '~> 2.0.6'
+  s.dependency '1PasswordExtension', '~> 1.2'
   s.requires_arc = true
 end
