@@ -62,4 +62,44 @@ internal extension Comment {
 
 ////////////////////////////////////////////////////////////////////////////
 
+
+// MARK: Caching ease
+////////////////////////////////////////////////////////////////////////////
+
+public extension Comment {
+    /**
+    Returns NSData to ease caching of the struct.
+
+    :returns: NSData representation of the struct.
+    */
+    public mutating func toData() -> NSData {
+        return NSData(bytes: &self, length: sizeof(self.dynamicType))
+    }
+
+    internal static var empty: Comment {
+        return Comment(identifier: 0,
+            createdAt: NSDate(),
+            trackIdentifier: nil,
+            userIdentifier: nil,
+            timestamp: nil,
+            body: "",
+            user: nil)
+    }
+
+    /**
+    Initialize a new struct from NSData.
+
+    :param: data NSData representation of the struct.
+
+    :returns: An initialized struct.
+    */
+    public static func fromData(data: NSData) -> Comment {
+        var comment = empty
+        data.getBytes(&comment, length: sizeof(Comment))
+        return comment
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////
+
 ////////////////////////////////////////////////////////////////////////////
