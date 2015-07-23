@@ -21,4 +21,21 @@ extension String: HTTPParametersConvertible {
     }
 }
 
+extension String {
+    var queryDictionary: [String: String] {
+        let parameters = componentsSeparatedByString("&")
+        var dictionary = [String: String]()
+        for parameter in parameters {
+            let keyValue = parameter.componentsSeparatedByString("=")
+            if keyValue.count == 2 {
+                if let key = keyValue[0].stringByRemovingPercentEncoding,
+                    value = keyValue[1].stringByRemovingPercentEncoding {
+                        dictionary[keyValue[0]] = keyValue[1]
+                }
+            }
+        }
+        return dictionary
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////
