@@ -19,7 +19,7 @@ public extension User {
             if let user = User(JSON: $0) {
                 return .Success(Box(user))
             }
-            return .Failure(ParsingError)
+            return .Failure(GenericError)
         }, completion: completion)
         request.start()
     }
@@ -33,7 +33,7 @@ public extension User {
             if let tracks = tracks {
                 return .Success(Box(compact(tracks)))
             }
-            return .Failure(ParsingError)
+            return .Failure(GenericError)
         }, completion: completion)
         request.start()
     }

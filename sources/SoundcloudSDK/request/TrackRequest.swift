@@ -19,7 +19,7 @@ public extension Track {
             if let track = Track(JSON: $0) {
                 return .Success(Box(track))
             }
-            return .Failure(ParsingError)
+            return .Failure(GenericError)
         }, completion: completion)
         request.start()
     }
@@ -36,7 +36,7 @@ public extension Track {
             if let tracks = tracks {
                 return .Success(Box(compact(tracks)))
             }
-            return .Failure(ParsingError)
+            return .Failure(GenericError)
         }, completion: completion)
         request.start()
     }
@@ -50,7 +50,7 @@ public extension Track {
             if let comments = comments {
                 return .Success(Box(compact(comments)))
             }
-            return .Failure(ParsingError)
+            return .Failure(GenericError)
         }, completion: completion)
         request.start()
     }

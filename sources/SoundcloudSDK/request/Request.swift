@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal let ParsingError = NSError(domain: "SoundcloudSDK", code: -1, userInfo: nil)
+internal let GenericError = NSError(domain: "SoundcloudSDK", code: -1, userInfo: nil)
 
 // MARK: - JSONObject
 ////////////////////////////////////////////////////////////////////////////
