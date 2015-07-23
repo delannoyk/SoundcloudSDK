@@ -48,4 +48,24 @@ public extension User {
         }, completion: completion)
         request.start()
     }
+
+    /**
+    Load all comments from the user
+
+    :param: completion The closure that will be called when the comments are loaded or upon error
+    */
+    public func comments(completion: Result<[Comment]> -> Void) {
+        let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier)/comments.json")
+        let parameters = ["client_id": Soundcloud.clientIdentifier!]
+
+        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
+            let comments = $0.map { return Comment(JSON: $0) }
+            if let comments = comments {
+                return .Success(Box(compact(comments)))
+            }
+            return .Failure(GenericError)
+            }, completion: completion)
+        request.start()
+    }
+
 }
