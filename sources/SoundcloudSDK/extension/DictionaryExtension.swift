@@ -11,12 +11,14 @@ import UIKit
 // MARK: - StringExtension
 ////////////////////////////////////////////////////////////////////////////
 
-private extension String {
+internal extension String {
     // MARK: URL Encoding
     ////////////////////////////////////////////////////////////////////////////
 
     var URLEncodedValue: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet()) ?? self
+        let customAllowedSet =  NSCharacterSet(charactersInString: "=\"#%/<>?@\\^`{|}&: ").invertedSet
+        let escapedString = stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet)
+        return escapedString ?? self
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -36,7 +38,7 @@ internal extension Dictionary {
         let parts = map(self, {(key, value) -> String in
             let keyStr = "\(key)"
             let valueStr = "\(value)"
-            return "\(keyStr.URLEncodedValue)=\(valueStr.URLEncodedValue)"
+            return "\(keyStr)=\(valueStr.URLEncodedValue)"
         })
         return join("&", parts)
     }
