@@ -68,4 +68,23 @@ public extension User {
         request.start()
     }
 
+    /**
+    Loads favorited tracks of the user
+
+    :param: completion The closure that will be called when tracks are loaded or upon error
+    */
+    public func favorites(completion: Result<[Track]> -> Void) {
+        let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier)/favorites.json")
+        let parameters = ["client_id": Soundcloud.clientIdentifier!]
+
+        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
+            let tracks = $0.map { return Track(JSON: $0) }
+            if let tracks = tracks {
+                return .Success(Box(compact(tracks)))
+            }
+            return .Failure(GenericError)
+            }, completion: completion)
+        request.start()
+    }
+
 }
