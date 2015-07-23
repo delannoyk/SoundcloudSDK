@@ -11,7 +11,13 @@ import UIKit
 public extension Track {
     private static let BaseURL = NSURL(string: "https://api.soundcloud.com/tracks")!
 
-    internal static func track(identifier: Int, completion: Result<Track> -> Void) {
+    /**
+    Load track with a specific identifier
+
+    :param: identifier The identifier of the track to load
+    :param: completion The closure that will be called when track is loaded or upon error
+    */
+    public static func track(identifier: Int, completion: Result<Track> -> Void) {
         let URL = BaseURL.URLByAppendingPathComponent("\(identifier).json")
         let parameters = ["client_id": Soundcloud.clientIdentifier!]
 
@@ -24,7 +30,13 @@ public extension Track {
         request.start()
     }
 
-    internal static func tracks(identifiers: [Int], completion: Result<[Track]> -> Void) {
+    /**
+    Load tracks with specific identifiers
+
+    :param: identifiers The identifiers of the tracks to load
+    :param: completion  The closure that will be called when tracks are loaded or upon error
+    */
+    public static func tracks(identifiers: [Int], completion: Result<[Track]> -> Void) {
         let URL = BaseURL
         let parameters = [
             "client_id": Soundcloud.clientIdentifier!,
@@ -41,6 +53,11 @@ public extension Track {
         request.start()
     }
 
+    /**
+    Load comments relative to a track
+
+    :param: completion The closure that will be called when the comments are loaded or upon error
+    */
     public func comments(completion: Result<[Comment]> -> Void) {
         let URL = Track.BaseURL.URLByAppendingPathComponent("\(identifier)/comments.json")
         let parameters = ["client_id": Soundcloud.clientIdentifier!]

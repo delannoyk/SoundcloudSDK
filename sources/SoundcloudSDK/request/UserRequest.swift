@@ -11,7 +11,13 @@ import UIKit
 public extension User {
     private static let BaseURL = NSURL(string: "https://api.soundcloud.com/users")!
 
-    internal static func user(identifier: Int, completion: Result<User> -> Void) {
+    /**
+    Loads an user profile
+
+    :param: identifier The identifier of the user to load
+    :param: completion The closure that will be called when user profile is loaded or upon error
+    */
+    public static func user(identifier: Int, completion: Result<User> -> Void) {
         let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier).json")
         let parameters = ["client_id": Soundcloud.clientIdentifier!]
 
@@ -24,6 +30,11 @@ public extension User {
         request.start()
     }
 
+    /**
+    Loads tracks the user uploaded to Soundcloud
+
+    :param: completion The closure that will be called when tracks are loaded or upon error
+    */
     public func tracks(completion: Result<[Track]> -> Void) {
         let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier)/tracks.json")
         let parameters = ["client_id": Soundcloud.clientIdentifier!]
