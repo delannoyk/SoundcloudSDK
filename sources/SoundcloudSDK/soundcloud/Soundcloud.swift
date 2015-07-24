@@ -124,6 +124,35 @@ extension Session {
         Soundcloud.session = nil
     }
 
+    /**
+    Fetch current user's profile.
+
+    **This method requires a Session.**
+
+    :param: completion The closure that will be called when the profile is loaded or upon error
+    */
+    public func me(completion: Result<User> -> Void) {
+        if let clientId = Soundcloud.clientIdentifier, oauthToken = accessToken {
+            let URL = NSURL(string: "https://api.soundcloud.com/me")!
+
+            let parameters = [
+                "client_id": clientId,
+                "oauth_token": oauthToken,
+            ]
+
+            let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
+                if let user = User(JSON: $0) {
+                    return .Success(Box(user))
+                }
+                return .Failure(GenericError)
+            }, completion: completion)
+            request.start()
+        }
+        else {
+            completion(.Failure(GenericError))
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
 
