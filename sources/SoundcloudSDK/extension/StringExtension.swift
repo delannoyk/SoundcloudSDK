@@ -30,7 +30,7 @@ extension String {
             if keyValue.count == 2 {
                 if let key = keyValue[0].stringByRemovingPercentEncoding,
                     value = keyValue[1].stringByRemovingPercentEncoding {
-                        dictionary[keyValue[0]] = keyValue[1]
+                        dictionary[key] = value
                 }
             }
         }
