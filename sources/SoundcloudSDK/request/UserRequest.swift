@@ -87,4 +87,23 @@ public extension User {
         request.start()
     }
 
+    /**
+    Loads followers of the user
+
+    :param: completion The closure that will be called when followers are loaded or upon error
+    */
+    public func followers(completion: Result<[User]> -> Void) {
+        let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier)/followers.json")
+        let parameters = ["client_id": Soundcloud.clientIdentifier!]
+
+        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
+            let users = $0.map { return User(JSON: $0) }
+            if let users = users {
+                return .Success(Box(compact(users)))
+            }
+            return .Failure(GenericError)
+            }, completion: completion)
+        request.start()
+    }
+
 }
