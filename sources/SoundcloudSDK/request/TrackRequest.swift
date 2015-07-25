@@ -122,4 +122,36 @@ public extension Track {
         request.start()
     }
 
+    /**
+    Favorites a track for the logged user
+    
+    **This method requires a Session.**
+
+    :param: userIdentifier The identifier of the logged user
+    :param: completion     The closure that will be called when the track has been favorited or upon error
+    */
+    public func favorite(userIdentifier: Int, completion: Result<Bool> -> Void) {
+        if let oauthToken = Soundcloud.session?.accessToken {
+            let baseURL = User.BaseURL.URLByAppendingPathComponent("\(userIdentifier)/favorites/\(identifier).json")
+            let parameters = [
+                "client_id": Soundcloud.clientIdentifier!,
+                "oauth_token": oauthToken
+            ]
+
+            let URL = baseURL.URLByAppendingQueryString(parameters.queryString)
+            let request = Request(URL: URL, method: .PUT, parameters: nil, parse: {
+                if let textRange = $0["status"].stringValue?.rangeOfString(" OK") {
+                    return .Success(Box(true))
+                }
+                if let textRange = $0["status"].stringValue?.rangeOfString(" Created") {
+                    return .Success(Box(true))
+                }
+                return .Failure(GenericError)
+            }, completion: completion)
+            request.start()
+        }
+        else {
+            completion(.Failure(GenericError))
+        }
+    }
 }
