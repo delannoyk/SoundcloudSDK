@@ -125,4 +125,52 @@ public extension User {
         request.start()
     }
 
+    /**
+    Follow the given user.
+
+    **This method requires a Session.**
+
+    :param: userIdentifier The identifier of the user to follow
+    :param: completion     The closure that will be called when the user has been followed or upon error
+    */
+    public func follow(userIdentifier: Int, completion: Result<Bool> -> Void) {
+        changeFollowStatus(true, userIdentifier: userIdentifier, completion: completion)
+    }
+
+    /**
+    Follow the given user.
+
+    **This method requires a Session.**
+
+    :param: userIdentifier The identifier of the user to unfollow
+    :param: completion     The closure that will be called when the user has been unfollowed or upon error
+    */
+    public func unfollow(userIdentifier: Int, completion: Result<Bool> -> Void) {
+        changeFollowStatus(false, userIdentifier: userIdentifier, completion: completion)
+    }
+
+    internal func changeFollowStatus(follow: Bool, userIdentifier: Int, completion: Result<Bool> -> Void) {
+        if let oauthToken = Soundcloud.session?.accessToken {
+            let baseURL = User.BaseURL.URLByAppendingPathComponent("\(identifier)/followings/\(userIdentifier).json")
+            let parameters = ["client_id": Soundcloud.clientIdentifier!,
+                "oauth_token": oauthToken
+            ]
+
+            let URL = baseURL.URLByAppendingQueryString(parameters.queryString)
+
+            let request = Request(URL: URL, method: follow ? .PUT : .DELETE, parameters: parameters, parse: {
+                if let user = User(JSON: $0) {
+                    return .Success(Box(true))
+                }
+                if let textRange = $0["status"].stringValue?.rangeOfString(" OK") {
+                    return .Success(Box(true))
+                }
+                return .Failure(GenericError)
+            }, completion: completion)
+            request.start()
+        }
+        else {
+            completion(.Failure(GenericError))
+        }
+    }
 }
