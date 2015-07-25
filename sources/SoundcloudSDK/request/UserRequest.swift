@@ -158,7 +158,7 @@ public extension User {
 
             let URL = baseURL.URLByAppendingQueryString(parameters.queryString)
 
-            let request = Request(URL: URL, method: follow ? .PUT : .DELETE, parameters: parameters, parse: {
+            let request = Request(URL: URL, method: follow ? .PUT : .DELETE, parameters: nil, parse: {
                 if let user = User(JSON: $0) {
                     return .Success(Box(true))
                 }
