@@ -307,6 +307,51 @@ public class Soundcloud: NSObject {
     ////////////////////////////////////////////////////////////////////////////
 
 
+    // MARK: Requests
+    ////////////////////////////////////////////////////////////////////////////
+
+    /// A resolve response can either be a/some User(s) or a/some Track(s).
+    public typealias ResolveResponse = (users: [User]?, tracks: [Track]?)
+
+    /**
+    Resolve allows you to lookup and access API resources when you only know the SoundCloud.com URL.
+
+    :param: URI        The URI to lookup
+    :param: completion The closure that will be called when the result is ready or upon error
+    */
+    public static func resolve(URI: String, completion: Result<ResolveResponse> -> Void) {
+        if let clientId = clientIdentifier {
+            let URL = NSURL(string: "http://api.soundcloud.com/resolve")!
+            let parameters = ["client_id": clientId,
+                "url": URI
+            ]
+
+            let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
+                if let user = User(JSON: $0) {
+                    return .Success(Box(ResolveResponse(users: [user], tracks: nil)))
+                }
+
+                if let track = Track(JSON: $0) {
+                    return .Success(Box(ResolveResponse(users: nil, tracks: [track])))
+                }
+
+                let users = compact($0.map { return User(JSON: $0) })
+                if users.count > 0 {
+                    return .Success(Box(ResolveResponse(users: users, tracks: nil)))
+                }
+
+                let tracks = compact($0.map { return Track(JSON: $0) })
+                if tracks.count > 0 {
+                    return .Success(Box(ResolveResponse(users: nil, tracks: tracks)))
+                }
+                
+                return .Failure(GenericError)
+            }, completion: completion)
+            request.start()
+        }
+        else {
+            completion(.Failure(GenericError))
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
