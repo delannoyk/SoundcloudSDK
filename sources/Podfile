@@ -1,0 +1,17 @@
+use_frameworks!
+inhibit_all_warnings!
+
+target 'Soundcloud' do
+    pod 'UICKeyChainStore', '~> 2.0.6'
+    pod '1PasswordExtension', '~> 1.2'
+end
+
+target 'SoundcloudTests' do
+    pod 'UICKeyChainStore', '~> 2.0.6'
+    pod '1PasswordExtension', '~> 1.2'
+end
+
+target 'SoundcloudAppTest' do
+    pod 'UICKeyChainStore', '~> 2.0.6'
+    pod '1PasswordExtension', '~> 1.2'
+end

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="15A226f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SoundcloudAppTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Yb-ZM-b8i">
+                                <rect key="frame" x="16" y="20" width="568" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Login">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonLoginPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aGh-pH-6zp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Hm-UF-U1S">
+                                <rect key="frame" x="16" y="58" width="568" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Load me">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonLoadMePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zwI-sJ-qec"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User Identifier" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gIb-dV-V70">
+                                <rect key="frame" x="16" y="96" width="515" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="KwP-uv-MKk"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7d7-VJ-kGh">
+                                <rect key="frame" x="539" y="96" width="45" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Follow">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonFollowPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zxb-z4-3lq"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Track Identifier" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9sj-hu-jKH">
+                                <rect key="frame" x="16" y="134" width="504" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="LCo-Wi-twz"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQT-7G-Vkk">
+                                <rect key="frame" x="528" y="134" width="56" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Favorite">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonFavoritePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hGs-pp-nrW"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2Yb-ZM-b8i" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="0tB-EO-eSt"/>
+                            <constraint firstItem="EQT-7G-Vkk" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="1UP-Da-5PD"/>
+                            <constraint firstItem="7d7-VJ-kGh" firstAttribute="top" secondItem="2Hm-UF-U1S" secondAttribute="bottom" constant="8" id="Hoh-c3-EqR"/>
+                            <constraint firstItem="2Hm-UF-U1S" firstAttribute="top" secondItem="2Yb-ZM-b8i" secondAttribute="bottom" constant="8" id="Jee-ph-kZi"/>
+                            <constraint firstItem="9sj-hu-jKH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Rg0-EC-mJx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2Hm-UF-U1S" secondAttribute="trailing" id="SKL-D6-7ZE"/>
+                            <constraint firstItem="EQT-7G-Vkk" firstAttribute="centerY" secondItem="9sj-hu-jKH" secondAttribute="centerY" id="UWw-lU-bMk"/>
+                            <constraint firstItem="7d7-VJ-kGh" firstAttribute="leading" secondItem="gIb-dV-V70" secondAttribute="trailing" constant="8" id="XhI-wW-po7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2Yb-ZM-b8i" secondAttribute="trailing" id="b3Y-do-fE0"/>
+                            <constraint firstItem="2Hm-UF-U1S" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="cme-Xp-Iid"/>
+                            <constraint firstItem="7d7-VJ-kGh" firstAttribute="centerY" secondItem="gIb-dV-V70" secondAttribute="centerY" id="e7b-QJ-gIN"/>
+                            <constraint firstItem="EQT-7G-Vkk" firstAttribute="leading" secondItem="9sj-hu-jKH" secondAttribute="trailing" constant="8" id="i39-i7-VSN"/>
+                            <constraint firstItem="EQT-7G-Vkk" firstAttribute="top" secondItem="7d7-VJ-kGh" secondAttribute="bottom" constant="8" id="l5J-nP-FC1"/>
+                            <constraint firstItem="2Yb-ZM-b8i" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="mju-ey-Nvx"/>
+                            <constraint firstItem="7d7-VJ-kGh" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="pak-xX-dbi"/>
+                            <constraint firstItem="gIb-dV-V70" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="pgu-4g-1Dx"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textFieldTrackIdentifier" destination="9sj-hu-jKH" id="Iab-9V-xuO"/>
+                        <outlet property="textFieldUserIdentifier" destination="gIb-dV-V70" id="hnz-HL-Yu4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>

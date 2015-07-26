@@ -1,0 +1,13 @@
+PODS:
+  - 1PasswordExtension (1.2)
+  - UICKeyChainStore (2.0.6)
+
+DEPENDENCIES:
+  - 1PasswordExtension (~> 1.2)
+  - UICKeyChainStore (~> 2.0.6)
+
+SPEC CHECKSUMS:
+  1PasswordExtension: fcf300204bda5b5c78936dbb937a7d661f1ca796
+  UICKeyChainStore: c5719c814e8bd69e74e4a0fc09daf8f4d6257a59
+
+COCOAPODS: 0.37.2

@@ -1,0 +1,6 @@
+framework module Pods_Soundcloud {
+  umbrella header "Pods-Soundcloud-umbrella.h"
+
+  export *
+  module * { export * }
+}
