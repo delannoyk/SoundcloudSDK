@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.authors      = {
     'Kevin Delannoy' => 'delannoyk@gmail.com'
   }
-  s.summary      = ''
+  s.summary      = 'SoundcloudSDK is a framework written in Swift over Soundcloud API.'
 
 # Source Info
   s.platform     =  :ios, '8.0'
