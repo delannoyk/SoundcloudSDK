@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name         = 'Soundcloud'
   s.version      = '0.1.0'
   s.license      =  { :type => 'MIT' }
-  s.homepage     = 'https://github.com/delannoyk/Soundcloud'
+  s.homepage     = 'https://github.com/delannoyk/SoundcloudSDK'
   s.authors      = {
     'Kevin Delannoy' => 'delannoyk@gmail.com'
   }
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
 # Source Info
   s.platform     =  :ios, '8.0'
   s.source       =  {
-    :git => 'https://github.com/delannoyk/Soundcloud.git',
+    :git => 'https://github.com/delannoyk/SoundcloudSDK.git',
     :tag => s.version.to_s
   }
   s.source_files = 'sources/SoundcloudSDK/**/*.swift'
