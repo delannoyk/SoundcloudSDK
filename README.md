@@ -9,10 +9,104 @@ You have multiple choices here:
 * Add it in your Podfile `pod 'Soundcloud'`
 
 ## Usage
-Coming soon
+
+### Configuration
+
+First step to use the SDK is to configure it to use your application credentials:
+
+```swift
+Soundcloud.clientIdentifier = "YOUR_CLIENT_IDENTIFIER"
+Soundcloud.clientSecret  = "YOUR_CLIENT_SECRET"
+Soundcloud.redirectURI = "YOUR_REDIRECT_URI"
+```
+After that, you're good to go.
+
+### Track
+
+* Load track by identifier
+
+    ```swift
+    Tracks.track(identifier: Int, completion: Result<Track> -> Void)
+    ```
+* Load tracks by identifiers
+
+    ```swift
+    Tracks.tracks(identifiers: [Int], completion: Result<[Track]> -> Void)
+    ```
+* Get list of comments
+
+    ```swift
+    let track: Track
+    track.comments(completion: Result<[Comment]> -> Void)
+    ```
+* Get list of favoriters
+
+    ```swift
+    let track: Track
+    track.favoriters(completion: Result<[User]> -> Void)
+    ```
+
+### User
+
+* Load user by identifier
+
+    ```swift
+    User.user(identifier: Int, completion: Result<User> -> Void)
+    ```
+* Load list of user's tracks
+
+    ```swift
+    let user: User
+    user.tracks(completion: Result<[Track]> -> Void)
+    ```
+* Load list of user's comments
+
+    ```swift
+    let user: User
+    user.comments(completion: Result<[Comment]> -> Void)
+    ```
+* Load list of user's favorite tracks
+
+    ```swift
+    let user: User
+    user.favorites(completion: Result<[Track]> -> Void)
+    ```
+* Load list of user's followers
+
+    ```swift
+    let user: User
+    user.followers(completion: Result<[User]> -> Void)
+    ```
+* Load list of user's followings
+
+    ```swift
+    let user: User
+    user.followings(completion: Result<[User]> -> Void)
+    ```
+
+### Resolve
+
+Documentation coming soon
+
+### Login
+
+Documentation coming soon
+
+#### Session
+
+Documentation coming soon
 
 ## Limitations
+
 Right now Playlists are not available.
+
+## Next steps
+
+* Support Playlist
+* Add unit tests
+* Better error support
+* Analyse if it's necessary to ease up things to play a file (Integrate an audio player/a dependency ?)
+* Analyse if it's necessary to handle the session in the SDK for the developer
 
 ## Contributing
 
