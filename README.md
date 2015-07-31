@@ -86,15 +86,68 @@ After that, you're good to go.
 
 ### Resolve
 
-Documentation coming soon
+The resolve method doesn't support playlists yet. It's coming :)
+
+```swift
+Soundcloud.resolve(URI: String, completion: Result<ResolveResponse> -> Void)
+```
+where `ResolveResponse`is a typealias for `ResolveResponse = (users: [User]?, tracks: [Track]?)`
 
 ### Login
 
-Documentation coming soon
+The login method implements the standard OAuth2 of Soundcloud. Some private methods requires the user to be logged in. These are listed below.
 
 #### Session
 
-Documentation coming soon
+* Login
+
+    ```swift
+    Soundcloud.login(displayViewController: UIViewController, completion: Result<Session> -> Void)
+    ```
+* Refresh token
+
+    ```swift
+    let session = Soundcloud.session
+    session?.refreshSession(completion: Result<Session> -> Void)
+    ```
+* Logout
+
+    ```swift
+    let session = Soundcloud.session
+    session?.destroy()
+    ```
+
+#### Methods that require a Session
+* User's profile
+
+    ```swift
+    let session = Soundcloud.session
+    session?.me(completion: Result<User> -> Void)
+    ```
+* Comment a track
+
+    ```swift
+    let track: Track
+    track.comment(body: String, timestamp: NSTimeInterval, completion: Result<Comment> -> Void)
+    ```
+* Favorite a track
+
+    ```swift
+    let track: Track
+    track.favorite(userIdentifier: Int, completion: Result<Bool> -> Void)
+    ```
+* Follow a user
+
+    ```swift
+    let user: User
+    user.follow(userIdentifier: Int, completion: Result<Bool> -> Void)
+    ```
+* Unfollow a user
+
+    ```swift
+    let user: User
+    user.unfollow(userIdentifier: Int, completion: Result<Bool> -> Void)
+    ```
 
 ## Limitations
 
