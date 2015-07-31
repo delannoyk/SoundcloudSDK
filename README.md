@@ -102,7 +102,7 @@ The login method implements the standard OAuth2 of Soundcloud. Some private meth
 * Login
 
     ```swift
-    Soundcloud.login(displayViewController: UIViewController, completion: Result<Session> -> Void)
+    Session.login(displayViewController: UIViewController, completion: Result<Session> -> Void)
     ```
 * Refresh token
 
