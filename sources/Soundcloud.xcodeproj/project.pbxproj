@@ -49,12 +49,9 @@
 		465923791B636AA40090056E /* RequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465923781B636AA40090056E /* RequestTests.swift */; };
 		4697CE1A1B36D11E00052DF1 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4637FD891B30A39700286C14 /* Comment.swift */; };
 		469AE0721B5A6B61001DABD8 /* SoundcloudWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D1CC341B5A38210043381B /* SoundcloudWebViewController.swift */; };
-		46BA619D1B5BBCE40066ECE4 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BA619C1B5BBCE40066ECE4 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		46BA61A01B5BBD1D0066ECE4 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BA619C1B5BBCE40066ECE4 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		46BA61A21B5D4DBA0066ECE4 /* Soundcloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4656CE6A1A9CF05600319B94 /* Soundcloud.framework */; };
 		46BA61A31B5D4DBA0066ECE4 /* Soundcloud.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4656CE6A1A9CF05600319B94 /* Soundcloud.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		46D1CC351B5A38210043381B /* SoundcloudWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D1CC341B5A38210043381B /* SoundcloudWebViewController.swift */; };
-		4B041421B3B4230A66ABF3A4 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63BDAE102AF47ADA95C03341 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		BBDD9AC1E96725B7BBA05DDE /* Pods_SoundcloudTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769BFC9C3A1C147A600BAAD1 /* Pods_SoundcloudTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CA620035B153D1D48ADAAF7D /* Pods_SoundcloudAppTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0E8566B3D32EE75738D6BC /* Pods_SoundcloudAppTest.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -142,7 +139,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				46BA61A21B5D4DBA0066ECE4 /* Soundcloud.framework in Frameworks */,
-				4B041421B3B4230A66ABF3A4 /* Pods.framework in Frameworks */,
 				CA620035B153D1D48ADAAF7D /* Pods_SoundcloudAppTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,7 +147,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46BA619D1B5BBCE40066ECE4 /* Pods.framework in Frameworks */,
 				059018AEB2D10E1AD3F29379 /* Pods_Soundcloud.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,7 +155,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46BA61A01B5BBD1D0066ECE4 /* Pods.framework in Frameworks */,
 				4656CE761A9CF05600319B94 /* Soundcloud.framework in Frameworks */,
 				BBDD9AC1E96725B7BBA05DDE /* Pods_SoundcloudTests.framework in Frameworks */,
 			);
