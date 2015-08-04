@@ -34,16 +34,15 @@ public enum TrackType: String {
 ////////////////////////////////////////////////////////////////////////////
 
 public struct Track {
-    internal init(identifier: Int = 0, createdAt: NSDate = NSDate(), createdBy: User = User(),
-        createdWith: App? = nil, duration: NSTimeInterval = 0, commentable: Bool = false,
-        streamable: Bool = false, downloadable: Bool = false, streamURL: NSURL? = nil,
-        downloadURL: NSURL? = nil, permalinkURL: NSURL? = nil,
-        releaseYear: Int? = nil, releaseMonth: Int? = 0, releaseDay: Int? = 0,
-        tags: [String]? = nil, description: String? = nil, genre: String? = nil,
-        trackType: TrackType? = nil, title: String = "", format: String? = nil,
-        contentSize: UInt64? = nil, artworkImageURL: ImageURLs = ImageURLs(baseURL: nil),
-        waveformImageURL: ImageURLs = ImageURLs(baseURL: nil), playbackCount: Int? = nil,
-        downloadCount: Int? = nil, favoriteCount: Int? = nil, commentCount: Int? = nil) {
+    internal init(identifier: Int, createdAt: NSDate, createdBy: User,
+        createdWith: App?, duration: NSTimeInterval, commentable: Bool,
+        streamable: Bool, downloadable: Bool, streamURL: NSURL?,
+        downloadURL: NSURL?, permalinkURL: NSURL?,
+        releaseYear: Int?, releaseMonth: Int?, releaseDay: Int?,
+        tags: [String]?, description: String?, genre: String?,
+        trackType: TrackType?, title: String, format: String?,
+        contentSize: UInt64?, artworkImageURL: ImageURLs, waveformImageURL: ImageURLs,
+        playbackCount: Int?, downloadCount: Int?, favoriteCount: Int?, commentCount: Int?) {
             self.identifier = identifier
 
             self.createdAt = createdAt

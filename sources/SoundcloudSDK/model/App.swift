@@ -12,7 +12,7 @@ import Foundation
 ////////////////////////////////////////////////////////////////////////////
 
 public struct App {
-    internal init(identifier: Int = 0, URL: NSURL? = nil, permalinkURL: NSURL? = nil, name: String = "") {
+    internal init(identifier: Int, URL: NSURL?, permalinkURL: NSURL?, name: String) {
         self.identifier = identifier
         self.URL = URL
         self.permalinkURL = permalinkURL

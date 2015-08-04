@@ -12,12 +12,11 @@ import Foundation
 ////////////////////////////////////////////////////////////////////////////
 
 public struct User {
-    internal init(identifier: Int = 0, username: String = "", fullname: String = "",
-        city: String? = nil, country: String? = nil, biography: String? = nil,
-        URL: NSURL? = nil, permalinkURL: NSURL? = nil, websiteURL: NSURL? = nil,
-        websiteTitle: String? = nil, avatarURL: ImageURLs = ImageURLs(baseURL: nil),
-        tracksCount: Int = 0, playlistsCount: Int = 0, followersCount: Int = 0,
-        followingsCount: Int = 0) {
+    internal init(identifier: Int, username: String, fullname: String,
+        city: String?, country: String?, biography: String?,
+        URL: NSURL?, permalinkURL: NSURL?, websiteURL: NSURL?,
+        websiteTitle: String?, avatarURL: ImageURLs, tracksCount: Int,
+        playlistsCount: Int, followersCount: Int, followingsCount: Int) {
             self.identifier = identifier
 
             self.username = username
