@@ -173,4 +173,23 @@ public extension User {
             completion(.Failure(GenericError))
         }
     }
+
+    /**
+    Loads user's playlists
+
+    :param: completion The closure that will be called when playlists has been loaded or upon error
+    */
+    public func playlists(completion: Result<[Playlist]> -> Void) {
+        let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier)/playlists.json")
+        let parameters = ["client_id": Soundcloud.clientIdentifier!]
+
+        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
+            let playlists = $0.map { return Playlist(JSON: $0) }
+            if let playlists = playlists {
+                return .Success(Box(compact(playlists)))
+            }
+            return .Failure(GenericError)
+        }, completion: completion)
+        request.start()
+    }
 }
