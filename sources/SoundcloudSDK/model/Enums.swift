@@ -8,15 +8,9 @@
 
 import Foundation
 
-/*public enum SharingAccess: String {
+public enum SharingAccess: String {
     case Public = "public"
     case Private = "private"
-}
-
-public enum EmbeddablePermission: String {
-    case Me = "me"
-    case Everyone = "all"
-    case None = "none"
 }
 
 public enum PlaylistType: String {
@@ -30,4 +24,3 @@ public enum PlaylistType: String {
     case SamplePack = "sample pack"
     case Other = "other"
 }
-*/

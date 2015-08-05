@@ -7,85 +7,128 @@
 //
 
 import Foundation
-/*
+
 // MARK: - Playlist's definition
 ////////////////////////////////////////////////////////////////////////////
 
 public struct Playlist {
+    internal init(identifier: Int, createdAt: NSDate, createdBy: User, duration: NSTimeInterval,
+        streamable: Bool, downloadable: Bool, permalinkURL: NSURL?, purchaseURL: NSURL?,
+        releaseYear: Int?, releaseMonth: Int?, releaseDay: Int?, releaseNumber: String?,
+        description: String?, genre: String?, type: PlaylistType?, title: String, artworkURL: ImageURLs,
+        tracks: [Track], ean: String?, sharingAccess: SharingAccess, labelIdentifier: Int?,
+        labelName: String?, license: String?) {
+            self.identifier = identifier
+
+            self.createdAt = createdAt
+            self.createdBy = createdBy
+
+            self.duration = duration
+
+            self.streamable = streamable
+            self.downloadable = downloadable
+
+            self.permalinkURL = permalinkURL
+            self.purchaseURL = purchaseURL
+
+            self.releaseYear = releaseYear
+            self.releaseMonth = releaseMonth
+            self.releaseDay = releaseDay
+            self.releaseNumber = releaseNumber
+
+            self.description = description
+            self.genre = genre
+            self.type = type
+            self.title = title
+            self.artworkURL = artworkURL
+
+            self.tracks = tracks
+
+            self.ean = ean
+            self.sharingAccess = sharingAccess
+            self.labelIdentifier = labelIdentifier
+            self.labelName = labelName
+            self.license = license
+    }
+
     ///Playlist's identifier
     public let identifier: Int
 
-    ///API resource URL
-    public let URL: NSURL
-
-    ///URL to the SoundCloud.com page
-    public let permalinkURL: NSURL
 
     ///Date of creation
-    public let creationDate: NSDate
+    public let createdAt: NSDate
+
+    ///Mini user representation of the owner
+    public let createdBy: User
+
 
     ///Duration
     public let duration: NSTimeInterval
 
-    ///public/private sharing
-    public let sharingAccess: SharingAccess
-
-    ///Mini user representation of the owner
-    public let user: User
-
-    ///Tracks
-    public let tracks: [Track]
-
-    ///Permalink of the resource
-    public let permalink: String
 
     ///Streamable via API (This will aggregate the playlists tracks streamable attribute. Its value will be nil if not all tracks have the same streamable value.)
-    public let streamable: Bool?
+    public let streamable: Bool
 
     ///Downloadable (This will aggregate the playlists tracks downloadable attribute. Its value will be nil if not all tracks have the same downloadable value.)
-    public let downloadable: Bool?
+    public let downloadable: Bool
 
-    ///Who can embed this track or playlist
-    public let embeddableBy: EmbeddablePermission
+
+    ///URL to the SoundCloud.com page
+    public let permalinkURL: NSURL?
 
     ///External purchase link
     public let purchaseURL: NSURL?
 
-    ///Identifier of the label user
-    public let labelIdentifier: Int
 
-    ///EAN identifier for the playlist
-    public let ean: String
+    ///Release year
+    public let releaseYear: Int?
 
-    ///HTML description
-    public let description: String
+    ///Release month
+    public let releaseMonth: Int?
 
-    ///Genre
-    public let genre: String
+    ///Release day
+    public let releaseDay: Int?
 
     ///Release number
-    public let releaseNumber: String
+    public let releaseNumber: String?
 
-    ///Purchase title
-    public let purchaseTitle: String?
 
-    ///Label name
-    public let labelName: String
+
+    ///HTML description
+    public let description: String?
+
+    ///Genre
+    public let genre: String?
+
+    ///Playlist type
+    public let type: PlaylistType?
 
     ///Track title
     public let title: String
 
-    ///Release date
-    public let releaseDate: NSDate
-
-    ///Creative common license
-    public let license: String
 
     ///URL to a JPEG image
-    public let artworkURL: NSURL
+    public let artworkURL: ImageURLs
 
-    ///Playlist type
-    public let type: PlaylistType
+
+    ///Tracks
+    public let tracks: [Track]
+
+
+    ///EAN identifier for the playlist
+    public let ean: String?
+
+    ///public/private sharing
+    public let sharingAccess: SharingAccess
+
+    ///Identifier of the label user
+    public let labelIdentifier: Int?
+
+    ///Label name
+    public let labelName: String?
+
+    ///Creative common license
+    public let license: String?
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -109,4 +152,43 @@ public func ==(lhs: Playlist, rhs: Playlist) -> Bool {
 }
 
 ////////////////////////////////////////////////////////////////////////////
-*/
+
+
+// MARK: Parsing
+////////////////////////////////////////////////////////////////////////////
+
+internal extension Playlist {
+    init?(JSON: JSONObject) {
+        let tracks = JSON["tracks"].map { return Track(JSON: $0) }
+        if let identifier = JSON["id"].intValue, user = User(JSON: JSON["user"]), tracks = tracks {
+            self.init(identifier: identifier,
+                createdAt: JSON["created_at"].dateValue("yyyy/MM/dd HH:mm:ss VVVV") ?? NSDate(),
+                createdBy: user,
+                duration: JSON["duration"].doubleValue ?? 0,
+                streamable: JSON["streamable"].boolValue ?? false,
+                downloadable: JSON["downloadable"].boolValue ?? false,
+                permalinkURL: JSON["permalink_url"].URLValue,
+                purchaseURL: JSON["purchase_url"].URLValue,
+                releaseYear: JSON["release_year"].intValue,
+                releaseMonth: JSON["release_month"].intValue,
+                releaseDay: JSON["release_day"].intValue,
+                releaseNumber: JSON["release"].stringValue,
+                description: JSON["description"].stringValue,
+                genre: JSON["genre"].stringValue,
+                type: PlaylistType(rawValue: JSON["playlist_type"].stringValue ?? ""),
+                title: JSON["title"].stringValue ?? "",
+                artworkURL: ImageURLs(baseURL: JSON["artwork_url"].URLValue),
+                tracks: compact(tracks),
+                ean: JSON["ean"].stringValue,
+                sharingAccess: SharingAccess(rawValue: JSON["sharing"].stringValue ?? "") ?? .Private,
+                labelIdentifier: JSON["label_id"].intValue,
+                labelName: JSON["label_name"].stringValue,
+                license: JSON["license"].stringValue)
+        }
+        else {
+            return nil
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////

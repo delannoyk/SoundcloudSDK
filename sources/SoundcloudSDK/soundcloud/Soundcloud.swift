@@ -310,8 +310,8 @@ public class Soundcloud: NSObject {
     // MARK: Requests
     ////////////////////////////////////////////////////////////////////////////
 
-    /// A resolve response can either be a/some User(s) or a/some Track(s).
-    public typealias ResolveResponse = (users: [User]?, tracks: [Track]?)
+    /// A resolve response can either be a/some User(s) or a/some Track(s) or a Playlist.
+    public typealias ResolveResponse = (users: [User]?, tracks: [Track]?, playlist: Playlist?)
 
     /**
     Resolve allows you to lookup and access API resources when you only know the SoundCloud.com URL.
@@ -328,21 +328,25 @@ public class Soundcloud: NSObject {
 
             let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
                 if let user = User(JSON: $0) {
-                    return .Success(Box(ResolveResponse(users: [user], tracks: nil)))
+                    return .Success(Box(ResolveResponse(users: [user], tracks: nil, playlist: nil)))
+                }
+
+                if let playlist = Playlist(JSON: $0) {
+                    return .Success(Box(ResolveResponse(users: nil, tracks: nil, playlist: playlist)))
                 }
 
                 if let track = Track(JSON: $0) {
-                    return .Success(Box(ResolveResponse(users: nil, tracks: [track])))
+                    return .Success(Box(ResolveResponse(users: nil, tracks: [track], playlist: nil)))
                 }
 
-                let users = compact($0.map { return User(JSON: $0) })
-                if users.count > 0 {
-                    return .Success(Box(ResolveResponse(users: users, tracks: nil)))
+                let users = $0.map { return User(JSON: $0) }
+                if let users = users where users.count > 0 {
+                    return .Success(Box(ResolveResponse(users: compact(users), tracks: nil, playlist: nil)))
                 }
 
-                let tracks = compact($0.map { return Track(JSON: $0) })
-                if tracks.count > 0 {
-                    return .Success(Box(ResolveResponse(users: nil, tracks: tracks)))
+                let tracks = $0.map { return Track(JSON: $0) }
+                if let tracks = tracks where tracks.count > 0 {
+                    return .Success(Box(ResolveResponse(users: nil, tracks: compact(tracks), playlist: nil)))
                 }
                 
                 return .Failure(GenericError)
