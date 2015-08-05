@@ -155,7 +155,8 @@ Right now Playlists are not available.
 
 ## Next steps
 
-* Support Playlist
+* Support Playlist - In progress
+* Add support for pagination - In progress
 * Add unit tests
 * Better error support
 * Analyse if it's necessary to ease up things to play a file (Integrate an audio player/a dependency ?)
