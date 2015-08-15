@@ -77,9 +77,7 @@ internal extension JSONObject {
 
     internal func dateValue(dateFormat: String) -> NSDate? {
         let date: NSDate?? = stringValue.map {
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = dateFormat
-            return dateFormatter.dateFromString($0)
+            return NSDateFormatter.dateFormatterWithFormat(dateFormat).dateFromString($0)
         }
         return date ?? nil
     }
@@ -90,6 +88,27 @@ internal extension JSONObject {
             return compact(values)
         }
         return nil
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////
+
+
+// MARK: - DateFormatter
+////////////////////////////////////////////////////////////////////////////
+
+private extension NSDateFormatter {
+    private static var dateFormatters = [String: NSDateFormatter]()
+
+    private static func dateFormatterWithFormat(format: String) -> NSDateFormatter {
+        if let dateFormatter = dateFormatters[format] {
+            return dateFormatter
+        }
+
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatters[format] = dateFormatter
+        return dateFormatter
     }
 }
 
