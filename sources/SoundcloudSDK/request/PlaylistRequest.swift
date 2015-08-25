@@ -9,7 +9,7 @@
 import UIKit
 
 public extension Playlist {
-    internal static let BaseURL = NSURL(string: "https://api.soundcloud.com/playlist")!
+    internal static let BaseURL = NSURL(string: "https://api.soundcloud.com/playlists")!
 
     /**
     Load playlist with a specific identifier
@@ -19,12 +19,12 @@ public extension Playlist {
     :param: completion  The closure that will be called when playlist is loaded or upon error
     */
     public static func playlist(identifier: Int, secretToken: String? = nil, completion: Result<Playlist> -> Void) {
-        var URL = BaseURL.URLByAppendingPathComponent("\(identifier)")
-        if let secretToken = secretToken {
-            URL = URL.URLByAppendingPathComponent(secretToken)
-        }
+        let URL = BaseURL.URLByAppendingPathComponent("\(identifier)")
 
-        let parameters = ["client_id": Soundcloud.clientIdentifier!]
+        var parameters = ["client_id": Soundcloud.clientIdentifier!]
+        if let secretToken = secretToken {
+            parameters["secret_token"] = secretToken
+        }
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
             if let playlist = Playlist(JSON: $0) {
