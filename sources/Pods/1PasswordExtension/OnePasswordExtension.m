@@ -8,7 +8,7 @@
 #import "OnePasswordExtension.h"
 
 // Version
-#define VERSION_NUMBER @(120)
+#define VERSION_NUMBER @(150)
 static NSString *const AppExtensionVersionNumberKey = @"version_number";
 
 // Available App Extension Actions
@@ -37,14 +37,6 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 	return __sharedExtension;
 }
 
-- (BOOL)isSystemAppExtensionAPIAvailable {
-#ifdef __IPHONE_8_0
-	return NSClassFromString(@"NSExtensionItem") != nil;
-#else
-	return NO;
-#endif
-}
-
 - (BOOL)isAppExtensionAvailable {
 	if ([self isSystemAppExtensionAPIAvailable]) {
 		return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"org-appextension-feature-password-management://"]];
@@ -54,11 +46,12 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 }
 
 #pragma mark - Native app Login
-- (void)findLoginForURLString:(NSString *)URLString forViewController:(UIViewController *)viewController sender:(id)sender completion:(void (^)(NSDictionary *loginDictionary, NSError *error))completion {
+
+- (void)findLoginForURLString:(nonnull NSString *)URLString forViewController:(nonnull UIViewController *)viewController sender:(nullable id)sender completion:(nullable void (^)(NSDictionary * __nullable loginDictionary, NSError * __nullable error))completion {
 	NSAssert(URLString != nil, @"URLString must not be nil");
 	NSAssert(viewController != nil, @"viewController must not be nil");
 
-	if (![self isSystemAppExtensionAPIAvailable]) {
+	if (NO == [self isSystemAppExtensionAPIAvailable]) {
 		NSLog(@"Failed to findLoginForURLString, system API is not available");
 		if (completion) {
 			completion(nil, [OnePasswordExtension systemAppExtensionAPINotAvailableError]);
@@ -89,9 +82,9 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 			return;
 		}
 
-		[self processExtensionItem:returnedItems[0] completion:^(NSDictionary *loginDictionary, NSError *error) {
+		[self processExtensionItem:returnedItems.firstObject completion:^(NSDictionary *itemDictionary, NSError *error) {
 			if (completion) {
-				completion(loginDictionary, error);
+				completion(itemDictionary, error);
 			}
 		}];
 	};
@@ -102,12 +95,11 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 
 #pragma mark - New User Registration
 
-- (void)storeLoginForURLString:(NSString *)URLString loginDetails:(NSDictionary *)loginDetailsDict passwordGenerationOptions:(NSDictionary *)passwordGenerationOptions forViewController:(UIViewController *)viewController sender:(id)sender completion:(void (^)(NSDictionary *, NSError *))completion {
+- (void)storeLoginForURLString:(nonnull NSString *)URLString loginDetails:(nullable NSDictionary *)loginDetailsDictionary passwordGenerationOptions:(nullable NSDictionary *)passwordGenerationOptions forViewController:(nonnull UIViewController *)viewController sender:(nullable id)sender completion:(nullable void (^)(NSDictionary * __nullable loginDictionary, NSError * __nullable error))completion {
 	NSAssert(URLString != nil, @"URLString must not be nil");
-	NSAssert(loginDetailsDict != nil, @"loginDetailsDict must not be nil");
 	NSAssert(viewController != nil, @"viewController must not be nil");
 
-	if (![self isSystemAppExtensionAPIAvailable]) {
+	if (NO == [self isSystemAppExtensionAPIAvailable]) {
 		NSLog(@"Failed to storeLoginForURLString, system API is not available");
 		if (completion) {
 			completion(nil, [OnePasswordExtension systemAppExtensionAPINotAvailableError]);
@@ -121,9 +113,9 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 	NSMutableDictionary *newLoginAttributesDict = [NSMutableDictionary new];
 	newLoginAttributesDict[AppExtensionVersionNumberKey] = VERSION_NUMBER;
 	newLoginAttributesDict[AppExtensionURLStringKey] = URLString;
-	[newLoginAttributesDict addEntriesFromDictionary:loginDetailsDict];
+	[newLoginAttributesDict addEntriesFromDictionary:loginDetailsDictionary];
 	if (passwordGenerationOptions.count > 0) {
-		newLoginAttributesDict[AppExtensionPasswordGereratorOptionsKey] = passwordGenerationOptions;
+		newLoginAttributesDict[AppExtensionPasswordGeneratorOptionsKey] = passwordGenerationOptions;
 	}
 
 	UIActivityViewController *activityViewController = [self activityViewControllerForItem:newLoginAttributesDict viewController:viewController sender:sender typeIdentifier:kUTTypeAppExtensionSaveLoginAction];
@@ -145,9 +137,9 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 			return;
 		}
 
-		[self processExtensionItem:returnedItems[0] completion:^(NSDictionary *loginDictionary, NSError *error) {
+		[self processExtensionItem:returnedItems.firstObject completion:^(NSDictionary *itemDictionary, NSError *error) {
 			if (completion) {
-				completion(loginDictionary, error);
+				completion(itemDictionary, error);
 			}
 		}];
 	};
@@ -158,11 +150,11 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 
 #pragma mark - Change Password
 
-- (void)changePasswordForLoginForURLString:(NSString *)URLString loginDetails:(NSDictionary *)loginDetailsDict passwordGenerationOptions:(NSDictionary *)passwordGenerationOptions forViewController:(UIViewController *)viewController sender:(id)sender completion:(void (^)(NSDictionary *loginDict, NSError *error))completion {
+- (void)changePasswordForLoginForURLString:(nonnull NSString *)URLString loginDetails:(nullable NSDictionary *)loginDetailsDict passwordGenerationOptions:(nullable NSDictionary *)passwordGenerationOptions forViewController:(UIViewController *)viewController sender:(nullable id)sender completion:(nullable void (^)(NSDictionary * __nullable loginDictionary, NSError * __nullable error))completion {
 	NSAssert(URLString != nil, @"URLString must not be nil");
 	NSAssert(viewController != nil, @"viewController must not be nil");
 
-	if (![self isSystemAppExtensionAPIAvailable]) {
+	if (NO == [self isSystemAppExtensionAPIAvailable]) {
 		NSLog(@"Failed to changePasswordForLoginWithUsername, system API is not available");
 		if (completion) {
 			completion(nil, [OnePasswordExtension systemAppExtensionAPINotAvailableError]);
@@ -177,7 +169,7 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 	item[AppExtensionURLStringKey] = URLString;
 	[item addEntriesFromDictionary:loginDetailsDict];
 	if (passwordGenerationOptions.count > 0) {
-		item[AppExtensionPasswordGereratorOptionsKey] = passwordGenerationOptions;
+		item[AppExtensionPasswordGeneratorOptionsKey] = passwordGenerationOptions;
 	}
 
 	UIActivityViewController *activityViewController = [self activityViewControllerForItem:item viewController:viewController sender:sender typeIdentifier:kUTTypeAppExtensionChangePasswordAction];
@@ -200,9 +192,9 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 			return;
 		}
 
-		[self processExtensionItem:returnedItems[0] completion:^(NSDictionary *loginDictionary, NSError *error) {
+		[self processExtensionItem:returnedItems.firstObject completion:^(NSDictionary *itemDictionary, NSError *error) {
 			if (completion) {
-				completion(loginDictionary, error);
+				completion(itemDictionary, error);
 			}
 		}];
 	};
@@ -211,44 +203,43 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 #endif
 }
 
-#pragma mark - Web View Login Support
+#pragma mark - Web View filling Support
 
-- (void)fillLoginIntoWebView:(id)webView forViewController:(UIViewController *)viewController sender:(id)sender completion:(void (^)(BOOL success, NSError *error))completion {
+- (void)fillItemIntoWebView:(nonnull id)webView forViewController:(nonnull UIViewController *)viewController sender:(nullable id)sender showOnlyLogins:(BOOL)yesOrNo completion:(nullable void (^)(BOOL success, NSError * __nullable error))completion {
 	NSAssert(webView != nil, @"webView must not be nil");
 	NSAssert(viewController != nil, @"viewController must not be nil");
+	NSAssert([webView isKindOfClass:[UIWebView class]] || [webView isKindOfClass:[WKWebView class]], @"webView must be an instance of WKWebView or UIWebView.");
 
 #ifdef __IPHONE_8_0
 	if ([webView isKindOfClass:[UIWebView class]]) {
-		[self fillLoginIntoUIWebView:webView webViewController:viewController sender:(id)sender completion:^(BOOL success, NSError *error) {
+		[self fillItemIntoUIWebView:webView webViewController:viewController sender:(id)sender showOnlyLogins:yesOrNo completion:^(BOOL success, NSError *error) {
 			if (completion) {
 				completion(success, error);
 			}
 		}];
 	}
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_8_0
+	#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_8_0 || ONE_PASSWORD_EXTENSION_ENABLE_WK_WEB_VIEW
 	else if ([webView isKindOfClass:[WKWebView class]]) {
-		[self fillLoginIntoWKWebView:webView forViewController:viewController sender:(id)sender completion:^(BOOL success, NSError *error) {
+		[self fillItemIntoWKWebView:webView forViewController:viewController sender:(id)sender showOnlyLogins:yesOrNo completion:^(BOOL success, NSError *error) {
 			if (completion) {
 				completion(success, error);
 			}
 		}];
 	}
-#endif
-	else {
-		[NSException raise:@"Invalid argument: web view must be an instance of WKWebView or UIWebView." format:@""];
-	}
+	#endif
 #endif
 }
 
-#pragma mark - Browser filling Support
+#pragma mark - Support for custom UIActivityViewControllers
 
-- (BOOL)isOnePasswordExtensionActivityType:(NSString *)activityType {
+- (BOOL)isOnePasswordExtensionActivityType:(nullable NSString *)activityType {
 	return [@"com.agilebits.onepassword-ios.extension" isEqualToString:activityType] || [@"com.agilebits.beta.onepassword-ios.extension" isEqualToString:activityType];
 }
 
-- (void)createExtensionItemForWebView:(id)webView completion:(void (^)(NSExtensionItem *extensionItem, NSError *error))completion {
+- (void)createExtensionItemForWebView:(nonnull id)webView completion:(void (^)(NSExtensionItem * __nullable extensionItem, NSError * __nullable error))completion {
 	NSAssert(webView != nil, @"webView must not be nil");
-
+	NSAssert([webView isKindOfClass:[UIWebView class]] || [webView isKindOfClass:[WKWebView class]], @"webView must be an instance of WKWebView or UIWebView.");
+	
 #ifdef __IPHONE_8_0
 	if ([webView isKindOfClass:[UIWebView class]]) {
 		UIWebView *uiWebView = (UIWebView *)webView;
@@ -256,11 +247,11 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 
 		[self createExtensionItemForURLString:uiWebView.request.URL.absoluteString webPageDetails:collectedPageDetails completion:completion];
 	}
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_8_0
+	#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_8_0 || ONE_PASSWORD_EXTENSION_ENABLE_WK_WEB_VIEW
 	else if ([webView isKindOfClass:[WKWebView class]]) {
 		WKWebView *wkWebView = (WKWebView *)webView;
 		[wkWebView evaluateJavaScript:OPWebViewCollectFieldsScript completionHandler:^(NSString *result, NSError *evaluateError) {
-			if (!result) {
+			if (result == nil) {
 				NSLog(@"1Password Extension failed to collect web page fields: %@", evaluateError);
 				NSError *failedToCollectFieldsError = [OnePasswordExtension failedToCollectFieldsErrorWithUnderlyingError:evaluateError];
 				if (completion) {
@@ -280,14 +271,13 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 			[self createExtensionItemForURLString:wkWebView.URL.absoluteString webPageDetails:result completion:completion];
 		}];
 	}
-#endif
-	else {
-		[NSException raise:@"Invalid argument: web view must be an instance of WKWebView or UIWebView." format:@""];
-	}
+	#endif
 #endif
 }
 
-- (void)fillReturnedItems:(NSArray *)returnedItems intoWebView:(id)webView completion:(void (^)(BOOL success, NSError *error))completion {
+- (void)fillReturnedItems:(nullable NSArray *)returnedItems intoWebView:(nonnull id)webView completion:(nullable void (^)(BOOL success, NSError * __nullable error))completion {
+	NSAssert(webView != nil, @"webView must not be nil");
+
 	if (returnedItems.count == 0) {
 		NSError *error = [OnePasswordExtension extensionCancelledByUserError];
 		if (completion) {
@@ -297,8 +287,8 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 		return;
 	}
 
-	[self processExtensionItem:returnedItems[0] completion:^(NSDictionary *loginDictionary, NSError *error) {
-		if (!loginDictionary) {
+	[self processExtensionItem:returnedItems.firstObject completion:^(NSDictionary *itemDictionary, NSError *error) {
+		if (itemDictionary.count == 0) {
 			if (completion) {
 				completion(NO, error);
 			}
@@ -306,7 +296,7 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 			return;
 		}
 
-		NSString *fillScript = loginDictionary[AppExtensionWebViewPageFillScript];
+		NSString *fillScript = itemDictionary[AppExtensionWebViewPageFillScript];
 		[self executeFillScript:fillScript inWebView:webView completion:^(BOOL success, NSError *executeFillScriptError) {
 			if (completion) {
 				completion(success, executeFillScriptError);
@@ -317,11 +307,22 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 
 #pragma mark - Private methods
 
-- (void)findLoginIn1PasswordWithURLString:(NSString *)URLString collectedPageDetails:(NSString *)collectedPageDetails forWebViewController:(UIViewController *)forViewController sender:(id)sender withWebView:(id)webView completion:(void (^)(BOOL success, NSError *error))completion {
+- (BOOL)isSystemAppExtensionAPIAvailable {
+#ifdef __IPHONE_8_0
+	return [NSExtensionItem class] != nil;
+#else
+	return NO;
+#endif
+}
+
+- (void)findLoginIn1PasswordWithURLString:(nonnull NSString *)URLString collectedPageDetails:(nullable NSString *)collectedPageDetails forWebViewController:(nonnull UIViewController *)forViewController sender:(nullable id)sender withWebView:(nonnull id)webView showOnlyLogins:(BOOL)yesOrNo completion:(void (^)(BOOL success, NSError * __nullable error))completion {
 	if ([URLString length] == 0) {
 		NSError *URLStringError = [OnePasswordExtension failedToObtainURLStringFromWebViewError];
 		NSLog(@"Failed to findLoginIn1PasswordWithURLString: %@", URLStringError);
-		completion(NO, URLStringError);
+		if (completion) {
+			completion(NO, URLStringError);
+		}
+		return;
 	}
 
 	NSError *jsonError = nil;
@@ -330,12 +331,16 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 
 	if (collectedPageDetailsDictionary.count == 0) {
 		NSLog(@"Failed to parse JSON collected page details: %@", jsonError);
-		completion(NO, jsonError);
+		if (completion) {
+			completion(NO, jsonError);
+		}
+		return;
 	}
 
 	NSDictionary *item = @{ AppExtensionVersionNumberKey : VERSION_NUMBER, AppExtensionURLStringKey : URLString, AppExtensionWebViewPageDetails : collectedPageDetailsDictionary };
 
-	UIActivityViewController *activityViewController = [self activityViewControllerForItem:item viewController:forViewController sender:sender typeIdentifier:kUTTypeAppExtensionFillWebViewAction];
+	NSString *typeIdentifier = yesOrNo ? kUTTypeAppExtensionFillWebViewAction  : kUTTypeAppExtensionFillBrowserAction;
+	UIActivityViewController *activityViewController = [self activityViewControllerForItem:item viewController:forViewController sender:sender typeIdentifier:typeIdentifier];
 	activityViewController.completionWithItemsHandler = ^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
 		if (returnedItems.count == 0) {
 			NSError *error = nil;
@@ -354,8 +359,8 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 			return;
 		}
 
-		[self processExtensionItem:returnedItems[0] completion:^(NSDictionary *loginDictionary, NSError *processExtensionItemError) {
-			if (!loginDictionary) {
+		[self processExtensionItem:returnedItems.firstObject completion:^(NSDictionary *itemDictionary, NSError *processExtensionItemError) {
+			if (itemDictionary.count == 0) {
 				if (completion) {
 					completion(NO, processExtensionItemError);
 				}
@@ -363,7 +368,7 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 				return;
 			}
 
-			NSString *fillScript = loginDictionary[AppExtensionWebViewPageFillScript];
+			NSString *fillScript = itemDictionary[AppExtensionWebViewPageFillScript];
 			[self executeFillScript:fillScript inWebView:webView completion:^(BOOL success, NSError *executeFillScriptError) {
 				if (completion) {
 					completion(success, executeFillScriptError);
@@ -375,10 +380,10 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 	[forViewController presentViewController:activityViewController animated:YES completion:nil];
 }
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_8_0
-- (void)fillLoginIntoWKWebView:(WKWebView *)webView forViewController:(UIViewController *)viewController sender:(id)sender completion:(void (^)(BOOL success, NSError *error))completion {
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_8_0 || ONE_PASSWORD_EXTENSION_ENABLE_WK_WEB_VIEW
+- (void)fillItemIntoWKWebView:(nonnull WKWebView *)webView forViewController:(nonnull UIViewController *)viewController sender:(nullable id)sender showOnlyLogins:(BOOL)yesOrNo completion:(void (^)(BOOL success, NSError * __nullable error))completion {
 	[webView evaluateJavaScript:OPWebViewCollectFieldsScript completionHandler:^(NSString *result, NSError *error) {
-		if (!result) {
+		if (result == nil) {
 			NSLog(@"1Password Extension failed to collect web page fields: %@", error);
 			if (completion) {
 				completion(NO,[OnePasswordExtension failedToCollectFieldsErrorWithUnderlyingError:error]);
@@ -387,7 +392,7 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 			return;
 		}
 
-		[self findLoginIn1PasswordWithURLString:webView.URL.absoluteString collectedPageDetails:result forWebViewController:viewController sender:sender withWebView:webView completion:^(BOOL success, NSError *findLoginError) {
+		[self findLoginIn1PasswordWithURLString:webView.URL.absoluteString collectedPageDetails:result forWebViewController:viewController sender:sender withWebView:webView showOnlyLogins:yesOrNo completion:^(BOOL success, NSError *findLoginError) {
 			if (completion) {
 				completion(success, findLoginError);
 			}
@@ -396,20 +401,21 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 }
 #endif
 
-- (void)fillLoginIntoUIWebView:(UIWebView *)webView webViewController:(UIViewController *)viewController sender:(id)sender completion:(void (^)(BOOL success, NSError *error))completion {
+- (void)fillItemIntoUIWebView:(nonnull UIWebView *)webView webViewController:(nonnull UIViewController *)viewController sender:(nullable id)sender showOnlyLogins:(BOOL)yesOrNo completion:(void (^)(BOOL success, NSError * __nullable error))completion {
 	NSString *collectedPageDetails = [webView stringByEvaluatingJavaScriptFromString:OPWebViewCollectFieldsScript];
-	[self findLoginIn1PasswordWithURLString:webView.request.URL.absoluteString collectedPageDetails:collectedPageDetails forWebViewController:viewController sender:sender withWebView:webView completion:^(BOOL success, NSError *error) {
+	[self findLoginIn1PasswordWithURLString:webView.request.URL.absoluteString collectedPageDetails:collectedPageDetails forWebViewController:viewController sender:sender withWebView:webView showOnlyLogins:yesOrNo completion:^(BOOL success, NSError *error) {
 		if (completion) {
 			completion(success, error);
 		}
 	}];
 }
 
-- (void)executeFillScript:(NSString *)fillScript inWebView:(id)webView completion:(void (^)(BOOL success, NSError *error))completion {
-	if (!fillScript) {
+- (void)executeFillScript:(NSString * __nullable)fillScript inWebView:(nonnull id)webView completion:(void (^)(BOOL success, NSError * __nullable error))completion {
+
+	if (fillScript == nil) {
 		NSLog(@"Failed to executeFillScript, fillScript is missing");
 		if (completion) {
-			completion(NO, [OnePasswordExtension failedToFillFieldsErrorWithLocalizedErrorMessage:NSLocalizedString(@"Failed to fill web page because script is missing", @"1Password Extension Error Message") underlyingError:nil]);
+			completion(NO, [OnePasswordExtension failedToFillFieldsErrorWithLocalizedErrorMessage:NSLocalizedStringFromTable(@"Failed to fill web page because script is missing", @"OnePasswordExtension", @"1Password Extension Error Message") underlyingError:nil]);
 		}
 
 		return;
@@ -418,6 +424,7 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 	NSMutableString *scriptSource = [OPWebViewFillScript mutableCopy];
 	[scriptSource appendFormat:@"(document, %@);", fillScript];
 
+#ifdef __IPHONE_8_0
 	if ([webView isKindOfClass:[UIWebView class]]) {
 		NSString *result = [((UIWebView *)webView) stringByEvaluatingJavaScriptFromString:scriptSource];
 		BOOL success = (result != nil);
@@ -425,41 +432,36 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 
 		if (!success) {
 			NSLog(@"Cannot executeFillScript, stringByEvaluatingJavaScriptFromString failed");
-			error = [OnePasswordExtension failedToFillFieldsErrorWithLocalizedErrorMessage:NSLocalizedString(@"Failed to fill web page because script could not be evaluated", @"1Password Extension Error Message") underlyingError:nil];
+			error = [OnePasswordExtension failedToFillFieldsErrorWithLocalizedErrorMessage:NSLocalizedStringFromTable(@"Failed to fill web page because script could not be evaluated", @"OnePasswordExtension", @"1Password Extension Error Message") underlyingError:nil];
 		}
 
 		if (completion) {
 			completion(success, error);
 		}
-
-		return;
 	}
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_8_0
-	if ([webView isKindOfClass:[WKWebView class]]) {
+	
+	#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_8_0 || ONE_PASSWORD_EXTENSION_ENABLE_WK_WEB_VIEW
+	else if ([webView isKindOfClass:[WKWebView class]]) {
 		[((WKWebView *)webView) evaluateJavaScript:scriptSource completionHandler:^(NSString *result, NSError *evaluationError) {
 			BOOL success = (result != nil);
 			NSError *error = nil;
 
 			if (!success) {
 				NSLog(@"Cannot executeFillScript, evaluateJavaScript failed: %@", evaluationError);
-				error = [OnePasswordExtension failedToFillFieldsErrorWithLocalizedErrorMessage:NSLocalizedString(@"Failed to fill web page because script could not be evaluated", @"1Password Extension Error Message") underlyingError:error];
+				error = [OnePasswordExtension failedToFillFieldsErrorWithLocalizedErrorMessage:NSLocalizedStringFromTable(@"Failed to fill web page because script could not be evaluated", @"OnePasswordExtension", @"1Password Extension Error Message") underlyingError:error];
 			}
 
 			if (completion) {
 				completion(success, error);
 			}
 		}];
-
-		return;
 	}
+	#endif
 #endif
-
-	[NSException raise:@"Invalid argument: web view must be an instance of WKWebView or UIWebView." format:@""];
 }
 
 #ifdef __IPHONE_8_0
-- (void)processExtensionItem:(NSExtensionItem *)extensionItem completion:(void (^)(NSDictionary *loginDictionary, NSError *error))completion {
+- (void)processExtensionItem:(nullable NSExtensionItem *)extensionItem completion:(void (^)(NSDictionary *itemDictionary, NSError * __nullable error))completion {
 	if (extensionItem.attachments.count == 0) {
 		NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: @"Unexpected data returned by App Extension: extension item had no attachments." };
 		NSError *error = [[NSError alloc] initWithDomain:AppExtensionErrorDomain code:AppExtensionErrorCodeUnexpectedData userInfo:userInfo];
@@ -469,8 +471,8 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 		return;
 	}
 
-	NSItemProvider *itemProvider = extensionItem.attachments[0];
-	if (![itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePropertyList]) {
+	NSItemProvider *itemProvider = extensionItem.attachments.firstObject;
+	if (NO == [itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePropertyList]) {
 		NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: @"Unexpected data returned by App Extension: extension item attachment does not conform to kUTTypePropertyList type identifier" };
 		NSError *error = [[NSError alloc] initWithDomain:AppExtensionErrorDomain code:AppExtensionErrorCodeUnexpectedData userInfo:userInfo];
 		if (completion) {
@@ -480,29 +482,29 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 	}
 
 
-	[itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypePropertyList options:nil completionHandler:^(NSDictionary *loginDictionary, NSError *itemProviderError)
-	 {
+	[itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypePropertyList options:nil completionHandler:^(NSDictionary *itemDictionary, NSError *itemProviderError) {
 		 NSError *error = nil;
-		 if (!loginDictionary) {
+		 if (itemDictionary.count == 0) {
 			 NSLog(@"Failed to loadItemForTypeIdentifier: %@", itemProviderError);
 			 error = [OnePasswordExtension failedToLoadItemProviderDataErrorWithUnderlyingError:itemProviderError];
 		 }
 
 		 if (completion) {
 			 if ([NSThread isMainThread]) {
-				 completion(loginDictionary, error);
+				 completion(itemDictionary, error);
 			 }
 			 else {
 				 dispatch_async(dispatch_get_main_queue(), ^{
-					 completion(loginDictionary, error);
+					 completion(itemDictionary, error);
 				 });
 			 }
 		 }
 	 }];
 }
 
-- (UIActivityViewController *)activityViewControllerForItem:(NSDictionary *)item viewController:(UIViewController*)viewController sender:(id)sender typeIdentifier:(NSString *)typeIdentifier {
+- (UIActivityViewController *)activityViewControllerForItem:(nonnull NSDictionary *)item viewController:(nonnull UIViewController*)viewController sender:(nullable id)sender typeIdentifier:(nonnull NSString *)typeIdentifier {
 #ifdef __IPHONE_8_0
+	NSAssert(NO == (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && sender == nil), @"sender must not be nil on iPad.");
 
 	NSItemProvider *itemProvider = [[NSItemProvider alloc] initWithItem:item typeIdentifier:typeIdentifier];
 
@@ -530,14 +532,17 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 
 #endif
 
-- (void)createExtensionItemForURLString:(NSString *)URLString webPageDetails:(NSString *)webPageDetails completion:(void (^)(NSExtensionItem *extensionItem, NSError *error))completion {
+- (void)createExtensionItemForURLString:(nonnull NSString *)URLString webPageDetails:(nullable NSString *)webPageDetails completion:(void (^)(NSExtensionItem *extensionItem, NSError * __nullable error))completion {
 	NSError *jsonError = nil;
 	NSData *data = [webPageDetails dataUsingEncoding:NSUTF8StringEncoding];
 	NSDictionary *webPageDetailsDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
 
 	if (webPageDetailsDictionary.count == 0) {
 		NSLog(@"Failed to parse JSON collected page details: %@", jsonError);
-		completion(nil, jsonError);
+		if (completion) {
+			completion(nil, jsonError);
+		}
+		return;
 	}
 
 	NSDictionary *item = @{ AppExtensionVersionNumberKey : VERSION_NUMBER, AppExtensionURLStringKey : URLString, AppExtensionWebViewPageDetails : webPageDetailsDictionary };
@@ -562,19 +567,19 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 #pragma mark - Errors
 
 + (NSError *)systemAppExtensionAPINotAvailableError {
-	NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : NSLocalizedString(@"App Extension API is not available is this version of iOS", @"1Password Extension Error Message") };
+	NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : NSLocalizedStringFromTable(@"App Extension API is not available is this version of iOS", @"OnePasswordExtension", @"1Password Extension Error Message") };
 	return [NSError errorWithDomain:AppExtensionErrorDomain code:AppExtensionErrorCodeAPINotAvailable userInfo:userInfo];
 }
 
 
 + (NSError *)extensionCancelledByUserError {
-	NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : NSLocalizedString(@"1Password Extension was cancelled by the user", @"1Password Extension Error Message") };
+	NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : NSLocalizedStringFromTable(@"1Password Extension was cancelled by the user", @"OnePasswordExtension", @"1Password Extension Error Message") };
 	return [NSError errorWithDomain:AppExtensionErrorDomain code:AppExtensionErrorCodeCancelledByUser userInfo:userInfo];
 }
 
-+ (NSError *)failedToContactExtensionErrorWithActivityError:(NSError *)activityError {
++ (NSError *)failedToContactExtensionErrorWithActivityError:(nullable NSError *)activityError {
 	NSMutableDictionary *userInfo = [NSMutableDictionary new];
-	userInfo[NSLocalizedDescriptionKey] = NSLocalizedString(@"Failed to contact the 1Password Extension", @"1Password Extension Error Message");
+	userInfo[NSLocalizedDescriptionKey] = NSLocalizedStringFromTable(@"Failed to contact the 1Password Extension", @"OnePasswordExtension", @"1Password Extension Error Message");
 	if (activityError) {
 		userInfo[NSUnderlyingErrorKey] = activityError;
 	}
@@ -582,9 +587,9 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 	return [NSError errorWithDomain:AppExtensionErrorDomain code:AppExtensionErrorCodeFailedToContactExtension userInfo:userInfo];
 }
 
-+ (NSError *)failedToCollectFieldsErrorWithUnderlyingError:(NSError *)underlyingError {
++ (NSError *)failedToCollectFieldsErrorWithUnderlyingError:(nullable NSError *)underlyingError {
 	NSMutableDictionary *userInfo = [NSMutableDictionary new];
-	userInfo[NSLocalizedDescriptionKey] = NSLocalizedString(@"Failed to execute script that collects web page information", @"1Password Extension Error Message");
+	userInfo[NSLocalizedDescriptionKey] = NSLocalizedStringFromTable(@"Failed to execute script that collects web page information", @"OnePasswordExtension", @"1Password Extension Error Message");
 	if (underlyingError) {
 		userInfo[NSUnderlyingErrorKey] = underlyingError;
 	}
@@ -592,7 +597,7 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 	return [NSError errorWithDomain:AppExtensionErrorDomain code:AppExtensionErrorCodeCollectFieldsScriptFailed userInfo:userInfo];
 }
 
-+ (NSError *)failedToFillFieldsErrorWithLocalizedErrorMessage:(NSString *)errorMessage underlyingError:(NSError *)underlyingError {
++ (NSError *)failedToFillFieldsErrorWithLocalizedErrorMessage:(nullable NSString *)errorMessage underlyingError:(nullable NSError *)underlyingError {
 	NSMutableDictionary *userInfo = [NSMutableDictionary new];
 	if (errorMessage) {
 		userInfo[NSLocalizedDescriptionKey] = errorMessage;
@@ -604,9 +609,9 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 	return [NSError errorWithDomain:AppExtensionErrorDomain code:AppExtensionErrorCodeFillFieldsScriptFailed userInfo:userInfo];
 }
 
-+ (NSError *)failedToLoadItemProviderDataErrorWithUnderlyingError:(NSError *)underlyingError {
++ (NSError *)failedToLoadItemProviderDataErrorWithUnderlyingError:(nullable NSError *)underlyingError {
 	NSMutableDictionary *userInfo = [NSMutableDictionary new];
-	userInfo[NSLocalizedDescriptionKey] = NSLocalizedString(@"Failed to parse information returned by 1Password Extension", @"1Password Extension Error Message");
+	userInfo[NSLocalizedDescriptionKey] = NSLocalizedStringFromTable(@"Failed to parse information returned by 1Password Extension", @"OnePasswordExtension", @"1Password Extension Error Message");
 	if (underlyingError) {
 		userInfo[NSUnderlyingErrorKey] = underlyingError;
 	}
@@ -615,38 +620,50 @@ static NSString *const AppExtensionWebViewPageDetails = @"pageDetails";
 }
 
 + (NSError *)failedToObtainURLStringFromWebViewError {
-	NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : NSLocalizedString(@"Failed to obtain URL String from web view. The web view must be loaded completely when calling the 1Password Extension", @"1Password Extension Error Message") };
+	NSDictionary *userInfo = @{ NSLocalizedDescriptionKey : NSLocalizedStringFromTable(@"Failed to obtain URL String from web view. The web view must be loaded completely when calling the 1Password Extension", @"OnePasswordExtension", @"1Password Extension Error Message") };
 	return [NSError errorWithDomain:AppExtensionErrorDomain code:AppExtensionErrorCodeFailedToObtainURLStringFromWebView userInfo:userInfo];
 }
 
 #pragma mark - WebView field collection and filling scripts
 
-static NSString *const OPWebViewCollectFieldsScript = @"document.collect=n;document.elementsByOPID={};\
+static NSString *const OPWebViewCollectFieldsScript = @"(function(document, undefined) {document.com_agilebits_onepassword_collect=n;document.elementsByOPID={};\
 function n(d,b){function e(a,f){var c=a[f];if('string'==typeof c)return c;c=a.getAttribute(f);return'string'==typeof c?c:null}function h(a){switch(l(a.type)){case 'checkbox':return a.checked?'✓':'';case 'hidden':a=a.value;if(!a||'number'!=typeof a.length)return'';254<a.length&&(a=a.substr(0,254)+'...SNIPPED');return a;default:return a.value}}function q(a){return a.options?(a=Array.prototype.slice.call(a.options).map(function(a){var c=a.text,c=c?l(c).replace(/\\s/mg,'').replace(/[~`!@$%^&*()\\-_+=:;'\"\\[\\]|\\\\,<.>\\/?]/mg,\
 ''):null;return[c?c:null,a.value]}),{options:a}):null}function s(a){var f;for(a=a.parentElement||a.parentNode;a&&'td'!=l(a.tagName);)a=a.parentElement||a.parentNode;if(!a||void 0===a)return null;f=a.parentElement||a.parentNode;if('tr'!=f.tagName.toLowerCase())return null;f=f.previousElementSibling;if(!f||'tr'!=(f.tagName+'').toLowerCase()||f.cells&&a.cellIndex>=f.cells.length)return null;a=p(f.cells[a.cellIndex]);return a=r(a)}function x(a){var f=d.documentElement,c=a.getBoundingClientRect(),b=f.getBoundingClientRect(),\
-e=c.left-f.clientLeft,f=c.top-f.clientTop;return a.offsetParent?0>e||e>b.width||0>f||f>b.height?t(a):(b=a.ownerDocument.elementFromPoint(e+3,f+3))?'label'===l(b.tagName)?b===y(a):b.tagName===a.tagName:!1:!1}function t(a){for(var f;a!==d&&a;a=a.parentNode)if(f=u.getComputedStyle?u.getComputedStyle(a,null):a.style,'none'===f.display||'hidden'==f.visibility)return!1;return a===d}function y(a){var f;if(a.id&&(f=z(d,\"label[for='\"+a.id.replace(/'/g,\"\\\\'\")+\"']\"))||a.name&&(f=z(d,\"label[for='\"+a.name.replace(/'/g,\
-\"\\\\'\")+\"']\")))return p(f);for(;a&&a!=d;a=a.parentNode)if('label'===l(a.tagName))return p(a);return null}function g(a,f,c,d){void 0!==d&&d===c||null===c||void 0===c||(a[f]=c)}function l(a){return'string'===typeof a?a.toLowerCase():(''+a).toLowerCase()}function z(a,f){var c=null;try{c=a.querySelector(f)}catch(d){console.error('[COLLECT FIELDS] @ag_querySelector Exception in selector \"'+f+'\"')}return c}function A(a,f){var c=[];try{c=a.querySelectorAll(f)}catch(d){console.error('[COLLECT FIELDS] @ag_querySelectorAll Exception in selector \"'+\
-f+'\"')}return c}var u=d.defaultView?d.defaultView:window,m=RegExp('(pin|password|passwort|kennwort|passe|contraseña|senha|密码|adgangskode|hasło|wachtwoord)','i'),F=Array.prototype.slice.call(A(d,'form')).map(function(a,d){var c={},b='__form__'+d;a.opid=b;c.opid=b;g(c,'htmlName',e(a,'name'));g(c,'htmlID',e(a,'id'));g(c,'htmlAction',v(e(a,'action')));g(c,'htmlMethod',e(a,'method'));return c}),C=Array.prototype.slice.call(A(d,'input, select')).map(function(a,f){var c={},b='__'+f,k=-1==a.maxLength?999:\
-a.maxLength;d.elementsByOPID[b]=a;a.opid=b;c.opid=b;c.elementNumber=f;g(c,'maxLength',Math.min(k,999),999);c.visible=t(a);c.viewable=x(a);g(c,'htmlID',e(a,'id'));g(c,'htmlName',e(a,'name'));g(c,'htmlClass',e(a,'class'));if('hidden'!=l(a.type)){g(c,'label-tag',y(a));g(c,'label-data',e(a,'data-label'));g(c,'label-aria',e(a,'aria-label'));g(c,'label-top',s(a));b=[];for(k=a;k&&k.nextSibling;){k=k.nextSibling;if(w(k))break;B(b,k)}g(c,'label-right',b.join(''));b=[];D(a,b);b=b.reverse().join('');g(c,'label-left',\
-b);g(c,'placeholder',e(a,'placeholder'))}g(c,'rel',e(a,'rel'));g(c,'type',l(e(a,'type')));g(c,'value',h(a));g(c,'checked',a.checked,!1);g(c,'autoCompleteType',a.getAttribute('x-autocompletetype')||a.getAttribute('autocompletetype')||a.getAttribute('autocomplete'),'off');g(c,'selectInfo',q(a));g(c,'aria-hidden','true'==a.getAttribute('aria-hidden'),!1);g(c,'aria-disabled','true'==a.getAttribute('aria-disabled'),!1);g(c,'aria-haspopup','true'==a.getAttribute('aria-haspopup'),!1);g(c,'data-stripe',e(a,\
-'data-stripe'));a.form&&(c.form=e(a.form,'opid'));b=(m.test(c.value)||m.test(c.htmlID)||m.test(c.htmlName)||m.test(c.placeholder)||m.test(c['label-tag'])||m.test(c['label-data'])||m.test(c['label-aria']))&&('text'==c.type||'password'==c.type&&!c.visible);g(c,'fakeTested',b,!1);return c});C.filter(function(a){return a.fakeTested}).forEach(function(a){var b=d.elementsByOPID[a.opid];b.getBoundingClientRect();!b||b&&'function'!==typeof b.click||b.click();b.focus();E(b,'keydown');E(b,'keyup');E(b,'keypress');\
-b.click&&b.click();a.postFakeTestVisible=t(b);a.postFakeTestViewable=x(b);a=b.ownerDocument.createEvent('HTMLEvents');var c=b.ownerDocument.createEvent('HTMLEvents');E(b,'keydown');E(b,'keyup');E(b,'keypress');c.initEvent('input',!0,!0);b.dispatchEvent(c);a.initEvent('change',!0,!0);b.dispatchEvent(a);b.blur()});return{documentUUID:b,title:d.title,url:u.location.href,forms:function(a){var b={};a.forEach(function(a){b[a.opid]=a});return b}(F),fields:C,collectedTimestamp:(new Date).getTime()}};document.elementForOPID=G;function E(d,b){var e;e=d.ownerDocument.createEvent('KeyboardEvent');e.initKeyboardEvent?e.initKeyboardEvent(b,!0,!0):e.initKeyEvent&&e.initKeyEvent(b,!0,!0,null,!1,!1,!1,!1,0,0);d.dispatchEvent(e)}function p(d){return d.textContent||d.innerText}function r(d){var b=null;d&&(b=d.replace(/^\\s+|\\s+$|\\r?\\n.*$/mg,''),b=0<b.length?b:null);return b}function B(d,b){var e;e='';3===b.nodeType?e=b.nodeValue:1===b.nodeType&&(e=p(b));(e=r(e))&&d.push(e)}\
+e=c.left-f.clientLeft,f=c.top-f.clientTop;return a.offsetParent?0>e||e>b.width||0>f||f>b.height?t(a):(b=a.ownerDocument.elementFromPoint(e+3,f+3))?'label'===l(b.tagName)?b===y(a):b.tagName===a.tagName:!1:!1}function t(a){for(var f;a!==d&&a;a=a.parentNode)if(f=u.getComputedStyle?u.getComputedStyle(a,null):a.style,'none'===f.display||'hidden'==f.visibility)return!1;return a===d}function y(a){var f;if(a.id&&(f=z(d,'label[for='+JSON.stringify(a.id)+']'))||a.name&&(f=z(d,'label[for='+JSON.stringify(a.name)+\
+']')))return p(f);for(;a&&a!=d;a=a.parentNode)if('label'===l(a.tagName))return p(a);return null}function g(a,f,c,d){void 0!==d&&d===c||null===c||void 0===c||(a[f]=c)}function l(a){return'string'===typeof a?a.toLowerCase():(''+a).toLowerCase()}function z(a,d){var c=null;try{c=a.querySelector(d)}catch(b){}return c}function A(a,d){var c=[];try{c=a.querySelectorAll(d)}catch(b){}return c}var u=d.defaultView?d.defaultView:window,m=RegExp('((\\\\b|_|-)pin(\\\\b|_|-)|password|passwort|kennwort|passe|contraseña|senha|密码|adgangskode|hasło|wachtwoord)',\
+'i'),F=Array.prototype.slice.call(A(d,'form')).map(function(a,d){var c={},b='__form__'+d;a.opid=b;c.opid=b;g(c,'htmlName',e(a,'name'));g(c,'htmlID',e(a,'id'));g(c,'htmlAction',v(e(a,'action')));g(c,'htmlMethod',e(a,'method'));return c}),C=Array.prototype.slice.call(A(d,'input, select')).map(function(a,f){var c={},b='__'+f,k=-1==a.maxLength?999:a.maxLength;d.elementsByOPID[b]=a;a.opid=b;c.opid=b;c.elementNumber=f;g(c,'maxLength',Math.min(k,999),999);c.visible=t(a);c.viewable=x(a);g(c,'htmlID',e(a,\
+'id'));g(c,'htmlName',e(a,'name'));g(c,'htmlClass',e(a,'class'));if('hidden'!=l(a.type)){g(c,'label-tag',y(a));g(c,'label-data',e(a,'data-label'));g(c,'label-aria',e(a,'aria-label'));g(c,'label-top',s(a));b=[];for(k=a;k&&k.nextSibling;){k=k.nextSibling;if(w(k))break;B(b,k)}g(c,'label-right',b.join(''));b=[];D(a,b);b=b.reverse().join('');g(c,'label-left',b);g(c,'placeholder',e(a,'placeholder'))}g(c,'rel',e(a,'rel'));g(c,'type',l(e(a,'type')));g(c,'value',h(a));g(c,'checked',a.checked,!1);g(c,'autoCompleteType',\
+a.getAttribute('x-autocompletetype')||a.getAttribute('autocompletetype')||a.getAttribute('autocomplete'),'off');g(c,'selectInfo',q(a));g(c,'aria-hidden','true'==a.getAttribute('aria-hidden'),!1);g(c,'aria-disabled','true'==a.getAttribute('aria-disabled'),!1);g(c,'aria-haspopup','true'==a.getAttribute('aria-haspopup'),!1);g(c,'data-stripe',e(a,'data-stripe'));a.form&&(c.form=e(a.form,'opid'));b=(m.test(c.value)||m.test(c.htmlID)||m.test(c.htmlName)||m.test(c.placeholder)||m.test(c['label-tag'])||m.test(c['label-data'])||\
+m.test(c['label-aria']))&&('text'==c.type||'password'==c.type&&!c.visible);g(c,'fakeTested',b,!1);return c});C.filter(function(a){return a.fakeTested}).forEach(function(a){var b=d.elementsByOPID[a.opid];b.getBoundingClientRect();!b||b&&'function'!==typeof b.click||b.click();b.focus();E(b,'keydown');E(b,'keyup');E(b,'keypress');b.click&&b.click();a.postFakeTestVisible=t(b);a.postFakeTestViewable=x(b);a=b.ownerDocument.createEvent('HTMLEvents');var c=b.ownerDocument.createEvent('HTMLEvents');E(b,'keydown');\
+E(b,'keyup');E(b,'keypress');c.initEvent('input',!0,!0);b.dispatchEvent(c);a.initEvent('change',!0,!0);b.dispatchEvent(a);b.blur()});return{documentUUID:b,title:d.title,url:u.location.href,forms:function(a){var b={};a.forEach(function(a){b[a.opid]=a});return b}(F),fields:C,collectedTimestamp:(new Date).getTime()}};document.elementForOPID=G;function E(d,b){var e;e=d.ownerDocument.createEvent('KeyboardEvent');e.initKeyboardEvent?e.initKeyboardEvent(b,!0,!0):e.initKeyEvent&&e.initKeyEvent(b,!0,!0,null,!1,!1,!1,!1,0,0);d.dispatchEvent(e)}function p(d){return d.textContent||d.innerText}function r(d){var b=null;d&&(b=d.replace(/^\\s+|\\s+$|\\r?\\n.*$/mg,''),b=0<b.length?b:null);return b}function B(d,b){var e;e='';3===b.nodeType?e=b.nodeValue:1===b.nodeType&&(e=p(b));(e=r(e))&&d.push(e)}\
 function w(d){var b;d&&void 0!==d?(b='select option input form textarea button table iframe body head script'.split(' '),d?(d=d?(d.tagName||'').toLowerCase():'',b=b.constructor==Array?0<=b.indexOf(d):d===b):b=!1):b=!0;return b}\
 function D(d,b,e){var h;for(e||(e=0);d&&d.previousSibling;){d=d.previousSibling;if(w(d))return;B(b,d)}if(d&&0===b.length){for(h=null;!h;){d=d.parentElement||d.parentNode;if(!d)return;for(h=d.previousSibling;h&&!w(h)&&h.lastChild;)h=h.lastChild}w(h)||(B(b,h),0===b.length&&D(h,b,e+1))}}\
-function G(d){var b;if(void 0===d||null===d)return null;try{var e=Array.prototype.slice.call(H()),h=e.filter(function(b){return b.opid==d});if(0<h.length)b=h[0],1<h.length&&console.warn('More than one element found with opid '+d);else{var q=parseInt(d.split('__')[1],10);isNaN(q)||(b=e[q])}}catch(s){console.error('An unexpected error occurred: '+s)}finally{return b}};var I=/^[\\/\\?]/;function v(d){if(!d)return null;if(0==d.indexOf('http'))return d;var b=window.location.protocol+'//'+window.location.hostname;window.location.port&&''!=window.location.port&&(b+=':'+window.location.port);d.match(I)||(d='/'+d);return b+d}function H(){var d=document,b=[];try{b=d.querySelectorAll('input, select')}catch(e){console.error('[COMMON] @ag_querySelectorAll Exception in selector \"input, select\"')}return b};\
-(function collect(uuid) { var pageDetails = document.collect(document, uuid); return JSON.stringify(pageDetails); })('uuid');";
+function G(d){var b;if(void 0===d||null===d)return null;try{var e=Array.prototype.slice.call(H()),h=e.filter(function(b){return b.opid==d});if(0<h.length)b=h[0],1<h.length&&console.warn('More than one element found with opid '+d);else{var q=parseInt(d.split('__')[1],10);isNaN(q)||(b=e[q])}}catch(s){console.error('An unexpected error occurred: '+s)}finally{return b}};var I=/^[\\/\\?]/;function v(d){if(!d)return null;if(0==d.indexOf('http'))return d;var b=window.location.protocol+'//'+window.location.hostname;window.location.port&&''!=window.location.port&&(b+=':'+window.location.port);d.match(I)||(d='/'+d);return b+d}function H(){var d=document,b=[];try{b=d.querySelectorAll('input, select')}catch(e){}return b};\
+;return JSON.stringify(document.com_agilebits_onepassword_collect(document, 'oneshotUUID'));})(document);";
 
-static NSString *const OPWebViewFillScript = @"var f=!0,h=!0;document.fill=k;\
-function k(a){var b,c=[],d=a.properties,e=1,g;d&&d.delay_between_operations&&(e=d.delay_between_operations);if(null!=a.savedURL&&0===a.savedURL.indexOf('https://')&&'http:'==document.location.protocol&&(b=confirm('1Password warning: This is an unsecured HTTP page, and any information you submit can potentially be seen and changed by others. This Login was originally saved on a secure (HTTPS) page.\\n\\nDo you still wish to fill this login?'),0==b))return;g=function(a,b){var d=a[0];void 0===d?b():('delay'===\
-d.operation?e=d.parameters[0]:c.push(l(d)),setTimeout(function(){g(a.slice(1),b)},e))};if(b=a.options)h=b.animate,f=b.markFilling;a.hasOwnProperty('script')&&(b=a.script,g(b,function(){c=Array.prototype.concat.apply(c,void 0);a.hasOwnProperty('autosubmit')&&'function'==typeof autosubmit&&setTimeout(function(){autosubmit(a.autosubmit,d.allow_clicky_autosubmit)},AUTOSUBMIT_DELAY);'object'==typeof protectedGlobalPage&&protectedGlobalPage.a('fillItemResults',{documentUUID:documentUUID,fillContextIdentifier:a.fillContextIdentifier,\
-usedOpids:c},function(){})}))}var u={fill_by_opid:m,fill_by_query:n,click_on_opid:p,click_on_query:q,touch_all_fields:r,simple_set_value_by_query:s,focus_by_opid:t,delay:null};function l(a){var b;if(a.hasOwnProperty('operation')&&a.hasOwnProperty('parameters'))b=a.operation,a=a.parameters;else if('[object Array]'===Object.prototype.toString.call(a))b=a[0],a=a.splice(1);else return null;return u.hasOwnProperty(b)?u[b].apply(this,a):null}function m(a,b){var c;return(c=v(a))?(w(c,b),c.opid):null}\
-function n(a,b){var c;c=x(a);return Array.prototype.map.call(c,function(a){w(a,b);return a.opid},this)}function s(a,b){var c,d=[];c=x(a);Array.prototype.forEach.call(c,function(a){void 0!==a.value&&(a.value=b,d.push(a.opid))});return d}function t(a){if(a=v(a))'function'===typeof a.click&&a.click(),'function'===typeof a.focus&&a.focus();return null}function p(a){return(a=v(a))?y(a)?a.opid:null:null}\
-function q(a){a=x(a);return Array.prototype.map.call(a,function(a){y(a);'function'===typeof a.click&&a.click();'function'===typeof a.focus&&a.focus();return a.opid},this)}function r(){z()};var A={'true':!0,y:!0,1:!0,yes:!0,'✓':!0},B=200;function w(a,b){var c;if(a&&null!==b&&void 0!==b)switch(f&&a.form&&!a.form.opfilled&&(a.form.opfilled=!0),a.type?a.type.toLowerCase():null){case 'checkbox':c=b&&1<=b.length&&A.hasOwnProperty(b.toLowerCase())&&!0===A[b.toLowerCase()];a.checked===c||C(a,function(a){a.checked=c});break;case 'radio':!0===A[b.toLowerCase()]&&a.click();break;default:a.value==b||C(a,function(a){a.value=b})}}\
-function C(a,b){D(a);b(a);E(a);F(a)&&(a.className+=' com-agilebits-onepassword-extension-animated-fill',setTimeout(function(){a&&a.className&&(a.className=a.className.replace(/(\\s)?com-agilebits-onepassword-extension-animated-fill/,''))},B))};document.elementForOPID=v;function G(a,b){var c;c=a.ownerDocument.createEvent('KeyboardEvent');c.initKeyboardEvent?c.initKeyboardEvent(b,!0,!0):c.initKeyEvent&&c.initKeyEvent(b,!0,!0,null,!1,!1,!1,!1,0,0);a.dispatchEvent(c)}function D(a){y(a);a.focus();G(a,'keydown');G(a,'keyup');G(a,'keypress')}\
-function E(a){var b=a.ownerDocument.createEvent('HTMLEvents'),c=a.ownerDocument.createEvent('HTMLEvents');G(a,'keydown');G(a,'keyup');G(a,'keypress');c.initEvent('input',!0,!0);a.dispatchEvent(c);b.initEvent('change',!0,!0);a.dispatchEvent(b);a.blur()}function y(a){if(!a||a&&'function'!==typeof a.click)return!1;a.click();return!0}\
-function H(){var a=RegExp('(pin|password|passwort|kennwort|passe|contraseña|senha|密码|adgangskode|hasło|wachtwoord)','i');return Array.prototype.slice.call(x(\"input[type='text']\")).filter(function(b){return b.value&&a.test(b.value)},this)}function z(){H().forEach(function(a){D(a);a.click&&a.click();E(a)})}\
-function F(a){var b;if(b=h)a:{b=a;for(var c=a.ownerDocument,c=c?c.defaultView:{},d;b&&b!==document;){d=c.getComputedStyle?c.getComputedStyle(b,null):b.style;if('none'===d.display||'hidden'==d.visibility){b=!1;break a}b=b.parentNode}b=b===document}return b?-1!=='email text password number tel url'.split(' ').indexOf(a.type||''):!1}\
-function v(a){var b;if(void 0===a||null===a)return null;try{var c=Array.prototype.slice.call(x('input, select')),d=c.filter(function(b){return b.opid==a});if(0<d.length)b=d[0],1<d.length&&console.warn('More than one element found with opid '+a);else{var e=parseInt(a.split('__')[1],10);isNaN(e)||(b=c[e])}}catch(g){console.error('An unexpected error occurred: '+g)}finally{return b}};function x(a){var b=document,c=[];try{c=b.querySelectorAll(a)}catch(d){}return c};\
-(function(ownerDocument, script){ownerDocument.fill(script); return {'success': true}; })";
+static NSString *const OPWebViewFillScript = @"(function(document, undefined) {var f=!0,h=!0;document.com_agilebits_onepassword_fill=k;\
+function l(a){var b=null;return a?0===a.indexOf('https://')&&'http:'===document.location.protocol&&(b=document.querySelectorAll('input[type=password]'),0<b.length&&(confirmResult=confirm('1Password warning: This is an unsecured HTTP page, and any information you submit can potentially be seen and changed by others. This Login was originally saved on a secure (HTTPS) page.\\n\\nDo you still wish to fill this login?'),0==confirmResult))?!0:!1:!1}\
+function k(a){var b,c=[],d=a.properties,e=1,g;d&&d.delay_between_operations&&(e=d.delay_between_operations);if(!l(a.savedURL)){g=function(a,b){var d=a[0];void 0===d?b():('delay'===d.operation||'delay'===d[0]?e=d.parameters?d.parameters[0]:d[1]:c.push(m(d)),setTimeout(function(){g(a.slice(1),b)},e))};if(b=a.options)h=b.animate,f=b.markFilling;a.hasOwnProperty('script')&&(b=a.script,g(b,function(){c=Array.prototype.concat.apply(c,void 0);a.hasOwnProperty('autosubmit')&&'function'==typeof autosubmit&&\
+setTimeout(function(){autosubmit(a.autosubmit,d.allow_clicky_autosubmit)},AUTOSUBMIT_DELAY);'object'==typeof protectedGlobalPage&&protectedGlobalPage.a('fillItemResults',{documentUUID:documentUUID,fillContextIdentifier:a.fillContextIdentifier,usedOpids:c},function(){})}))}}var v={fill_by_opid:n,fill_by_query:p,click_on_opid:q,click_on_query:r,touch_all_fields:s,simple_set_value_by_query:t,focus_by_opid:u,delay:null};\
+function m(a){var b;if(a.hasOwnProperty('operation')&&a.hasOwnProperty('parameters'))b=a.operation,a=a.parameters;else if('[object Array]'===Object.prototype.toString.call(a))b=a[0],a=a.splice(1);else return null;return v.hasOwnProperty(b)?v[b].apply(this,a):null}function n(a,b){var c;return(c=w(a))?(x(c,b),c.opid):null}function p(a,b){var c;c=y(a);return Array.prototype.map.call(Array.prototype.slice.call(c),function(a){x(a,b);return a.opid},this)}\
+function t(a,b){var c,d=[];c=y(a);Array.prototype.forEach.call(Array.prototype.slice.call(c),function(a){void 0!==a.value&&(a.value=b,d.push(a.opid))});return d}function u(a){if(a=w(a))'function'===typeof a.click&&a.click(),'function'===typeof a.focus&&a.focus();return null}function q(a){return(a=w(a))?z(a)?a.opid:null:null}\
+function r(a){a=y(a);return Array.prototype.map.call(Array.prototype.slice.call(a),function(a){z(a);'function'===typeof a.click&&a.click();'function'===typeof a.focus&&a.focus();return a.opid},this)}function s(){A()};var B={'true':!0,y:!0,1:!0,yes:!0,'✓':!0},C=200;function x(a,b){var c;if(a&&null!==b&&void 0!==b)switch(f&&a.form&&!a.form.opfilled&&(a.form.opfilled=!0),a.type?a.type.toLowerCase():null){case 'checkbox':c=b&&1<=b.length&&B.hasOwnProperty(b.toLowerCase())&&!0===B[b.toLowerCase()];a.checked===c||D(a,function(a){a.checked=c});break;case 'radio':!0===B[b.toLowerCase()]&&a.click();break;default:a.value==b||D(a,function(a){a.value=b})}}\
+function D(a,b){E(a);b(a);F(a);G(a)&&(a.className+=' com-agilebits-onepassword-extension-animated-fill',setTimeout(function(){a&&a.className&&(a.className=a.className.replace(/(\\s)?com-agilebits-onepassword-extension-animated-fill/,''))},C))};document.elementForOPID=w;function H(a,b){var c;c=a.ownerDocument.createEvent('KeyboardEvent');c.initKeyboardEvent?c.initKeyboardEvent(b,!0,!0):c.initKeyEvent&&c.initKeyEvent(b,!0,!0,null,!1,!1,!1,!1,0,0);a.dispatchEvent(c)}function E(a){z(a);a.focus();H(a,'keydown');H(a,'keyup');H(a,'keypress')}\
+function F(a){var b=a.ownerDocument.createEvent('HTMLEvents'),c=a.ownerDocument.createEvent('HTMLEvents');H(a,'keydown');H(a,'keyup');H(a,'keypress');c.initEvent('input',!0,!0);a.dispatchEvent(c);b.initEvent('change',!0,!0);a.dispatchEvent(b);a.blur()}function z(a){if(!a||a&&'function'!==typeof a.click)return!1;a.click();return!0}\
+function I(){var a=RegExp('((\\\\b|_|-)pin(\\\\b|_|-)|password|passwort|kennwort|passe|contraseña|senha|密码|adgangskode|hasło|wachtwoord)','i');return Array.prototype.slice.call(y(\"input[type='text']\")).filter(function(b){return b.value&&a.test(b.value)},this)}function A(){I().forEach(function(a){E(a);a.click&&a.click();F(a)})}\
+function G(a){var b;if(b=h)a:{b=a;for(var c=a.ownerDocument,c=c?c.defaultView:{},d;b&&b!==document;){d=c.getComputedStyle?c.getComputedStyle(b,null):b.style;if('none'===d.display||'hidden'==d.visibility){b=!1;break a}b=b.parentNode}b=b===document}return b?-1!=='email text password number tel url'.split(' ').indexOf(a.type||''):!1}\
+function w(a){var b;if(void 0===a||null===a)return null;try{var c=Array.prototype.slice.call(y('input, select')),d=c.filter(function(b){return b.opid==a});if(0<d.length)b=d[0],1<d.length&&console.warn('More than one element found with opid '+a);else{var e=parseInt(a.split('__')[1],10);isNaN(e)||(b=c[e])}}catch(g){console.error('An unexpected error occurred: '+g)}finally{return b}};function y(a){var b=document,c=[];try{c=b.querySelectorAll(a)}catch(d){}return c};\
+})(document);(function(ownerDocument, script){ownerDocument.com_agilebits_onepassword_fill(script); return JSON.stringify({'success': true}); })";
+
+
+#pragma mark - Deprecated methods
+
+/*
+ Deprecated in version 1.5
+ Use fillItemIntoWebView:forViewController:sender:showOnlyLogins:completion: instead
+ */
+- (void)fillLoginIntoWebView:(nonnull id)webView forViewController:(nonnull UIViewController *)viewController sender:(nullable id)sender completion:(nullable void (^)(BOOL success, NSError * __nullable error))completion {
+	[self fillItemIntoWebView:webView forViewController:viewController sender:sender showOnlyLogins:YES completion:completion];
+}
 
 @end

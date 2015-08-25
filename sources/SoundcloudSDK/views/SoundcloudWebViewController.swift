@@ -51,9 +51,10 @@ internal class SoundcloudWebViewController: UIViewController, WKNavigationDelega
 
     @objc private func buttonOnePasswordPressed(sender: AnyObject) {
         if OnePasswordExtension.sharedExtension().isAppExtensionAvailable() {
-            OnePasswordExtension.sharedExtension().fillLoginIntoWebView(webView,
+            OnePasswordExtension.sharedExtension().fillItemIntoWebView(webView,
                 forViewController: self,
                 sender: sender,
+                showOnlyLogins: true,
                 completion: nil)
         }
     }
