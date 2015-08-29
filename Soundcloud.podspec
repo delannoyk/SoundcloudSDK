@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'Soundcloud'
-  s.version      = '0.1.2'
+  s.version      = '0.1.3'
   s.license      =  { :type => 'MIT' }
   s.homepage     = 'https://github.com/delannoyk/SoundcloudSDK'
   s.authors      = {
@@ -17,6 +17,6 @@ Pod::Spec.new do |s|
   s.source_files = 'sources/SoundcloudSDK/**/*.swift'
   s.framework    =  'UIKit'
   s.dependency 'UICKeyChainStore', '~> 2.0.6'
-  s.dependency '1PasswordExtension', '~> 1.2'
+  s.dependency '1PasswordExtension', '~> 1.5'
   s.requires_arc = true
 end
