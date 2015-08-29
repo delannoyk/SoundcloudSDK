@@ -274,7 +274,7 @@ public extension Track {
     */
     public static func fromData(data: NSData) -> Track {
         var track = empty
-        data.getBytes(&track, length: sizeof(User))
+        data.getBytes(&track, length: sizeof(Track))
         return track
     }
 }
