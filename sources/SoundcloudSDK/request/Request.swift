@@ -218,16 +218,31 @@ internal struct Request<T> {
         let URLRequest = method.URLRequest(URL, parameters: parameters)
 
         dataTask = NSURLSession.sharedSession().dataTaskWithRequest(URLRequest, completionHandler: { (data, response, error) -> Void in
-            if let data = data {
-                let JSON = JSONObject(NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil))
-                let result = parse(JSON)
-
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    completion(result)
+            if let session = Soundcloud.session, response = response as? NSHTTPURLResponse where response.statusCode == 401 {
+                session.refreshSession({ result in
+                    switch result {
+                    case .Success(_):
+                        let request = Request(URL: URL, method: method, parameters: parameters, parse: parse, completion: completion)
+                        request.start()
+                    case .Failure(let error):
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            completion(.Failure(error))
+                        })
+                    }
                 })
             }
             else {
-                completion(.Failure(error))
+                if let data = data {
+                    let JSON = JSONObject(NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil))
+                    let result = parse(JSON)
+
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        completion(result)
+                    })
+                }
+                else {
+                    completion(.Failure(error))
+                }
             }
         })
     }
