@@ -26,7 +26,9 @@ public extension Track {
                 return .Success(Box(track))
             }
             return .Failure(GenericError)
-        }, completion: completion)
+            }, completion: { result, response in
+                completion(result)
+        })
         request.start()
     }
 
@@ -49,7 +51,9 @@ public extension Track {
                 return .Success(Box(compact(tracks)))
             }
             return .Failure(GenericError)
-        }, completion: completion)
+            }, completion: { result, response in
+                completion(result)
+        })
         request.start()
     }
 
@@ -68,7 +72,9 @@ public extension Track {
                 return .Success(Box(compact(comments)))
             }
             return .Failure(GenericError)
-        }, completion: completion)
+        }, completion: { result, response in
+            completion(result)
+        })
         request.start()
     }
 
@@ -95,7 +101,11 @@ public extension Track {
                     return .Success(Box(comments))
                 }
                 return .Failure(GenericError)
-            }, completion: completion)
+            }, completion: { result, response in
+                refreshTokenIfNecessaryCompletion(response, {
+                    self.comment(body, timestamp: timestamp, completion: completion)
+                    }, completion, result)
+            })
             request.start()
         }
         else {
@@ -118,7 +128,9 @@ public extension Track {
                 return .Success(Box(compact(users)))
             }
             return .Failure(GenericError)
-        }, completion: completion)
+            }, completion: { result, response in
+                completion(result)
+        })
         request.start()
     }
 
@@ -147,7 +159,11 @@ public extension Track {
                     return .Success(Box(true))
                 }
                 return .Failure(GenericError)
-            }, completion: completion)
+                }, completion: { result, response in
+                    refreshTokenIfNecessaryCompletion(response, {
+                        self.favorite(userIdentifier, completion: completion)
+                        }, completion, result)
+            })
             request.start()
         }
         else {

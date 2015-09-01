@@ -26,7 +26,9 @@ public extension User {
                 return .Success(Box(user))
             }
             return .Failure(GenericError)
-        }, completion: completion)
+            }, completion: { result, response in
+                completion(result)
+        })
         request.start()
     }
 
@@ -45,7 +47,9 @@ public extension User {
                 return .Success(Box(compact(tracks)))
             }
             return .Failure(GenericError)
-        }, completion: completion)
+            }, completion: { result, response in
+                completion(result)
+        })
         request.start()
     }
 
@@ -64,7 +68,9 @@ public extension User {
                 return .Success(Box(compact(comments)))
             }
             return .Failure(GenericError)
-            }, completion: completion)
+            }, completion: { result, response in
+                completion(result)
+        })
         request.start()
     }
 
@@ -83,7 +89,9 @@ public extension User {
                 return .Success(Box(compact(tracks)))
             }
             return .Failure(GenericError)
-            }, completion: completion)
+            }, completion: { result, response in
+                completion(result)
+        })
         request.start()
     }
 
@@ -102,7 +110,9 @@ public extension User {
                 return .Success(Box(compact(users)))
             }
             return .Failure(GenericError)
-            }, completion: completion)
+            }, completion: { result, response in
+                completion(result)
+        })
         request.start()
     }
 
@@ -121,7 +131,9 @@ public extension User {
                 return .Success(Box(compact(users)))
             }
             return .Failure(GenericError)
-            }, completion: completion)
+            }, completion: { result, response in
+                completion(result)
+        })
         request.start()
     }
 
@@ -166,7 +178,11 @@ public extension User {
                     return .Success(Box(true))
                 }
                 return .Failure(GenericError)
-            }, completion: completion)
+                }, completion: { result, response in
+                    refreshTokenIfNecessaryCompletion(response, {
+                        self.changeFollowStatus(follow, userIdentifier: userIdentifier, completion: completion)
+                        }, completion, result)
+            })
             request.start()
         }
         else {
@@ -189,7 +205,9 @@ public extension User {
                 return .Success(Box(compact(playlists)))
             }
             return .Failure(GenericError)
-        }, completion: completion)
+            }, completion: { result, response in
+                completion(result)
+        })
         request.start()
     }
 }

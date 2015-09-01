@@ -31,7 +31,9 @@ public extension Playlist {
                 return .Success(Box(playlist))
             }
             return .Failure(GenericError)
-        }, completion: completion)
+            }, completion: { result, response in
+                completion(result)
+        })
         request.start()
     }
 }

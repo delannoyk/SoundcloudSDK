@@ -145,7 +145,11 @@ extension Session {
                     return .Success(Box(user))
                 }
                 return .Failure(GenericError)
-            }, completion: completion)
+                }, completion: { result, response in
+                    refreshTokenIfNecessaryCompletion(response, {
+                        Soundcloud.session?.me(completion)
+                        }, completion, result)
+            })
             request.start()
         }
         else {
@@ -255,7 +259,9 @@ extension Session {
                 return .Success(Box(newSession))
             }
             return .Failure(GenericError)
-        }, completion: completion)
+            }, completion: { result, response in
+                completion(result)
+        })
         request.start()
     }
 
@@ -350,7 +356,9 @@ public class Soundcloud: NSObject {
                 }
                 
                 return .Failure(GenericError)
-            }, completion: completion)
+                }, completion: { result, response in
+                    completion(result)
+            })
             request.start()
         }
         else {
