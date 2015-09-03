@@ -12,6 +12,22 @@ import UIKit
 ////////////////////////////////////////////////////////////////////////////
 
 public struct Comment {
+    public init(identifier: Int,
+        createdAt: NSDate,
+        trackIdentifier: Int?,
+        userIdentifier: Int?,
+        timestamp: NSTimeInterval?,
+        body: String,
+        user: User?) {
+            self.identifier = identifier
+            self.createdAt = createdAt
+            self.trackIdentifier = trackIdentifier
+            self.userIdentifier = userIdentifier
+            self.timestamp = timestamp
+            self.body = body
+            self.user = user
+    }
+
     ///User's identifier
     public let identifier: Int
 
@@ -57,46 +73,6 @@ internal extension Comment {
         else {
             return nil
         }
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////
-
-
-// MARK: Caching ease
-////////////////////////////////////////////////////////////////////////////
-
-public extension Comment {
-    /**
-    Returns NSData to ease caching of the struct.
-
-    :returns: NSData representation of the struct.
-    */
-    public mutating func toData() -> NSData {
-        return NSData(bytes: &self, length: sizeof(self.dynamicType))
-    }
-
-    internal static var empty: Comment {
-        return Comment(identifier: 0,
-            createdAt: NSDate(),
-            trackIdentifier: nil,
-            userIdentifier: nil,
-            timestamp: nil,
-            body: "",
-            user: nil)
-    }
-
-    /**
-    Initialize a new struct from NSData.
-
-    :param: data NSData representation of the struct.
-
-    :returns: An initialized struct.
-    */
-    public static func fromData(data: NSData) -> Comment {
-        var comment = empty
-        data.getBytes(&comment, length: sizeof(Comment))
-        return comment
     }
 }
 

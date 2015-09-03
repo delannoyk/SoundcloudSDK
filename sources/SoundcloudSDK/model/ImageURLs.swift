@@ -11,7 +11,7 @@ import UIKit
 public struct ImageURLs {
     private let baseURL: NSURL?
 
-    internal init(baseURL: NSURL?) {
+    public init(baseURL: NSURL?) {
         self.baseURL = baseURL
     }
 

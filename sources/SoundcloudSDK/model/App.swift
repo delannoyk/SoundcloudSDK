@@ -12,7 +12,7 @@ import Foundation
 ////////////////////////////////////////////////////////////////////////////
 
 public struct App {
-    internal init(identifier: Int, URL: NSURL?, permalinkURL: NSURL?, name: String) {
+    public init(identifier: Int, URL: NSURL?, permalinkURL: NSURL?, name: String) {
         self.identifier = identifier
         self.URL = URL
         self.permalinkURL = permalinkURL
@@ -54,40 +54,6 @@ internal extension App {
         else {
             return nil
         }
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////
-
-
-// MARK: Caching ease
-////////////////////////////////////////////////////////////////////////////
-
-public extension App {
-    /**
-    Returns NSData to ease caching of the struct.
-
-    :returns: NSData representation of the struct.
-    */
-    public mutating func toData() -> NSData {
-        return NSData(bytes: &self, length: sizeof(self.dynamicType))
-    }
-
-    internal static var empty: App {
-        return App(identifier: 0, URL: nil, permalinkURL: nil, name: "")
-    }
-
-    /**
-    Initialize a new struct from NSData.
-
-    :param: data NSData representation of the struct.
-
-    :returns: An initialized struct.
-    */
-    public static func fromData(data: NSData) -> App {
-        var app = empty
-        data.getBytes(&app, length: sizeof(App))
-        return app
     }
 }
 

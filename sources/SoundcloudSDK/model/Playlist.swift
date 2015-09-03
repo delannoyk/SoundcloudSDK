@@ -12,7 +12,7 @@ import Foundation
 ////////////////////////////////////////////////////////////////////////////
 
 public struct Playlist {
-    internal init(identifier: Int, createdAt: NSDate, createdBy: User, duration: NSTimeInterval,
+    public init(identifier: Int, createdAt: NSDate, createdBy: User, duration: NSTimeInterval,
         streamable: Bool, downloadable: Bool, permalinkURL: NSURL?, purchaseURL: NSURL?,
         releaseYear: Int?, releaseMonth: Int?, releaseDay: Int?, releaseNumber: String?,
         description: String?, genre: String?, type: PlaylistType?, title: String, artworkURL: ImageURLs,

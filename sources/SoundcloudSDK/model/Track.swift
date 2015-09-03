@@ -34,7 +34,7 @@ public enum TrackType: String {
 ////////////////////////////////////////////////////////////////////////////
 
 public struct Track {
-    internal init(identifier: Int, createdAt: NSDate, createdBy: User,
+    public init(identifier: Int, createdAt: NSDate, createdBy: User,
         createdWith: App?, duration: NSTimeInterval, commentable: Bool,
         streamable: Bool, downloadable: Bool, streamURL: NSURL?,
         downloadURL: NSURL?, permalinkURL: NSURL?,
@@ -216,66 +216,6 @@ internal extension Track {
         else {
             return nil
         }
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////
-
-
-// MARK: Caching ease
-////////////////////////////////////////////////////////////////////////////
-
-public extension Track {
-    /**
-    Returns NSData to ease caching of the struct.
-
-    :returns: NSData representation of the struct.
-    */
-    public mutating func toData() -> NSData {
-        return NSData(bytes: &self, length: sizeof(self.dynamicType))
-    }
-
-    internal static var empty: Track {
-        return Track(identifier: 0,
-            createdAt: NSDate(),
-            createdBy: User.empty,
-            createdWith: nil,
-            duration: 0,
-            commentable: true,
-            streamable: true,
-            downloadable: true,
-            streamURL: nil,
-            downloadURL: nil,
-            permalinkURL: nil,
-            releaseYear: nil,
-            releaseMonth: nil,
-            releaseDay: nil,
-            tags: nil,
-            description: nil,
-            genre: nil,
-            trackType: nil,
-            title: "",
-            format: nil,
-            contentSize: nil,
-            artworkImageURL: ImageURLs(baseURL: nil),
-            waveformImageURL: ImageURLs(baseURL: nil),
-            playbackCount: nil,
-            downloadCount: nil,
-            favoriteCount: nil,
-            commentCount: nil)
-    }
-
-    /**
-    Initialize a new struct from NSData.
-
-    :param: data NSData representation of the struct.
-
-    :returns: An initialized struct.
-    */
-    public static func fromData(data: NSData) -> Track {
-        var track = empty
-        data.getBytes(&track, length: sizeof(Track))
-        return track
     }
 }
 

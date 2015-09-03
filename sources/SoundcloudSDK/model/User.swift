@@ -12,7 +12,7 @@ import Foundation
 ////////////////////////////////////////////////////////////////////////////
 
 public struct User {
-    internal init(identifier: Int, username: String, fullname: String,
+    public init(identifier: Int, username: String, fullname: String,
         city: String?, country: String?, biography: String?,
         URL: NSURL?, permalinkURL: NSURL?, websiteURL: NSURL?,
         websiteTitle: String?, avatarURL: ImageURLs, tracksCount: Int,
@@ -121,54 +121,6 @@ internal extension User {
         else {
             return nil
         }
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////
-
-
-// MARK: Caching ease
-////////////////////////////////////////////////////////////////////////////
-
-public extension User {
-    /**
-    Returns NSData to ease caching of the struct.
-
-    :returns: NSData representation of the struct.
-    */
-    public mutating func toData() -> NSData {
-        return NSData(bytes: &self, length: sizeof(self.dynamicType))
-    }
-
-    internal static var empty: User {
-        return User(identifier: 0,
-            username: "",
-            fullname: "",
-            city: nil,
-            country: nil,
-            biography: nil,
-            URL: nil,
-            permalinkURL: nil,
-            websiteURL: nil,
-            websiteTitle: nil,
-            avatarURL: ImageURLs(baseURL: nil),
-            tracksCount: 0,
-            playlistsCount: 0,
-            followersCount: 0,
-            followingsCount: 0)
-    }
-
-    /**
-    Initialize a new struct from NSData.
-
-    :param: data NSData representation of the struct.
-
-    :returns: An initialized struct.
-    */
-    public static func fromData(data: NSData) -> User {
-        var user = empty
-        data.getBytes(&user, length: sizeof(User))
-        return user
     }
 }
 
