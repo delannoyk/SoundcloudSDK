@@ -204,7 +204,7 @@ internal extension Track {
                 trackType: TrackType(rawValue: JSON["track_type"].stringValue ?? ""),
                 title: JSON["title"].stringValue ?? "",
                 format: JSON["original_format"].stringValue,
-                contentSize: JSON["original_content_size"].uint64Value,
+                contentSize: JSON["original_content_size"].intValue.map { UInt64($0) },
                 artworkImageURL: ImageURLs(baseURL: JSON["artwork_url"].URLValue),
                 waveformImageURL: ImageURLs(baseURL: JSON["waveform_url"].URLValue),
                 playbackCount: JSON["playback_count"].intValue,
