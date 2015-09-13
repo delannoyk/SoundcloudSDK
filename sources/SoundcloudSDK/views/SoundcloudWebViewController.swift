@@ -27,11 +27,13 @@ internal class SoundcloudWebViewController: UIViewController, WKNavigationDelega
         //Right button is OnePassword if available
         if OnePasswordExtension.sharedExtension().isAppExtensionAvailable() {
             let bundle = NSBundle(forClass: OnePasswordExtension.self)
-            let resourceBundle = bundle.pathForResource("OnePasswordExtensionResources", ofType: "bundle")
-            let image = UIImage(named: "onepassword-navbar", inBundle: resourceBundle, compatibleWithTraitCollection: nil)
+            if let path = bundle.pathForResource("OnePasswordExtensionResources", ofType: "bundle") {
+                let resourceBundle = NSBundle(path: path)
+                let image = UIImage(named: "onepassword-navbar", inBundle: resourceBundle, compatibleWithTraitCollection: nil)
 
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: image,
-                style: .Plain, target: self, action: "buttonOnePasswordPressed:")
+                navigationItem.rightBarButtonItem = UIBarButtonItem(image: image,
+                    style: .Plain, target: self, action: "buttonOnePasswordPressed:")
+            }
         }
 
         //Left button is a Cancel button
