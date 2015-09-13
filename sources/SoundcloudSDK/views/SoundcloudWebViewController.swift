@@ -27,7 +27,8 @@ internal class SoundcloudWebViewController: UIViewController, WKNavigationDelega
         //Right button is OnePassword if available
         if OnePasswordExtension.sharedExtension().isAppExtensionAvailable() {
             let bundle = NSBundle(forClass: OnePasswordExtension.self)
-            let image = UIImage(named: "onepassword-navbar", inBundle: bundle, compatibleWithTraitCollection: nil)
+            let resourceBundle = bundle.pathForResource("OnePasswordExtensionResources", ofType: "bundle")
+            let image = UIImage(named: "onepassword-navbar", inBundle: resourceBundle, compatibleWithTraitCollection: nil)
 
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: image,
                 style: .Plain, target: self, action: "buttonOnePasswordPressed:")
