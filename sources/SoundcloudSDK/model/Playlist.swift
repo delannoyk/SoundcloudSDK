@@ -142,10 +142,10 @@ extension Playlist: Equatable {}
 /**
 Compares 2 Playlists based on their identifier
 
-:param: lhs First playlist
-:param: rhs Second playlist
+- parameter lhs: First playlist
+- parameter rhs: Second playlist
 
-:returns: true if playlists are equals, false if they're not
+- returns: true if playlists are equals, false if they're not
 */
 public func ==(lhs: Playlist, rhs: Playlist) -> Bool {
     return lhs.identifier == rhs.identifier

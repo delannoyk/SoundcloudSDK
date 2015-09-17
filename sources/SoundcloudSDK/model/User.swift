@@ -135,10 +135,10 @@ extension User: Equatable {}
 /**
 Compares 2 Users based on their identifier
 
-:param: lhs First user
-:param: rhs Second user
+- parameter lhs: First user
+- parameter rhs: Second user
 
-:returns: true if users are equals, false if they're not
+- returns: true if users are equals, false if they're not
 */
 public func ==(lhs: User, rhs: User) -> Bool {
     return lhs.identifier == rhs.identifier

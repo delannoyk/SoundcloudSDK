@@ -14,8 +14,8 @@ public extension User {
     /**
     Loads an user profile
 
-    :param: identifier The identifier of the user to load
-    :param: completion The closure that will be called when user profile is loaded or upon error
+    - parameter identifier: The identifier of the user to load
+    - parameter completion: The closure that will be called when user profile is loaded or upon error
     */
     public static func user(identifier: Int, completion: Result<User> -> Void) {
         let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier).json")
@@ -35,7 +35,7 @@ public extension User {
     /**
     Loads tracks the user uploaded to Soundcloud
 
-    :param: completion The closure that will be called when tracks are loaded or upon error
+    - parameter completion: The closure that will be called when tracks are loaded or upon error
     */
     public func tracks(completion: Result<[Track]> -> Void) {
         let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier)/tracks.json")
@@ -56,7 +56,7 @@ public extension User {
     /**
     Load all comments from the user
 
-    :param: completion The closure that will be called when the comments are loaded or upon error
+    - parameter completion: The closure that will be called when the comments are loaded or upon error
     */
     public func comments(completion: Result<[Comment]> -> Void) {
         let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier)/comments.json")
@@ -77,7 +77,7 @@ public extension User {
     /**
     Loads favorited tracks of the user
 
-    :param: completion The closure that will be called when tracks are loaded or upon error
+    - parameter completion: The closure that will be called when tracks are loaded or upon error
     */
     public func favorites(completion: Result<[Track]> -> Void) {
         let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier)/favorites.json")
@@ -98,7 +98,7 @@ public extension User {
     /**
     Loads followers of the user
 
-    :param: completion The closure that will be called when followers are loaded or upon error
+    - parameter completion: The closure that will be called when followers are loaded or upon error
     */
     public func followers(completion: Result<[User]> -> Void) {
         let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier)/followers.json")
@@ -119,7 +119,7 @@ public extension User {
     /**
     Loads followed users of the user
 
-    :param: completion The closure that will be called when followed users are loaded or upon error
+    - parameter completion: The closure that will be called when followed users are loaded or upon error
     */
     public func followings(completion: Result<[User]> -> Void) {
         let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier)/followings.json")
@@ -142,8 +142,8 @@ public extension User {
 
     **This method requires a Session.**
 
-    :param: userIdentifier The identifier of the user to follow
-    :param: completion     The closure that will be called when the user has been followed or upon error
+    - parameter userIdentifier: The identifier of the user to follow
+    - parameter completion:     The closure that will be called when the user has been followed or upon error
     */
     public func follow(userIdentifier: Int, completion: Result<Bool> -> Void) {
         changeFollowStatus(true, userIdentifier: userIdentifier, completion: completion)
@@ -154,8 +154,8 @@ public extension User {
 
     **This method requires a Session.**
 
-    :param: userIdentifier The identifier of the user to unfollow
-    :param: completion     The closure that will be called when the user has been unfollowed or upon error
+    - parameter userIdentifier: The identifier of the user to unfollow
+    - parameter completion:     The closure that will be called when the user has been unfollowed or upon error
     */
     public func unfollow(userIdentifier: Int, completion: Result<Bool> -> Void) {
         changeFollowStatus(false, userIdentifier: userIdentifier, completion: completion)
@@ -171,17 +171,17 @@ public extension User {
             let URL = baseURL.URLByAppendingQueryString(parameters.queryString)
 
             let request = Request(URL: URL, method: follow ? .PUT : .DELETE, parameters: nil, parse: {
-                if let user = User(JSON: $0) {
+                if let _ = User(JSON: $0) {
                     return .Success(Box(true))
                 }
-                if let textRange = $0["status"].stringValue?.rangeOfString(" OK") {
+                if let _ = $0["status"].stringValue?.rangeOfString(" OK") {
                     return .Success(Box(true))
                 }
                 return .Failure(GenericError)
                 }, completion: { result, response in
-                    refreshTokenIfNecessaryCompletion(response, {
+                    refreshTokenIfNecessaryCompletion(response, retry: {
                         self.changeFollowStatus(follow, userIdentifier: userIdentifier, completion: completion)
-                        }, completion, result)
+                        }, completion: completion, result: result)
             })
             request.start()
         }
@@ -193,7 +193,7 @@ public extension User {
     /**
     Loads user's playlists
 
-    :param: completion The closure that will be called when playlists has been loaded or upon error
+    - parameter completion: The closure that will be called when playlists has been loaded or upon error
     */
     public func playlists(completion: Result<[Playlist]> -> Void) {
         let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier)/playlists.json")

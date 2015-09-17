@@ -14,9 +14,9 @@ public extension Playlist {
     /**
     Load playlist with a specific identifier
 
-    :param: identifier  The identifier of the playlist to load
-    :param: secretToken The secret token to access the playlist or nil
-    :param: completion  The closure that will be called when playlist is loaded or upon error
+    - parameter identifier:  The identifier of the playlist to load
+    - parameter secretToken: The secret token to access the playlist or nil
+    - parameter completion:  The closure that will be called when playlist is loaded or upon error
     */
     public static func playlist(identifier: Int, secretToken: String? = nil, completion: Result<Playlist> -> Void) {
         let URL = BaseURL.URLByAppendingPathComponent("\(identifier)")

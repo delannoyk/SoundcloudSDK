@@ -14,8 +14,8 @@ public extension Track {
     /**
     Load track with a specific identifier
 
-    :param: identifier The identifier of the track to load
-    :param: completion The closure that will be called when track is loaded or upon error
+    - parameter identifier: The identifier of the track to load
+    - parameter completion: The closure that will be called when track is loaded or upon error
     */
     public static func track(identifier: Int, completion: Result<Track> -> Void) {
         let URL = BaseURL.URLByAppendingPathComponent("\(identifier).json")
@@ -35,14 +35,14 @@ public extension Track {
     /**
     Load tracks with specific identifiers
 
-    :param: identifiers The identifiers of the tracks to load
-    :param: completion  The closure that will be called when tracks are loaded or upon error
+    - parameter identifiers: The identifiers of the tracks to load
+    - parameter completion:  The closure that will be called when tracks are loaded or upon error
     */
     public static func tracks(identifiers: [Int], completion: Result<[Track]> -> Void) {
         let URL = BaseURL
         let parameters = [
             "client_id": Soundcloud.clientIdentifier!,
-            "ids": ",".join(identifiers.map { "\($0)" })
+            "ids": identifiers.map { "\($0)" }.joinWithSeparator(",")
         ]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
@@ -60,7 +60,7 @@ public extension Track {
     /**
     Load comments relative to a track
 
-    :param: completion The closure that will be called when the comments are loaded or upon error
+    - parameter completion: The closure that will be called when the comments are loaded or upon error
     */
     public func comments(completion: Result<[Comment]> -> Void) {
         let URL = Track.BaseURL.URLByAppendingPathComponent("\(identifier)/comments.json")
@@ -83,9 +83,9 @@ public extension Track {
     
     **This method requires a Session.**
 
-    :param: body       The text body of the comment
-    :param: timestamp  The progression of the track when the comment was validated
-    :param: completion The closure that will be called when the comment is posted or upon error
+    - parameter body:       The text body of the comment
+    - parameter timestamp:  The progression of the track when the comment was validated
+    - parameter completion: The closure that will be called when the comment is posted or upon error
     */
     public func comment(body: String, timestamp: NSTimeInterval, completion: Result<Comment> -> Void) {
         if let oauthToken = Soundcloud.session?.accessToken {
@@ -102,9 +102,9 @@ public extension Track {
                 }
                 return .Failure(GenericError)
             }, completion: { result, response in
-                refreshTokenIfNecessaryCompletion(response, {
+                refreshTokenIfNecessaryCompletion(response, retry: {
                     self.comment(body, timestamp: timestamp, completion: completion)
-                    }, completion, result)
+                    }, completion: completion, result: result)
             })
             request.start()
         }
@@ -116,7 +116,7 @@ public extension Track {
     /**
     Fetch the list of users that favorited the track.
 
-    :param: completion The closure that will be called when users are loaded or upon error
+    - parameter completion: The closure that will be called when users are loaded or upon error
     */
     public func favoriters(completion: Result<[User]> -> Void) {
         let URL = Track.BaseURL.URLByAppendingPathComponent("\(identifier)/favoriters.json")
@@ -139,8 +139,8 @@ public extension Track {
     
     **This method requires a Session.**
 
-    :param: userIdentifier The identifier of the logged user
-    :param: completion     The closure that will be called when the track has been favorited or upon error
+    - parameter userIdentifier: The identifier of the logged user
+    - parameter completion:     The closure that will be called when the track has been favorited or upon error
     */
     public func favorite(userIdentifier: Int, completion: Result<Bool> -> Void) {
         if let oauthToken = Soundcloud.session?.accessToken {
@@ -152,17 +152,17 @@ public extension Track {
 
             let URL = baseURL.URLByAppendingQueryString(parameters.queryString)
             let request = Request(URL: URL, method: .PUT, parameters: nil, parse: {
-                if let textRange = $0["status"].stringValue?.rangeOfString(" OK") {
+                if let _ = $0["status"].stringValue?.rangeOfString(" OK") {
                     return .Success(Box(true))
                 }
-                if let textRange = $0["status"].stringValue?.rangeOfString(" Created") {
+                if let _ = $0["status"].stringValue?.rangeOfString(" Created") {
                     return .Success(Box(true))
                 }
                 return .Failure(GenericError)
                 }, completion: { result, response in
-                    refreshTokenIfNecessaryCompletion(response, {
+                    refreshTokenIfNecessaryCompletion(response, retry: {
                         self.favorite(userIdentifier, completion: completion)
-                        }, completion, result)
+                        }, completion: completion, result: result)
             })
             request.start()
         }

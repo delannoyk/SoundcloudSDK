@@ -29,8 +29,8 @@ internal class JSONObject: SequenceType {
         return (value as? NSDictionary).map { JSONObject($0[key]) } ?? JSONObject(nil)
     }
 
-    func generate() -> GeneratorOf<JSONObject> {
-        return GeneratorOf<JSONObject> {
+    func generate() -> AnyGenerator<JSONObject> {
+        return anyGenerator {
             if self.index + 1 < 0 {
                 return nil
             }
@@ -219,15 +219,23 @@ internal struct Request<T> {
 
         dataTask = NSURLSession.sharedSession().dataTaskWithRequest(URLRequest, completionHandler: { (data, response, error) -> Void in
             if let data = data {
-                let JSON = JSONObject(NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil))
-                let result = parse(JSON)
+                var result: Result<T>
+                do {
+                    let JSON = try JSONObject(NSJSONSerialization.JSONObjectWithData(data, options: []))
+                    result = parse(JSON)
+                } catch let error as NSError {
+                    result = .Failure(error)
+                }
 
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue()) {
                     completion(result, response)
-                })
+                }
+            }
+            else if let error = error {
+                completion(.Failure(error), response)
             }
             else {
-                completion(.Failure(error), response)
+                completion(.Failure(GenericError), response)
             }
         })
     }

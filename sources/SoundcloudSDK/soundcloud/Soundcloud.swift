@@ -43,7 +43,7 @@ public class Session: NSObject, NSCoding, NSCopying {
     private static let scopeKey = "scopeKey"
     private static let refreshTokenKey = "refreshTokenKey"
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         authorizationCode = aDecoder.decodeObjectForKey(Session.authorizationCodeKey) as! String
         accessToken = aDecoder.decodeObjectForKey(Session.accessTokenKey) as? String
         accessTokenExpireDate = aDecoder.decodeObjectForKey(Session.accessTokenExpireDateKey) as? NSDate
@@ -85,8 +85,8 @@ extension Session {
     Logs a user in. This method will present an UIViewController over `displayViewController`
     that will load a web view so that user is available to log in
 
-    :param: displayViewController An UIViewController that is in the view hierarchy
-    :param: completion            The closure that will be called when the user is logged in or upon error
+    - parameter displayViewController: An UIViewController that is in the view hierarchy
+    - parameter completion:            The closure that will be called when the user is logged in or upon error
     */
     public static func login(displayViewController: UIViewController, completion: Result<Session> -> Void) {
         authorize(displayViewController, completion: { result in
@@ -106,7 +106,7 @@ extension Session {
     Refresh the token of the logged user. You should call this method when you get a 401 error on
     API calls
 
-    :param: completion The closure that will be called when the session is refreshed or upon error
+    - parameter completion: The closure that will be called when the session is refreshed or upon error
     */
     public func refreshSession(completion: Result<Session> -> Void) {
         _refreshToken({ result in
@@ -129,7 +129,7 @@ extension Session {
 
     **This method requires a Session.**
 
-    :param: completion The closure that will be called when the profile is loaded or upon error
+    - parameter completion: The closure that will be called when the profile is loaded or upon error
     */
     public func me(completion: Result<User> -> Void) {
         if let clientId = Soundcloud.clientIdentifier, oauthToken = accessToken {
@@ -146,9 +146,9 @@ extension Session {
                 }
                 return .Failure(GenericError)
                 }, completion: { result, response in
-                    refreshTokenIfNecessaryCompletion(response, {
+                    refreshTokenIfNecessaryCompletion(response, retry: {
                         Soundcloud.session?.me(completion)
-                        }, completion, result)
+                        }, completion: completion, result: result)
             })
             request.start()
         }
@@ -322,8 +322,8 @@ public class Soundcloud: NSObject {
     /**
     Resolve allows you to lookup and access API resources when you only know the SoundCloud.com URL.
 
-    :param: URI        The URI to lookup
-    :param: completion The closure that will be called when the result is ready or upon error
+    - parameter URI:        The URI to lookup
+    - parameter completion: The closure that will be called when the result is ready or upon error
     */
     public static func resolve(URI: String, completion: Result<ResolveResponse> -> Void) {
         if let clientId = clientIdentifier {

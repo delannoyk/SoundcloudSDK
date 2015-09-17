@@ -68,10 +68,10 @@ extension App: Equatable {}
 /**
 Compares 2 Apps based on their identifier
 
-:param: lhs First app
-:param: rhs Second app
+- parameter lhs: First app
+- parameter rhs: Second app
 
-:returns: true if apps are equals, false if they're not
+- returns: true if apps are equals, false if they're not
 */
 public func ==(lhs: App, rhs: App) -> Bool {
     return lhs.identifier == rhs.identifier

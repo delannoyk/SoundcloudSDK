@@ -18,38 +18,38 @@ class ViewController: UIViewController, UITextFieldDelegate {
     // MARK: IBAction
     ////////////////////////////////////////////////////////////////////////////
 
-    @IBAction func buttonLoginPressed(AnyObject) {
+    @IBAction func buttonLoginPressed(_: AnyObject) {
         Session.login(self, completion: { result in
         })
     }
 
-    @IBAction func buttonLoadMePressed(AnyObject) {
+    @IBAction func buttonLoadMePressed(_: AnyObject) {
         Soundcloud.session?.me({ result in
             self.user = result.result
 
             if let user = result.result {
-                println(user)
+                print(user)
             }
         })
     }
 
-    @IBAction func buttonFollowPressed(AnyObject) {
-        user?.follow(textFieldUserIdentifier.text.toInt()!, completion: { result in
-            println(result.result)
-            println(result.error)
+    @IBAction func buttonFollowPressed(_: AnyObject) {
+        user?.follow(Int(textFieldUserIdentifier.text!)!, completion: { result in
+            print(result.result)
+            print(result.error)
 
-            self.user?.unfollow(self.textFieldUserIdentifier.text.toInt()!, completion: { result in
-                println(result.result)
-                println(result.error)
+            self.user?.unfollow(Int(self.textFieldUserIdentifier.text!)!, completion: { result in
+                print(result.result)
+                print(result.error)
             })
         })
     }
 
-    @IBAction func buttonFavoritePressed(AnyObject) {
-        Track.track(textFieldTrackIdentifier.text.toInt()!, completion: { result in
+    @IBAction func buttonFavoritePressed(_: AnyObject) {
+        Track.track(Int(textFieldTrackIdentifier.text!)!, completion: { result in
             result.result?.favorite(self.user!.identifier, completion: { result in
-                println(result.result)
-                println(result.error)
+                print(result.result)
+                print(result.error)
             })
         })
     }

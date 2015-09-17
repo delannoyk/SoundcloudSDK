@@ -35,12 +35,12 @@ internal extension Dictionary {
     ////////////////////////////////////////////////////////////////////////////
 
     var queryString: String {
-        let parts = map(self, {(key, value) -> String in
+        let parts = map({(key, value) -> String in
             let keyStr = "\(key)"
             let valueStr = "\(value)"
             return "\(keyStr)=\(valueStr.URLEncodedValue)"
         })
-        return join("&", parts)
+        return parts.joinWithSeparator("&")
     }
 
     ////////////////////////////////////////////////////////////////////////////
