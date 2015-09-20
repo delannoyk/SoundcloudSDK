@@ -28,7 +28,7 @@ public extension Playlist {
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
             if let playlist = Playlist(JSON: $0) {
-                return .Success(Box(playlist))
+                return .Success(playlist)
             }
             return .Failure(GenericError)
             }, completion: { result, response in

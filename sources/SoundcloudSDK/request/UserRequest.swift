@@ -23,7 +23,7 @@ public extension User {
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
             if let user = User(JSON: $0) {
-                return .Success(Box(user))
+                return .Success(user)
             }
             return .Failure(GenericError)
             }, completion: { result, response in
@@ -42,9 +42,9 @@ public extension User {
         let parameters = ["client_id": Soundcloud.clientIdentifier!]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
-            let tracks = $0.map { return Track(JSON: $0) }
+            let tracks = $0.flatMap { return Track(JSON: $0) }
             if let tracks = tracks {
-                return .Success(Box(compact(tracks)))
+                return .Success(tracks)
             }
             return .Failure(GenericError)
             }, completion: { result, response in
@@ -63,9 +63,9 @@ public extension User {
         let parameters = ["client_id": Soundcloud.clientIdentifier!]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
-            let comments = $0.map { return Comment(JSON: $0) }
+            let comments = $0.flatMap { return Comment(JSON: $0) }
             if let comments = comments {
-                return .Success(Box(compact(comments)))
+                return .Success(comments)
             }
             return .Failure(GenericError)
             }, completion: { result, response in
@@ -84,9 +84,9 @@ public extension User {
         let parameters = ["client_id": Soundcloud.clientIdentifier!]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
-            let tracks = $0.map { return Track(JSON: $0) }
+            let tracks = $0.flatMap { return Track(JSON: $0) }
             if let tracks = tracks {
-                return .Success(Box(compact(tracks)))
+                return .Success(tracks)
             }
             return .Failure(GenericError)
             }, completion: { result, response in
@@ -105,9 +105,9 @@ public extension User {
         let parameters = ["client_id": Soundcloud.clientIdentifier!]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
-            let users = $0.map { return User(JSON: $0) }
+            let users = $0.flatMap { return User(JSON: $0) }
             if let users = users {
-                return .Success(Box(compact(users)))
+                return .Success(users)
             }
             return .Failure(GenericError)
             }, completion: { result, response in
@@ -126,9 +126,9 @@ public extension User {
         let parameters = ["client_id": Soundcloud.clientIdentifier!]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
-            let users = $0.map { return User(JSON: $0) }
+            let users = $0.flatMap { return User(JSON: $0) }
             if let users = users {
-                return .Success(Box(compact(users)))
+                return .Success(users)
             }
             return .Failure(GenericError)
             }, completion: { result, response in
@@ -172,10 +172,10 @@ public extension User {
 
             let request = Request(URL: URL, method: follow ? .PUT : .DELETE, parameters: nil, parse: {
                 if let _ = User(JSON: $0) {
-                    return .Success(Box(true))
+                    return .Success(true)
                 }
                 if let _ = $0["status"].stringValue?.rangeOfString(" OK") {
-                    return .Success(Box(true))
+                    return .Success(true)
                 }
                 return .Failure(GenericError)
                 }, completion: { result, response in
@@ -200,9 +200,9 @@ public extension User {
         let parameters = ["client_id": Soundcloud.clientIdentifier!]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
-            let playlists = $0.map { return Playlist(JSON: $0) }
+            let playlists = $0.flatMap { return Playlist(JSON: $0) }
             if let playlists = playlists {
-                return .Success(Box(compact(playlists)))
+                return .Success(playlists)
             }
             return .Failure(GenericError)
             }, completion: { result, response in

@@ -23,7 +23,7 @@ public extension Track {
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
             if let track = Track(JSON: $0) {
-                return .Success(Box(track))
+                return .Success(track)
             }
             return .Failure(GenericError)
             }, completion: { result, response in
@@ -46,9 +46,9 @@ public extension Track {
         ]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
-            let tracks = $0.map { return Track(JSON: $0) }
+            let tracks = $0.flatMap { return Track(JSON: $0) }
             if let tracks = tracks {
-                return .Success(Box(compact(tracks)))
+                return .Success(tracks)
             }
             return .Failure(GenericError)
             }, completion: { result, response in
@@ -67,9 +67,9 @@ public extension Track {
         let parameters = ["client_id": Soundcloud.clientIdentifier!]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
-            let comments = $0.map { return Comment(JSON: $0) }
+            let comments = $0.flatMap { return Comment(JSON: $0) }
             if let comments = comments {
-                return .Success(Box(compact(comments)))
+                return .Success(comments)
             }
             return .Failure(GenericError)
         }, completion: { result, response in
@@ -98,7 +98,7 @@ public extension Track {
 
             let request = Request(URL: URL, method: .POST, parameters: parameters, parse: {
                 if let comments = Comment(JSON: $0) {
-                    return .Success(Box(comments))
+                    return .Success(comments)
                 }
                 return .Failure(GenericError)
             }, completion: { result, response in
@@ -123,9 +123,9 @@ public extension Track {
         let parameters = ["client_id": Soundcloud.clientIdentifier!]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
-            let users = $0.map { return User(JSON: $0) }
+            let users = $0.flatMap { return User(JSON: $0) }
             if let users = users {
-                return .Success(Box(compact(users)))
+                return .Success(users)
             }
             return .Failure(GenericError)
             }, completion: { result, response in
@@ -153,10 +153,10 @@ public extension Track {
             let URL = baseURL.URLByAppendingQueryString(parameters.queryString)
             let request = Request(URL: URL, method: .PUT, parameters: nil, parse: {
                 if let _ = $0["status"].stringValue?.rangeOfString(" OK") {
-                    return .Success(Box(true))
+                    return .Success(true)
                 }
                 if let _ = $0["status"].stringValue?.rangeOfString(" Created") {
-                    return .Success(Box(true))
+                    return .Success(true)
                 }
                 return .Failure(GenericError)
                 }, completion: { result, response in

@@ -44,6 +44,13 @@ internal class JSONObject: SequenceType {
         }
         return nil
     }
+
+    func flatMap<U>(f: JSONObject -> U?) -> [U]? {
+        if let value = value as? [AnyObject] {
+            return value.flatMap { f(JSONObject($0)) }
+        }
+        return nil
+    }
 }
 
 internal extension JSONObject {
@@ -83,9 +90,8 @@ internal extension JSONObject {
     }
     
     internal func arrayValue<T>(mapping: JSONObject -> T?) -> [T]? {
-        if let actualJsonArray =  value as? [AnyObject] {
-            let values = actualJsonArray.map { mapping(JSONObject($0)) }
-            return compact(values)
+        if let actualJsonArray = value as? [AnyObject] {
+            return actualJsonArray.flatMap { mapping(JSONObject($0)) }
         }
         return nil
     }
@@ -115,25 +121,11 @@ private extension NSDateFormatter {
 ////////////////////////////////////////////////////////////////////////////
 
 
-// MARK: - Box
-////////////////////////////////////////////////////////////////////////////
-
-public class Box<T> {
-    public let value: T
-
-    public init(_ value: T) {
-        self.value = value
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////
-
-
 // MARK: - Result
 ////////////////////////////////////////////////////////////////////////////
 
 public enum Result<T> {
-    case Success(Box<T>)
+    case Success(T)
     case Failure(NSError)
 
     public var isSuccessful: Bool {
@@ -148,7 +140,7 @@ public enum Result<T> {
     public var result: T? {
         switch self {
         case .Success(let result):
-            return result.value
+            return result
         default:
             return nil
         }

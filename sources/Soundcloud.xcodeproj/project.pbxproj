@@ -17,7 +17,6 @@
 		461FA2CC1AFBC6DD00F585C8 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461FA2CB1AFBC6DD00F585C8 /* StringExtension.swift */; };
 		461FA2CD1AFBC78000F585C8 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BC1AEBC58100D3B495 /* DictionaryExtension.swift */; };
 		461FA2CE1AFBC78000F585C8 /* NSURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */; };
-		461FA2CF1AFBC78000F585C8 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0C41AEBF2EB00D3B495 /* ArrayExtension.swift */; };
 		461FA2D01AFBC78000F585C8 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461FA2CB1AFBC6DD00F585C8 /* StringExtension.swift */; };
 		461FA2D11AFBC78500F585C8 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465308A91AB5C73700766A62 /* Request.swift */; };
 		461FA2D21AFBC79700F585C8 /* Soundcloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0CB1AEC04F800D3B495 /* Soundcloud.swift */; };
@@ -36,7 +35,6 @@
 		4644B0BF1AEBC76E00D3B495 /* NSURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */; };
 		4644B0C11AEBD01900D3B495 /* TrackRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0C01AEBD01900D3B495 /* TrackRequest.swift */; };
 		4644B0C31AEBD0FA00D3B495 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0C21AEBD0FA00D3B495 /* UserRequest.swift */; };
-		4644B0C51AEBF2EB00D3B495 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0C41AEBF2EB00D3B495 /* ArrayExtension.swift */; };
 		4644B0CC1AEC04F800D3B495 /* Soundcloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0CB1AEC04F800D3B495 /* Soundcloud.swift */; };
 		464565D31B73BCC500839812 /* PlaylistRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464565D21B73BCC500839812 /* PlaylistRequest.swift */; };
 		465308AA1AB5C73700766A62 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465308A91AB5C73700766A62 /* Request.swift */; };
@@ -107,7 +105,6 @@
 		4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLExtension.swift; sourceTree = "<group>"; };
 		4644B0C01AEBD01900D3B495 /* TrackRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackRequest.swift; sourceTree = "<group>"; };
 		4644B0C21AEBD0FA00D3B495 /* UserRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
-		4644B0C41AEBF2EB00D3B495 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		4644B0CB1AEC04F800D3B495 /* Soundcloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Soundcloud.swift; sourceTree = "<group>"; };
 		464565D21B73BCC500839812 /* PlaylistRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistRequest.swift; sourceTree = "<group>"; };
 		465308A91AB5C73700766A62 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
@@ -213,7 +210,6 @@
 			children = (
 				4644B0BC1AEBC58100D3B495 /* DictionaryExtension.swift */,
 				4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */,
-				4644B0C41AEBF2EB00D3B495 /* ArrayExtension.swift */,
 				461FA2CB1AFBC6DD00F585C8 /* StringExtension.swift */,
 			);
 			path = extension;
@@ -628,7 +624,6 @@
 				464565D31B73BCC500839812 /* PlaylistRequest.swift in Sources */,
 				4644B0C31AEBD0FA00D3B495 /* UserRequest.swift in Sources */,
 				4644B0C11AEBD01900D3B495 /* TrackRequest.swift in Sources */,
-				4644B0C51AEBF2EB00D3B495 /* ArrayExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,7 +650,6 @@
 				461FA2D31AFBC7A700F585C8 /* Enums.swift in Sources */,
 				461FA2D51AFBC7A700F585C8 /* User.swift in Sources */,
 				465923771B636A8A0090056E /* TrackTests.swift in Sources */,
-				461FA2CF1AFBC78000F585C8 /* ArrayExtension.swift in Sources */,
 				461FA2D71AFBC7A700F585C8 /* Playlist.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

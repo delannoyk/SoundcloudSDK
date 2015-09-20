@@ -142,7 +142,7 @@ extension Session {
 
             let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
                 if let user = User(JSON: $0) {
-                    return .Success(Box(user))
+                    return .Success(user)
                 }
                 return .Failure(GenericError)
                 }, completion: { result, response in
@@ -180,7 +180,7 @@ extension Session {
             web.onDismiss = { URL in
                 if let accessCode = URL?.query?.queryDictionary["code"] {
                     let session = Session(authorizationCode: accessCode)
-                    completion(.Success(Box(session)))
+                    completion(.Success(session))
                 }
                 else {
                     completion(.Failure(GenericError))
@@ -256,7 +256,7 @@ extension Session {
                 newSession.accessTokenExpireDate = NSDate(timeIntervalSinceNow: expires)
                 newSession.scope = scope
                 newSession.refreshToken = $0["refresh_token"].stringValue
-                return .Success(Box(newSession))
+                return .Success(newSession)
             }
             return .Failure(GenericError)
             }, completion: { result, response in
@@ -334,25 +334,25 @@ public class Soundcloud: NSObject {
 
             let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
                 if let user = User(JSON: $0) {
-                    return .Success(Box(ResolveResponse(users: [user], tracks: nil, playlist: nil)))
+                    return .Success(ResolveResponse(users: [user], tracks: nil, playlist: nil))
                 }
 
                 if let playlist = Playlist(JSON: $0) {
-                    return .Success(Box(ResolveResponse(users: nil, tracks: nil, playlist: playlist)))
+                    return .Success(ResolveResponse(users: nil, tracks: nil, playlist: playlist))
                 }
 
                 if let track = Track(JSON: $0) {
-                    return .Success(Box(ResolveResponse(users: nil, tracks: [track], playlist: nil)))
+                    return .Success(ResolveResponse(users: nil, tracks: [track], playlist: nil))
                 }
 
-                let users = $0.map { return User(JSON: $0) }
+                let users = $0.flatMap { return User(JSON: $0) }
                 if let users = users where users.count > 0 {
-                    return .Success(Box(ResolveResponse(users: compact(users), tracks: nil, playlist: nil)))
+                    return .Success(ResolveResponse(users: users, tracks: nil, playlist: nil))
                 }
 
-                let tracks = $0.map { return Track(JSON: $0) }
+                let tracks = $0.flatMap { return Track(JSON: $0) }
                 if let tracks = tracks where tracks.count > 0 {
-                    return .Success(Box(ResolveResponse(users: nil, tracks: compact(tracks), playlist: nil)))
+                    return .Success(ResolveResponse(users: nil, tracks: tracks, playlist: nil))
                 }
                 
                 return .Failure(GenericError)

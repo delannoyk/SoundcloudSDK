@@ -159,8 +159,7 @@ public func ==(lhs: Playlist, rhs: Playlist) -> Bool {
 
 internal extension Playlist {
     init?(JSON: JSONObject) {
-        let tracks = JSON["tracks"].map { return Track(JSON: $0) }
-        if let identifier = JSON["id"].intValue, user = User(JSON: JSON["user"]), tracks = tracks {
+        if let identifier = JSON["id"].intValue, user = User(JSON: JSON["user"]) {
             self.init(identifier: identifier,
                 createdAt: JSON["created_at"].dateValue("yyyy/MM/dd HH:mm:ss VVVV") ?? NSDate(),
                 createdBy: user,
@@ -178,7 +177,7 @@ internal extension Playlist {
                 type: PlaylistType(rawValue: JSON["playlist_type"].stringValue ?? ""),
                 title: JSON["title"].stringValue ?? "",
                 artworkURL: ImageURLs(baseURL: JSON["artwork_url"].URLValue),
-                tracks: compact(tracks),
+                tracks: JSON["tracks"].flatMap { return Track(JSON: $0) },
                 ean: JSON["ean"].stringValue,
                 sharingAccess: SharingAccess(rawValue: JSON["sharing"].stringValue ?? "") ?? .Private,
                 labelIdentifier: JSON["label_id"].intValue,
