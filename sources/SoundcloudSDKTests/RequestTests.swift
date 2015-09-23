@@ -18,9 +18,9 @@ class RequestTests: XCTestCase {
         let parameters = "test=123"
         let URLRequest = method.URLRequest(URL, parameters: parameters)
 
-        let expectedValue = URL.absoluteString! + "?" + parameters
+        let expectedValue = URL.absoluteString + "?" + parameters
 
-        XCTAssert(URLRequest.URL?.absoluteString! == expectedValue, "Test failed: URLRequest.URL isn't what it's supposed to be.")
+        XCTAssert(URLRequest.URL?.absoluteString == expectedValue, "Test failed: URLRequest.URL isn't what it's supposed to be.")
     }
 
     func testGETDictionary() {
@@ -29,9 +29,9 @@ class RequestTests: XCTestCase {
         let parameters = ["test": "123"]
         let URLRequest = method.URLRequest(URL, parameters: parameters)
 
-        let expectedValue = URL.absoluteString! + "?" + parameters.queryString
+        let expectedValue = URL.absoluteString + "?" + parameters.queryString
 
-        XCTAssert(URLRequest.URL?.absoluteString! == expectedValue, "Test failed: URLRequest.URL isn't what it's supposed to be.")
+        XCTAssert(URLRequest.URL?.absoluteString == expectedValue, "Test failed: URLRequest.URL isn't what it's supposed to be.")
     }
 
     func testPOSTString() {
