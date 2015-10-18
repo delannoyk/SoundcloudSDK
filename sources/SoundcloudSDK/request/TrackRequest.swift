@@ -58,6 +58,29 @@ public extension Track {
     }
 
     /**
+    Search tracks that fit asked queries.
+    
+    - parameter queries:    The queries to run
+    - parameter completion: The closure that will be called when tracks are loaded or upon error
+    */
+    public static func search(queries: [SearchQueryOptions], completion: Result<[Track]> -> Void) {
+        let URL = BaseURL
+        var parameters = ["client_id": Soundcloud.clientIdentifier!]
+        queries.map { $0.query }.forEach { parameters[$0.0] = $0.1 }
+
+        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
+            let tracks = $0.flatMap { return Track(JSON: $0) }
+            if let tracks = tracks {
+                return .Success(tracks)
+            }
+            return .Failure(GenericError)
+            }, completion: { result, response in
+                completion(result)
+        })
+        request.start()
+    }
+
+    /**
     Load comments relative to a track
 
     - parameter completion: The closure that will be called when the comments are loaded or upon error

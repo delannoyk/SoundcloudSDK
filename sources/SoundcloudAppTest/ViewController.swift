@@ -12,6 +12,7 @@ import Soundcloud
 class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet private weak var textFieldUserIdentifier: UITextField!
     @IBOutlet private weak var textFieldTrackIdentifier: UITextField!
+    @IBOutlet private weak var textFieldSearchText: UITextField!
 
     var user: User?
 
@@ -51,6 +52,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 print(result.result)
                 print(result.error)
             })
+        })
+    }
+
+    @IBAction func buttonSearchPressed(_: AnyObject) {
+        Track.search([.QueryString(textFieldSearchText.text!)], completion: { result in
+            print(result.result)
+            print(result.error)
         })
     }
 

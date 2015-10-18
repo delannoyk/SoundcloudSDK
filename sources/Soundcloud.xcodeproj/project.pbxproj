@@ -45,6 +45,8 @@
 		4656CE8C1A9CF0CD00319B94 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8B1A9CF0CD00319B94 /* Playlist.swift */; };
 		4656CE8E1A9CF0DC00319B94 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8D1A9CF0DC00319B94 /* App.swift */; };
 		4656CE901A9D098300319B94 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8F1A9D098300319B94 /* Enums.swift */; };
+		465877191BD394AA0080F05A /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465877181BD394AA0080F05A /* SearchQuery.swift */; settings = {ASSET_TAGS = (); }; };
+		4658771A1BD398600080F05A /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465877181BD394AA0080F05A /* SearchQuery.swift */; settings = {ASSET_TAGS = (); }; };
 		465923771B636A8A0090056E /* TrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465923761B636A8A0090056E /* TrackTests.swift */; };
 		465923791B636AA40090056E /* RequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465923781B636AA40090056E /* RequestTests.swift */; };
 		4697CE1A1B36D11E00052DF1 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4637FD891B30A39700286C14 /* Comment.swift */; };
@@ -118,6 +120,7 @@
 		4656CE8B1A9CF0CD00319B94 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		4656CE8D1A9CF0DC00319B94 /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		4656CE8F1A9D098300319B94 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		465877181BD394AA0080F05A /* SearchQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchQuery.swift; sourceTree = "<group>"; };
 		465923761B636A8A0090056E /* TrackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackTests.swift; sourceTree = "<group>"; };
 		465923781B636AA40090056E /* RequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTests.swift; sourceTree = "<group>"; };
 		46BA619C1B5BBCE40066ECE4 /* Pods.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods.framework; path = "Pods/../build/Debug-iphoneos/Pods.framework"; sourceTree = "<group>"; };
@@ -310,6 +313,7 @@
 				4656CE891A9CF0BE00319B94 /* Track.swift */,
 				4656CE8B1A9CF0CD00319B94 /* Playlist.swift */,
 				4626792D1AED041B003771C9 /* ImageURLs.swift */,
+				465877181BD394AA0080F05A /* SearchQuery.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -613,6 +617,7 @@
 				465308AA1AB5C73700766A62 /* Request.swift in Sources */,
 				4644B0CC1AEC04F800D3B495 /* Soundcloud.swift in Sources */,
 				4656CE8E1A9CF0DC00319B94 /* App.swift in Sources */,
+				465877191BD394AA0080F05A /* SearchQuery.swift in Sources */,
 				4656CE8A1A9CF0BE00319B94 /* Track.swift in Sources */,
 				4656CE901A9D098300319B94 /* Enums.swift in Sources */,
 				4644B0BD1AEBC58100D3B495 /* DictionaryExtension.swift in Sources */,
@@ -636,6 +641,7 @@
 				461FA2D61AFBC7A700F585C8 /* Track.swift in Sources */,
 				461FA2D21AFBC79700F585C8 /* Soundcloud.swift in Sources */,
 				4656CE7D1A9CF05600319B94 /* SoundcloudSDKTests.swift in Sources */,
+				4658771A1BD398600080F05A /* SearchQuery.swift in Sources */,
 				461FA2D11AFBC78500F585C8 /* Request.swift in Sources */,
 				465923791B636AA40090056E /* RequestTests.swift in Sources */,
 				461FA2D91AFBC7AC00F585C8 /* TrackRequest.swift in Sources */,
@@ -861,10 +867,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6586E4359493BA207B4543E5 /* Pods-SoundcloudTests.debug.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -880,10 +883,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 85A7A8785631C97010BFC8BC /* Pods-SoundcloudTests.release.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = SoundcloudSDKTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "be.delannoyk.$(PRODUCT_NAME:rfc1034identifier)";
