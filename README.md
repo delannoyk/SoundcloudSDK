@@ -45,6 +45,18 @@ After that, you're good to go.
     let track: Track
     track.favoriters(completion: Result<[User]> -> Void)
     ```
+    
+* Search tracks
+
+    ```swift
+    let queries: [SearchQueryOptions] = [
+        .QueryString("The text to search"),
+        .Tags(["list", "of", "tags", "to", "search", "for"]),
+        .Genres(["punk", "rock", "..."]),
+        .Types([TrackType.Live, TrackType.Demo])
+    ]
+    Track.search(queries, completion: Result<[Track]> -> Void)
+    ```
 
 ### User
 
@@ -149,13 +161,8 @@ The login method implements the standard OAuth2 of Soundcloud. Some private meth
     user.unfollow(userIdentifier: Int, completion: Result<Bool> -> Void)
     ```
 
-## Limitations
-
-Right now Playlists are not available.
-
 ## Next steps
 
-* Support Playlist - In progress
 * Add support for pagination - In progress
 * Add unit tests
 * Better error support
