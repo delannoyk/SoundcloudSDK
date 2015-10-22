@@ -31,6 +31,8 @@
 		4626792E1AED041B003771C9 /* ImageURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4626792D1AED041B003771C9 /* ImageURLs.swift */; };
 		4637FD8A1B30A39700286C14 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4637FD891B30A39700286C14 /* Comment.swift */; };
 		463C04181B73BD7D009527FF /* PlaylistRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464565D21B73BCC500839812 /* PlaylistRequest.swift */; };
+		4641ECB21BD7F79900D0D315 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4641ECB11BD7F79900D0D315 /* APIResponse.swift */; };
+		4641ECB31BD8018B00D0D315 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4641ECB11BD7F79900D0D315 /* APIResponse.swift */; };
 		4644B0BD1AEBC58100D3B495 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BC1AEBC58100D3B495 /* DictionaryExtension.swift */; };
 		4644B0BF1AEBC76E00D3B495 /* NSURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */; };
 		4644B0C11AEBD01900D3B495 /* TrackRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0C01AEBD01900D3B495 /* TrackRequest.swift */; };
@@ -45,8 +47,8 @@
 		4656CE8C1A9CF0CD00319B94 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8B1A9CF0CD00319B94 /* Playlist.swift */; };
 		4656CE8E1A9CF0DC00319B94 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8D1A9CF0DC00319B94 /* App.swift */; };
 		4656CE901A9D098300319B94 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8F1A9D098300319B94 /* Enums.swift */; };
-		465877191BD394AA0080F05A /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465877181BD394AA0080F05A /* SearchQuery.swift */; settings = {ASSET_TAGS = (); }; };
-		4658771A1BD398600080F05A /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465877181BD394AA0080F05A /* SearchQuery.swift */; settings = {ASSET_TAGS = (); }; };
+		465877191BD394AA0080F05A /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465877181BD394AA0080F05A /* SearchQuery.swift */; };
+		4658771A1BD398600080F05A /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465877181BD394AA0080F05A /* SearchQuery.swift */; };
 		465923771B636A8A0090056E /* TrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465923761B636A8A0090056E /* TrackTests.swift */; };
 		465923791B636AA40090056E /* RequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465923781B636AA40090056E /* RequestTests.swift */; };
 		4697CE1A1B36D11E00052DF1 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4637FD891B30A39700286C14 /* Comment.swift */; };
@@ -103,6 +105,7 @@
 		4626792D1AED041B003771C9 /* ImageURLs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageURLs.swift; sourceTree = "<group>"; };
 		462679661AED57FC003771C9 /* Soundcloud.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Soundcloud.h; sourceTree = "<group>"; };
 		4637FD891B30A39700286C14 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		4641ECB11BD7F79900D0D315 /* APIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		4644B0BC1AEBC58100D3B495 /* DictionaryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLExtension.swift; sourceTree = "<group>"; };
 		4644B0C01AEBD01900D3B495 /* TrackRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackRequest.swift; sourceTree = "<group>"; };
@@ -306,6 +309,7 @@
 		4656CE861A9CF07E00319B94 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				4641ECB11BD7F79900D0D315 /* APIResponse.swift */,
 				4637FD891B30A39700286C14 /* Comment.swift */,
 				4656CE8F1A9D098300319B94 /* Enums.swift */,
 				4656CE8D1A9CF0DC00319B94 /* App.swift */,
@@ -616,6 +620,7 @@
 				4656CE881A9CF0A800319B94 /* User.swift in Sources */,
 				465308AA1AB5C73700766A62 /* Request.swift in Sources */,
 				4644B0CC1AEC04F800D3B495 /* Soundcloud.swift in Sources */,
+				4641ECB21BD7F79900D0D315 /* APIResponse.swift in Sources */,
 				4656CE8E1A9CF0DC00319B94 /* App.swift in Sources */,
 				465877191BD394AA0080F05A /* SearchQuery.swift in Sources */,
 				4656CE8A1A9CF0BE00319B94 /* Track.swift in Sources */,
@@ -641,6 +646,7 @@
 				461FA2D61AFBC7A700F585C8 /* Track.swift in Sources */,
 				461FA2D21AFBC79700F585C8 /* Soundcloud.swift in Sources */,
 				4656CE7D1A9CF05600319B94 /* SoundcloudSDKTests.swift in Sources */,
+				4641ECB31BD8018B00D0D315 /* APIResponse.swift in Sources */,
 				4658771A1BD398600080F05A /* SearchQuery.swift in Sources */,
 				461FA2D11AFBC78500F585C8 /* Request.swift in Sources */,
 				465923791B636AA40090056E /* RequestTests.swift in Sources */,
@@ -700,7 +706,7 @@
 			baseConfigurationReference = 6DFFF015B8F460A56E3C99B9 /* Pods-SoundcloudAppTest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -715,7 +721,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "be.delannoyk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9362ac88-79c6-40df-9d59-70c2c6db3674";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -724,6 +730,7 @@
 			baseConfigurationReference = 4F277BE0F3C96D640D9D29F7 /* Pods-SoundcloudAppTest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
