@@ -26,9 +26,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func buttonLoadMePressed(_: AnyObject) {
         Soundcloud.session?.me({ result in
-            self.user = result.result
+            self.user = result.response.result
 
-            if let user = result.result {
+            if let user = result.response.result {
                 print(user)
             }
         })
@@ -36,29 +36,29 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func buttonFollowPressed(_: AnyObject) {
         user?.follow(Int(textFieldUserIdentifier.text!)!, completion: { result in
-            print(result.result)
-            print(result.error)
+            print(result.response.result)
+            print(result.response.error)
 
             self.user?.unfollow(Int(self.textFieldUserIdentifier.text!)!, completion: { result in
-                print(result.result)
-                print(result.error)
+                print(result.response.result)
+                print(result.response.error)
             })
         })
     }
 
     @IBAction func buttonFavoritePressed(_: AnyObject) {
         Track.track(Int(textFieldTrackIdentifier.text!)!, completion: { result in
-            result.result?.favorite(self.user!.identifier, completion: { result in
-                print(result.result)
-                print(result.error)
+            result.response.result?.favorite(self.user!.identifier, completion: { result in
+                print(result.response.result)
+                print(result.response.error)
             })
         })
     }
 
     @IBAction func buttonSearchPressed(_: AnyObject) {
         Track.search([.QueryString(textFieldSearchText.text!)], completion: { result in
-            print(result.result)
-            print(result.error)
+            print(result.response.result)
+            print(result.response.error)
         })
     }
 

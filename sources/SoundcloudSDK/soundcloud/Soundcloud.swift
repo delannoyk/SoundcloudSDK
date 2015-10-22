@@ -88,11 +88,11 @@ extension Session {
     - parameter displayViewController: An UIViewController that is in the view hierarchy
     - parameter completion:            The closure that will be called when the user is logged in or upon error
     */
-    public static func login(displayViewController: UIViewController, completion: Result<Session> -> Void) {
+    public static func login(displayViewController: UIViewController, completion: SimpleAPIResponse<Session> -> Void) {
         authorize(displayViewController, completion: { result in
-            if let session = result.result {
+            if let session = result.response.result {
                 session.getToken({ result in
-                    Soundcloud.session = result.result
+                    Soundcloud.session = result.response.result
                     completion(result)
                 })
             }
@@ -108,9 +108,9 @@ extension Session {
 
     - parameter completion: The closure that will be called when the session is refreshed or upon error
     */
-    public func refreshSession(completion: Result<Session> -> Void) {
+    public func refreshSession(completion: SimpleAPIResponse<Session> -> Void) {
         _refreshToken({ result in
-            if let session = result.result {
+            if let session = result.response.result {
                 Soundcloud.session = session
             }
             completion(result)
@@ -131,7 +131,7 @@ extension Session {
 
     - parameter completion: The closure that will be called when the profile is loaded or upon error
     */
-    public func me(completion: Result<User> -> Void) {
+    public func me(completion: SimpleAPIResponse<User> -> Void) {
         if let clientId = Soundcloud.clientIdentifier, oauthToken = accessToken {
             let URL = NSURL(string: "https://api.soundcloud.com/me")!
 
@@ -140,20 +140,21 @@ extension Session {
                 "oauth_token": oauthToken,
             ]
 
-            let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
+            let request = Request<User>(URL: URL, method: .GET, parameters: parameters, parse: {
                 if let user = User(JSON: $0) {
                     return .Success(user)
                 }
                 return .Failure(GenericError)
                 }, completion: { result, response in
+                    let r = SimpleAPIResponse(result)
                     refreshTokenIfNecessaryCompletion(response, retry: {
                         Soundcloud.session?.me(completion)
-                        }, completion: completion, result: result)
+                        }, completion: completion, result: r)
             })
             request.start()
         }
         else {
-            completion(.Failure(GenericError))
+            completion(SimpleAPIResponse(.Failure(GenericError)))
         }
     }
 
@@ -163,7 +164,7 @@ extension Session {
     // MARK: Authorize
     ////////////////////////////////////////////////////////////////////////////
 
-    internal static func authorize(displayViewController: UIViewController, completion: Result<Session> -> Void) {
+    internal static func authorize(displayViewController: UIViewController, completion: SimpleAPIResponse<Session> -> Void) {
         if let clientId = Soundcloud.clientIdentifier, redirectURI = Soundcloud.redirectURI {
             let URL = NSURL(string: "https://soundcloud.com/connect")!
 
@@ -180,10 +181,10 @@ extension Session {
             web.onDismiss = { URL in
                 if let accessCode = URL?.query?.queryDictionary["code"] {
                     let session = Session(authorizationCode: accessCode)
-                    completion(.Success(session))
+                    completion(SimpleAPIResponse(.Success(session)))
                 }
                 else {
-                    completion(.Failure(GenericError))
+                    completion(SimpleAPIResponse(.Failure(GenericError)))
                 }
             }
 
@@ -191,7 +192,7 @@ extension Session {
             displayViewController.presentViewController(nav, animated: true, completion: nil)
         }
         else {
-            completion(.Failure(GenericError))
+            completion(SimpleAPIResponse(.Failure(GenericError)))
         }
     }
 
@@ -201,7 +202,7 @@ extension Session {
     // MARK: Token
     ////////////////////////////////////////////////////////////////////////////
 
-    internal func getToken(completion: Result<Session> -> Void) {
+    internal func getToken(completion: SimpleAPIResponse<Session> -> Void) {
         if let clientId = Soundcloud.clientIdentifier, clientSecret = Soundcloud.clientSecret, redirectURI = Soundcloud.redirectURI {
             let parameters = [
                 "client_id": clientId,
@@ -213,7 +214,7 @@ extension Session {
             token(parameters, completion: completion)
         }
         else {
-            completion(.Failure(GenericError))
+            completion(SimpleAPIResponse(.Failure(GenericError)))
         }
     }
 
@@ -223,7 +224,7 @@ extension Session {
     // MARK: Refresh Token
     ////////////////////////////////////////////////////////////////////////////
 
-    internal func _refreshToken(completion: Result<Session> -> Void) {
+    internal func _refreshToken(completion: SimpleAPIResponse<Session> -> Void) {
         if let clientId = Soundcloud.clientIdentifier, clientSecret = Soundcloud.clientSecret, redirectURI = Soundcloud.redirectURI, refreshToken = refreshToken {
             let parameters = [
                 "client_id": clientId,
@@ -236,7 +237,7 @@ extension Session {
             token(parameters, completion: completion)
         }
         else {
-            completion(.Failure(GenericError))
+            completion(SimpleAPIResponse(.Failure(GenericError)))
         }
     }
 
@@ -246,7 +247,7 @@ extension Session {
     // MARK: Token requests
     ////////////////////////////////////////////////////////////////////////////
 
-    private func token(parameters: HTTPParametersConvertible, completion: Result<Session> -> Void) {
+    private func token(parameters: HTTPParametersConvertible, completion: SimpleAPIResponse<Session> -> Void) {
         let URL = NSURL(string: "https://api.soundcloud.com/oauth2/token")!
 
         let request = Request(URL: URL, method: .POST, parameters: parameters, parse: {
@@ -260,7 +261,7 @@ extension Session {
             }
             return .Failure(GenericError)
             }, completion: { result, response in
-                completion(result)
+                completion(SimpleAPIResponse(result))
         })
         request.start()
     }
@@ -325,7 +326,7 @@ public class Soundcloud: NSObject {
     - parameter URI:        The URI to lookup
     - parameter completion: The closure that will be called when the result is ready or upon error
     */
-    public static func resolve(URI: String, completion: Result<ResolveResponse> -> Void) {
+    public static func resolve(URI: String, completion: SimpleAPIResponse<ResolveResponse> -> Void) {
         if let clientId = clientIdentifier {
             let URL = NSURL(string: "http://api.soundcloud.com/resolve")!
             let parameters = ["client_id": clientId,
@@ -354,15 +355,15 @@ public class Soundcloud: NSObject {
                 if let tracks = tracks where tracks.count > 0 {
                     return .Success(ResolveResponse(users: nil, tracks: tracks, playlist: nil))
                 }
-                
+
                 return .Failure(GenericError)
                 }, completion: { result, response in
-                    completion(result)
+                    completion(SimpleAPIResponse(result))
             })
             request.start()
         }
         else {
-            completion(.Failure(GenericError))
+            completion(SimpleAPIResponse(.Failure(GenericError)))
         }
     }
 

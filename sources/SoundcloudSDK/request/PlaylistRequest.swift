@@ -18,7 +18,7 @@ public extension Playlist {
     - parameter secretToken: The secret token to access the playlist or nil
     - parameter completion:  The closure that will be called when playlist is loaded or upon error
     */
-    public static func playlist(identifier: Int, secretToken: String? = nil, completion: Result<Playlist> -> Void) {
+    public static func playlist(identifier: Int, secretToken: String? = nil, completion: SimpleAPIResponse<Playlist> -> Void) {
         let URL = BaseURL.URLByAppendingPathComponent("\(identifier)")
 
         var parameters = ["client_id": Soundcloud.clientIdentifier!]
@@ -32,7 +32,7 @@ public extension Playlist {
             }
             return .Failure(GenericError)
             }, completion: { result, response in
-                completion(result)
+                completion(SimpleAPIResponse(result))
         })
         request.start()
     }

@@ -247,7 +247,7 @@ internal struct Request<T> {
 // MARK: - Refresh session token
 ////////////////////////////////////////////////////////////////////////////
 
-internal func refreshTokenIfNecessaryCompletion<T>(response: NSURLResponse?, retry: Void -> Void, completion: Result<T> -> Void, result: Result<T>) {
+internal func refreshTokenIfNecessaryCompletion<T>(response: NSURLResponse?, retry: Void -> Void, completion: SimpleAPIResponse<T> -> Void, result: SimpleAPIResponse<T>) {
     if let session = Soundcloud.session, response = response as? NSHTTPURLResponse where response.statusCode == 401 {
         session.refreshSession({ result in
             retry()
