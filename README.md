@@ -163,11 +163,9 @@ The login method implements the standard OAuth2 of Soundcloud. Some private meth
 
 ## Next steps
 
-* Add support for pagination - In progress
 * Add unit tests
 * Better error support
 * Analyse if it's necessary to ease up things to play a file (Integrate an audio player/a dependency ?)
-* Analyse if it's necessary to handle the session in the SDK for the developer
 
 ## Contributing
 
