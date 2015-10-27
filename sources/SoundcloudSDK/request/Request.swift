@@ -126,7 +126,7 @@ private extension NSDateFormatter {
 
 public enum Result<T> {
     case Success(T)
-    case Failure(NSError)
+    case Failure(ErrorType)
 
     public var isSuccessful: Bool {
         switch self {
@@ -146,7 +146,7 @@ public enum Result<T> {
         }
     }
 
-    public var error: NSError? {
+    public var error: ErrorType? {
         switch self {
         case .Failure(let error):
             return error
@@ -215,7 +215,7 @@ internal struct Request<T> {
                 do {
                     let JSON = try JSONObject(NSJSONSerialization.JSONObjectWithData(data, options: []))
                     result = parse(JSON)
-                } catch let error as NSError {
+                } catch let error {
                     result = .Failure(error)
                 }
 
