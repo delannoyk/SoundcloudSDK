@@ -8,8 +8,6 @@
 
 import Foundation
 
-internal let GenericError = NSError(domain: "SoundcloudSDK", code: -1, userInfo: nil)
-
 // MARK: - JSONObject
 ////////////////////////////////////////////////////////////////////////////
 
@@ -124,9 +122,9 @@ private extension NSDateFormatter {
 // MARK: - Result
 ////////////////////////////////////////////////////////////////////////////
 
-public enum Result<T> {
+public enum Result<T, E> {
     case Success(T)
-    case Failure(ErrorType)
+    case Failure(E)
 
     public var isSuccessful: Bool {
         switch self {
@@ -146,7 +144,7 @@ public enum Result<T> {
         }
     }
 
-    public var error: ErrorType? {
+    public var error: E? {
         switch self {
         case .Failure(let error):
             return error
@@ -200,36 +198,54 @@ internal protocol HTTPParametersConvertible {
 ////////////////////////////////////////////////////////////////////////////
 
 
+// MARK: - Errors
+////////////////////////////////////////////////////////////////////////////
+
+internal protocol RequestError {
+    init(networkError: ErrorType)
+    init(jsonError: ErrorType)
+    init?(HTTPURLResponse: NSHTTPURLResponse)
+}
+
+////////////////////////////////////////////////////////////////////////////
+
+
 // MARK: - Request
 ////////////////////////////////////////////////////////////////////////////
 
-internal struct Request<T> {
+internal struct Request<T, E: RequestError> {
     private let dataTask: NSURLSessionDataTask
 
-    init(URL: NSURL, method: HTTPMethod, parameters: HTTPParametersConvertible?, parse: JSONObject -> Result<T>, completion: (Result<T>, NSURLResponse?) -> Void) {
+    init(URL: NSURL, method: HTTPMethod, parameters: HTTPParametersConvertible?, parse: JSONObject -> Result<T, E>, completion: Result<T, E> -> Void) {
         let URLRequest = method.URLRequest(URL, parameters: parameters)
 
-        dataTask = NSURLSession.sharedSession().dataTaskWithRequest(URLRequest, completionHandler: { (data, response, error) -> Void in
-            if let data = data {
-                var result: Result<T>
-                do {
-                    let JSON = try JSONObject(NSJSONSerialization.JSONObjectWithData(data, options: []))
-                    result = parse(JSON)
-                } catch let error {
-                    result = .Failure(error)
-                }
-
+        dataTask = NSURLSession.sharedSession().dataTaskWithRequest(URLRequest) { data, response, error in
+            if let response = response as? NSHTTPURLResponse, error = E(HTTPURLResponse: response) {
                 dispatch_async(dispatch_get_main_queue()) {
-                    completion(result, response)
+                    completion(.Failure(error))
                 }
-            }
-            else if let error = error {
-                completion(.Failure(error), response)
             }
             else {
-                completion(.Failure(GenericError), response)
+                if let data = data {
+                    var result: Result<T, E>
+                    do {
+                        let JSON = try JSONObject(NSJSONSerialization.JSONObjectWithData(data, options: []))
+                        result = parse(JSON)
+                    } catch let error {
+                        result = .Failure(E(jsonError: error))
+                    }
+
+                    dispatch_async(dispatch_get_main_queue()) {
+                        completion(result)
+                    }
+                }
+                else if let error = error {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        completion(.Failure(E(networkError: error)))
+                    }
+                }
             }
-        })
+        }
     }
 
     func start() {
@@ -238,23 +254,6 @@ internal struct Request<T> {
 
     func stop() {
         dataTask.suspend()
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////
-
-
-// MARK: - Refresh session token
-////////////////////////////////////////////////////////////////////////////
-
-internal func refreshTokenIfNecessaryCompletion<T>(response: NSURLResponse?, retry: Void -> Void, completion: SimpleAPIResponse<T> -> Void, result: SimpleAPIResponse<T>) {
-    if let session = Soundcloud.session, response = response as? NSHTTPURLResponse where response.statusCode == 401 {
-        session.refreshSession({ result in
-            retry()
-        })
-    }
-    else {
-        completion(result)
     }
 }
 

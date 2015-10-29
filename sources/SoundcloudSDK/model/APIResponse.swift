@@ -10,18 +10,26 @@ import UIKit
 
 public protocol APIResponse {
     typealias U
-    var response: Result<U> { get }
+    var response: Result<U, SoundcloudError> { get }
 }
 
 public struct SimpleAPIResponse<T>: APIResponse {
     public typealias U = T
-    public let response: Result<T>
+    public let response: Result<T, SoundcloudError>
 
     // MARK: Initialization
     ////////////////////////////////////////////////////////////////////////////
 
-    internal init(_ response: Result<T>) {
+    internal init(_ response: Result<T, SoundcloudError>) {
         self.response = response
+    }
+
+    internal init(_ error: SoundcloudError) {
+        self.response = .Failure(error)
+    }
+
+    internal init(_ value: T) {
+        self.response = .Success(value)
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -29,15 +37,15 @@ public struct SimpleAPIResponse<T>: APIResponse {
 
 public struct PaginatedAPIResponse<T>: APIResponse {
     public typealias U = [T]
-    public let response: Result<[T]>
+    public let response: Result<[T], SoundcloudError>
 
     private let nextPageURL: NSURL?
-    private let parse: JSONObject -> Result<[T]>
+    private let parse: JSONObject -> Result<[T], SoundcloudError>
 
     // MARK: Initialization
     ////////////////////////////////////////////////////////////////////////////
 
-    internal init(response: Result<[T]>, nextPageURL: NSURL?, parse: JSONObject -> Result<[T]>) {
+    internal init(response: Result<[T], SoundcloudError>, nextPageURL: NSURL?, parse: JSONObject -> Result<[T], SoundcloudError>) {
         self.response = response
         self.nextPageURL = nextPageURL
         self.parse = parse
@@ -58,11 +66,9 @@ public struct PaginatedAPIResponse<T>: APIResponse {
             let request = Request(URL: nextPageURL,
                 method: .GET,
                 parameters: nil,
-                parse: { JSON in
-                    return .Success(PaginatedAPIResponse(response: self.parse(JSON["collection"]),
-                        nextPageURL: JSON["next_href"].URLValue,
-                        parse: self.parse))
-                }) { result, response in
+                parse: { JSON -> Result<PaginatedAPIResponse, SoundcloudError> in
+                    return .Success(PaginatedAPIResponse(JSON, parse: self.parse))
+                }) { result in
                     completion(result.result!)
             }
             request.start()

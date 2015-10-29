@@ -17,9 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        Soundcloud.clientIdentifier = "XXXXXXX"
-        Soundcloud.clientSecret = "XXXXX"
-        Soundcloud.redirectURI = "XXXX"
+        Soundcloud.clientIdentifier = "a71f7ea8d6bdce41649ececcc2ed43d9"
+        Soundcloud.clientSecret = "d6bbbb2b93c8462ed57dc8c2ba7b1328"
+        Soundcloud.redirectURI = "bemusic://soundcloud"
         return true
     }
 

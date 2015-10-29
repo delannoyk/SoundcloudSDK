@@ -18,17 +18,22 @@ public extension Track {
     - parameter completion: The closure that will be called when track is loaded or upon error
     */
     public static func track(identifier: Int, completion: SimpleAPIResponse<Track> -> Void) {
+        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+            completion(SimpleAPIResponse(.CredentialsNotSet))
+            return
+        }
+
         let URL = BaseURL.URLByAppendingPathComponent("\(identifier).json")
-        let parameters = ["client_id": Soundcloud.clientIdentifier!]
+        let parameters = ["client_id": clientIdentifier]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
             if let track = Track(JSON: $0) {
                 return .Success(track)
             }
-            return .Failure(GenericError)
-            }, completion: { result, response in
+            return .Failure(.Parsing)
+            }) { result in
                 completion(SimpleAPIResponse(result))
-        })
+        }
         request.start()
     }
 
@@ -39,21 +44,20 @@ public extension Track {
     - parameter completion:  The closure that will be called when tracks are loaded or upon error
     */
     public static func tracks(identifiers: [Int], completion: SimpleAPIResponse<[Track]> -> Void) {
-        let URL = BaseURL
-        let parameters = [
-            "client_id": Soundcloud.clientIdentifier!,
-            "ids": identifiers.map { "\($0)" }.joinWithSeparator(",")
-        ]
+        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+            completion(SimpleAPIResponse(.CredentialsNotSet))
+            return
+        }
 
-        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
-            let tracks = $0.flatMap { return Track(JSON: $0) }
-            if let tracks = tracks {
-                return .Success(tracks)
+        let parameters = ["client_id": clientIdentifier, "ids": identifiers.map { "\($0)" }.joinWithSeparator(",")]
+        let request = Request(URL: BaseURL, method: .GET, parameters: parameters, parse: {
+            guard let tracks = $0.flatMap({ return Track(JSON: $0) }) else {
+                return .Failure(.Parsing)
             }
-            return .Failure(GenericError)
-            }, completion: { result, response in
+            return .Success(tracks)
+            }) { result in
                 completion(SimpleAPIResponse(result))
-        })
+        }
         request.start()
     }
 
@@ -64,23 +68,26 @@ public extension Track {
     - parameter completion: The closure that will be called when tracks are loaded or upon error
     */
     public static func search(queries: [SearchQueryOptions], completion: PaginatedAPIResponse<Track> -> Void) {
-        let URL = BaseURL
-        var parameters = ["client_id": Soundcloud.clientIdentifier!, "linked_partitioning": "true"]
-        queries.map { $0.query }.forEach { parameters[$0.0] = $0.1 }
-
-        let parse = { (JSON: JSONObject) -> Result<[Track]> in
-            let tracks = JSON.flatMap { return Track(JSON: $0) }
-            if let tracks = tracks {
-                return .Success(tracks)
-            }
-            return .Failure(GenericError)
+        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+            completion(PaginatedAPIResponse(.CredentialsNotSet))
+            return
         }
 
-        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
-            return .Success(PaginatedAPIResponse(response: parse($0["collection"]), nextPageURL: $0["next_href"].URLValue, parse: parse))
-            }, completion: { result, response in
+        let parse = { (JSON: JSONObject) -> Result<[Track], SoundcloudError> in
+            guard let tracks = JSON.flatMap({ return Track(JSON: $0) }) else {
+                return .Failure(.Parsing)
+            }
+            return .Success(tracks)
+        }
+
+        var parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
+        queries.map { $0.query }.forEach { parameters[$0.0] = $0.1 }
+
+        let request = Request(URL: BaseURL, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Track>, SoundcloudError> in
+            return .Success(PaginatedAPIResponse(JSON, parse: parse))
+            }) { result in
                 completion(result.result!)
-        })
+        }
         request.start()
     }
 
@@ -90,22 +97,26 @@ public extension Track {
     - parameter completion: The closure that will be called when the comments are loaded or upon error
     */
     public func comments(completion: PaginatedAPIResponse<Comment> -> Void) {
-        let URL = Track.BaseURL.URLByAppendingPathComponent("\(identifier)/comments.json")
-        let parameters = ["client_id": Soundcloud.clientIdentifier!, "linked_partitioning": "true"]
-
-        let parse = { (JSON: JSONObject) -> Result<[Comment]> in
-            let comments = JSON.flatMap { return Comment(JSON: $0) }
-            if let comments = comments {
-                return .Success(comments)
-            }
-            return .Failure(GenericError)
+        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+            completion(PaginatedAPIResponse(.CredentialsNotSet))
+            return
         }
 
-        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
-            return .Success(PaginatedAPIResponse(response: parse($0["collection"]), nextPageURL: $0["next_href"].URLValue, parse: parse))
-            }, completion: { result, response in
+        let parse = { (JSON: JSONObject) -> Result<[Comment], SoundcloudError> in
+            guard let comments = JSON.flatMap({ return Comment(JSON: $0) }) else {
+                return .Failure(.Parsing)
+            }
+            return .Success(comments)
+        }
+
+        let URL = Track.BaseURL.URLByAppendingPathComponent("\(identifier)/comments.json")
+        let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
+
+        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Comment>, SoundcloudError> in
+            return .Success(PaginatedAPIResponse(JSON, parse: parse))
+            }) { result in
                 completion(result.result!)
-        })
+        }
         request.start()
     }
 
@@ -119,30 +130,28 @@ public extension Track {
     - parameter completion: The closure that will be called when the comment is posted or upon error
     */
     public func comment(body: String, timestamp: NSTimeInterval, completion: SimpleAPIResponse<Comment> -> Void) {
-        if let oauthToken = Soundcloud.session?.accessToken {
-            let URL = Track.BaseURL.URLByAppendingPathComponent("\(identifier)/comments.json")
-            let parameters = ["client_id": Soundcloud.clientIdentifier!,
-                "comment[body]": body,
-                "comment[timestamp]": "\(timestamp)",
-                "oauth_token": oauthToken
-            ]
+        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+            completion(SimpleAPIResponse(.CredentialsNotSet))
+            return
+        }
 
-            let request = Request<Comment>(URL: URL, method: .POST, parameters: parameters, parse: {
-                if let comments = Comment(JSON: $0) {
-                    return .Success(comments)
-                }
-                return .Failure(GenericError)
-            }, completion: { result, response in
-                let r = SimpleAPIResponse(result)
-                refreshTokenIfNecessaryCompletion(response, retry: {
-                    self.comment(body, timestamp: timestamp, completion: completion)
-                    }, completion: completion, result: r)
-            })
-            request.start()
+        guard let oauthToken = Soundcloud.session?.accessToken else {
+            completion(SimpleAPIResponse(.NeedsLogin))
+            return
         }
-        else {
-            completion(SimpleAPIResponse(.Failure(GenericError)))
+
+        let URL = Track.BaseURL.URLByAppendingPathComponent("\(identifier)/comments.json")
+        let parameters = ["client_id": clientIdentifier, "comment[body]": body, "comment[timestamp]": "\(timestamp)", "oauth_token": oauthToken]
+
+        let request = Request(URL: URL, method: .POST, parameters: parameters, parse: {
+            if let comments = Comment(JSON: $0) {
+                return .Success(comments)
+            }
+            return .Failure(.Parsing)
+            }) { result in
+                completion(SimpleAPIResponse(result))
         }
+        request.start()
     }
 
     /**
@@ -151,22 +160,26 @@ public extension Track {
     - parameter completion: The closure that will be called when users are loaded or upon error
     */
     public func favoriters(completion: PaginatedAPIResponse<User> -> Void) {
-        let URL = Track.BaseURL.URLByAppendingPathComponent("\(identifier)/favoriters.json")
-        let parameters = ["client_id": Soundcloud.clientIdentifier!, "linked_partitioning": "true"]
-
-        let parse = { (JSON: JSONObject) -> Result<[User]> in
-            let users = JSON.flatMap { return User(JSON: $0) }
-            if let users = users {
-                return .Success(users)
-            }
-            return .Failure(GenericError)
+        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+            completion(PaginatedAPIResponse(.CredentialsNotSet))
+            return
         }
 
-        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
-            return .Success(PaginatedAPIResponse(response: parse($0["collection"]), nextPageURL: $0["next_href"].URLValue, parse: parse))
-            }, completion: { result, response in
+        let URL = Track.BaseURL.URLByAppendingPathComponent("\(identifier)/favoriters.json")
+        let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
+
+        let parse = { (JSON: JSONObject) -> Result<[User], SoundcloudError> in
+            guard let users = JSON.flatMap({ return User(JSON: $0) }) else {
+                return .Failure(.Parsing)
+            }
+            return .Success(users)
+        }
+
+        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<User>, SoundcloudError> in
+            return .Success(PaginatedAPIResponse(JSON, parse: parse))
+            }) { result in
                 completion(result.result!)
-        })
+        }
         request.start()
     }
 
@@ -179,32 +192,24 @@ public extension Track {
     - parameter completion:     The closure that will be called when the track has been favorited or upon error
     */
     public func favorite(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void) {
-        if let oauthToken = Soundcloud.session?.accessToken {
-            let baseURL = User.BaseURL.URLByAppendingPathComponent("\(userIdentifier)/favorites/\(identifier).json")
-            let parameters = [
-                "client_id": Soundcloud.clientIdentifier!,
-                "oauth_token": oauthToken
-            ]
+        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+            completion(SimpleAPIResponse(.CredentialsNotSet))
+            return
+        }
 
-            let URL = baseURL.URLByAppendingQueryString(parameters.queryString)
-            let request = Request<Bool>(URL: URL, method: .PUT, parameters: nil, parse: {
-                if let _ = $0["status"].stringValue?.rangeOfString(" OK") {
-                    return .Success(true)
-                }
-                if let _ = $0["status"].stringValue?.rangeOfString(" Created") {
-                    return .Success(true)
-                }
-                return .Failure(GenericError)
-                }, completion: { result, response in
-                    let r = SimpleAPIResponse(result)
-                    refreshTokenIfNecessaryCompletion(response, retry: {
-                        self.favorite(userIdentifier, completion: completion)
-                        }, completion: completion, result: r)
-            })
-            request.start()
+        guard let oauthToken = Soundcloud.session?.accessToken else {
+            completion(SimpleAPIResponse(.NeedsLogin))
+            return
         }
-        else {
-            completion(SimpleAPIResponse(.Failure(GenericError)))
+
+        let URL = User.BaseURL.URLByAppendingPathComponent("\(userIdentifier)/favorites/\(identifier).json")
+        let parameters = ["client_id": clientIdentifier, "oauth_token": oauthToken]
+
+        let request = Request(URL: URL, method: .PUT, parameters: parameters, parse: { _ in
+            return .Success(true)
+            }) { result in
+                completion(SimpleAPIResponse(result))
         }
+        request.start()
     }
 }
