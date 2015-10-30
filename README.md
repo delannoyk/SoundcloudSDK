@@ -26,24 +26,24 @@ After that, you're good to go.
 * Load track by identifier
 
     ```swift
-    Tracks.track(identifier: Int, completion: Result<Track> -> Void)
+    Tracks.track(identifier: Int, completion: SimpleAPIResponse<Track> -> Void)
     ```
 * Load tracks by identifiers
 
     ```swift
-    Tracks.tracks(identifiers: [Int], completion: Result<[Track]> -> Void)
+    Tracks.tracks(identifiers: [Int], completion: SimpleAPIResponse<[Track]> -> Void)
     ```
 * Get list of comments
 
     ```swift
     let track: Track
-    track.comments(completion: Result<[Comment]> -> Void)
+    track.comments(completion: PaginatedAPIResponse<Comment> -> Void)
     ```
 * Get list of favoriters
 
     ```swift
     let track: Track
-    track.favoriters(completion: Result<[User]> -> Void)
+    track.favoriters(completion: PaginatedAPIResponse<User> -> Void)
     ```
     
 * Search tracks
@@ -55,7 +55,7 @@ After that, you're good to go.
         .Genres(["punk", "rock", "..."]),
         .Types([TrackType.Live, TrackType.Demo])
     ]
-    Track.search(queries, completion: Result<[Track]> -> Void)
+    Track.search(queries, completion: PaginatedAPIResponse<Track> -> Void)
     ```
 
 ### User
@@ -63,37 +63,37 @@ After that, you're good to go.
 * Load user by identifier
 
     ```swift
-    User.user(identifier: Int, completion: Result<User> -> Void)
+    User.user(identifier: Int, completion: SimpleAPIResponse<User> -> Void)
     ```
 * Load list of user's tracks
 
     ```swift
     let user: User
-    user.tracks(completion: Result<[Track]> -> Void)
+    user.tracks(completion: PaginatedAPIResponse<Track> -> Void)
     ```
 * Load list of user's comments
 
     ```swift
     let user: User
-    user.comments(completion: Result<[Comment]> -> Void)
+    user.comments(completion: PaginatedAPIResponse<Comment> -> Void)
     ```
 * Load list of user's favorite tracks
 
     ```swift
     let user: User
-    user.favorites(completion: Result<[Track]> -> Void)
+    user.favorites(completion: PaginatedAPIResponse<Track> -> Void)
     ```
 * Load list of user's followers
 
     ```swift
     let user: User
-    user.followers(completion: Result<[User]> -> Void)
+    user.followers(completion: PaginatedAPIResponse<User> -> Void)
     ```
 * Load list of user's followings
 
     ```swift
     let user: User
-    user.followings(completion: Result<[User]> -> Void)
+    user.followings(completion: PaginatedAPIResponse<User> -> Void)
     ```
 
 ### Resolve
@@ -101,9 +101,9 @@ After that, you're good to go.
 The resolve method doesn't support playlists yet. It's coming :)
 
 ```swift
-Soundcloud.resolve(URI: String, completion: Result<ResolveResponse> -> Void)
+Soundcloud.resolve(URI: String, completion: SimpleAPIResponse<ResolveResponse> -> Void)
 ```
-where `ResolveResponse`is a typealias for `ResolveResponse = (users: [User]?, tracks: [Track]?)`
+where `ResolveResponse`is a typealias for `ResolveResponse = (users: [User]?, tracks: [Track]?, playlist: Playlist?)`
 
 ### Login
 
@@ -114,13 +114,13 @@ The login method implements the standard OAuth2 of Soundcloud. Some private meth
 * Login
 
     ```swift
-    Session.login(displayViewController: UIViewController, completion: Result<Session> -> Void)
+    Session.login(displayViewController: UIViewController, completion: SimpleAPIResponse<Session> -> Void)
     ```
 * Refresh token
 
     ```swift
     let session = Soundcloud.session
-    session?.refreshSession(completion: Result<Session> -> Void)
+    session?.refreshSession(completion: SimpleAPIResponse<Session> -> Void)
     ```
 * Logout
 
@@ -134,37 +134,36 @@ The login method implements the standard OAuth2 of Soundcloud. Some private meth
 
     ```swift
     let session = Soundcloud.session
-    session?.me(completion: Result<User> -> Void)
+    session?.me(completion: SimpleAPIResponse<User> -> Void)
     ```
 * Comment a track
 
     ```swift
     let track: Track
-    track.comment(body: String, timestamp: NSTimeInterval, completion: Result<Comment> -> Void)
+    track.comment(body: String, timestamp: NSTimeInterval, completion: SimpleAPIResponse<Comment> -> Void)
     ```
 * Favorite a track
 
     ```swift
     let track: Track
-    track.favorite(userIdentifier: Int, completion: Result<Bool> -> Void)
+    track.favorite(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void)
     ```
 * Follow a user
 
     ```swift
     let user: User
-    user.follow(userIdentifier: Int, completion: Result<Bool> -> Void)
+    user.follow(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void)
     ```
 * Unfollow a user
 
     ```swift
     let user: User
-    user.unfollow(userIdentifier: Int, completion: Result<Bool> -> Void)
+    user.unfollow(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void)
     ```
 
 ## Next steps
 
 * Add unit tests
-* Better error support
 * Analyse if it's necessary to ease up things to play a file (Integrate an audio player/a dependency ?)
 
 ## Contributing
