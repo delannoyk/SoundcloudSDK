@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'Soundcloud'
-  s.version      = '0.5.0'
+  s.version      = '0.5.1'
   s.license      =  { :type => 'MIT' }
   s.homepage     = 'https://github.com/delannoyk/SoundcloudSDK'
   s.authors      = {
@@ -9,7 +9,8 @@ Pod::Spec.new do |s|
   s.summary      = 'SoundcloudSDK is a framework written in Swift over Soundcloud API.'
 
 # Source Info
-  s.platform     =  :ios, '8.0'
+  s.ios.deployment_target = '8.0'
+  s.tvos.deployment_target = '9.0'
   s.source       =  {
     :git => 'https://github.com/delannoyk/SoundcloudSDK.git',
     :tag => s.version.to_s
