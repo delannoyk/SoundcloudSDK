@@ -11,7 +11,7 @@ import Foundation
 // MARK: - JSONObject
 ////////////////////////////////////////////////////////////////////////////
 
-internal class JSONObject: SequenceType {
+internal class JSONObject {
     let value: AnyObject?
     var index: Int = 0
 
@@ -25,15 +25,6 @@ internal class JSONObject: SequenceType {
 
     subscript(key: String) -> JSONObject {
         return (value as? NSDictionary).map { JSONObject($0[key]) } ?? JSONObject(nil)
-    }
-
-    func generate() -> AnyGenerator<JSONObject> {
-        return anyGenerator {
-            if self.index + 1 < 0 {
-                return nil
-            }
-            return self[self.index++]
-        }
     }
 
     func map<U>(f: JSONObject -> U) -> [U]? {

@@ -177,7 +177,7 @@ internal extension Playlist {
                 type: PlaylistType(rawValue: JSON["playlist_type"].stringValue ?? ""),
                 title: JSON["title"].stringValue ?? "",
                 artworkURL: ImageURLs(baseURL: JSON["artwork_url"].URLValue),
-                tracks: JSON["tracks"].flatMap { return Track(JSON: $0) },
+                tracks: JSON["tracks"].flatMap { return Track(JSON: $0) } ?? [],
                 ean: JSON["ean"].stringValue,
                 sharingAccess: SharingAccess(rawValue: JSON["sharing"].stringValue ?? "") ?? .Private,
                 labelIdentifier: JSON["label_id"].intValue,
