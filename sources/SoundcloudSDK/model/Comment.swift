@@ -66,7 +66,7 @@ internal extension Comment {
             self.createdAt = JSON["created_at"].dateValue("yyyy/MM/dd HH:mm:ss VVVV") ?? NSDate()
             self.trackIdentifier = JSON["track_id"].intValue
             self.userIdentifier = JSON["user_id"].intValue
-            self.timestamp = JSON["timestamp"].doubleValue
+            self.timestamp = JSON["timestamp"].doubleValue.map { $0 / 1000 }
             self.body = body
             self.user = User(JSON: JSON["user"])
         }
