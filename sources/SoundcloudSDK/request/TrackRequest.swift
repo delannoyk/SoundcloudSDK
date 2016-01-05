@@ -212,4 +212,30 @@ public extension Track {
         }
         request.start()
     }
+    
+    /**
+     Load related tracks of a track with a specific identifier
+     
+     - parameter identifier: The identifier of the track whose related tracks you wish to find
+     - parameter completion: The closure that will be called when tracks are loaded or upon error
+     */
+    public static func relatedTracks(identifier: Int, completion: SimpleAPIResponse<[Track]> -> Void) {
+        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+            completion(SimpleAPIResponse(.CredentialsNotSet))
+            return
+        }
+        
+        let URL = BaseURL.URLByAppendingPathComponent("\(identifier)/related")
+        let parameters = ["client_id": clientIdentifier]
+        
+        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
+            guard let tracks = $0.flatMap({ return Track(JSON: $0) }) else {
+                return .Failure(.Parsing)
+            }
+            return .Success(tracks)
+            }) { result in
+                completion(SimpleAPIResponse(result))
+        }
+        request.start()
+    }
 }
