@@ -21,6 +21,7 @@ Pod::Spec.new do |s|
   s.ios.dependency '1PasswordExtension', '~> 1.5'
 
   s.tvos.deployment_target = '9.0'
+  s.tvos.exclude_files = 'sources/SoundcloudSDK/views/SoundcloudWebViewController.swift'
 
   s.requires_arc = true
 end
