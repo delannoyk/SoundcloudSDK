@@ -182,6 +182,7 @@ public extension User {
         request.start()
     }
 
+    #if os(iOS)
     /**
     Follow the given user.
 
@@ -227,6 +228,7 @@ public extension User {
         }
         request.start()
     }
+    #endif
 
     /**
     Loads user's playlists

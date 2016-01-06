@@ -1,7 +1,7 @@
 use_frameworks!
 inhibit_all_warnings!
 
-target 'Soundcloud' do
+target 'Soundcloud iOS' do
     pod 'UICKeyChainStore', '~> 2.0.6'
     pod '1PasswordExtension', '~> 1.2'
 end

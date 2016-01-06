@@ -7,7 +7,9 @@
 //
 
 import UIKit
-import UICKeyChainStore
+#if os(iOS)
+    import UICKeyChainStore
+#endif
 
 // MARK: - Errors
 ////////////////////////////////////////////////////////////////////////////
@@ -16,10 +18,12 @@ public enum SoundcloudError: ErrorType {
     case CredentialsNotSet
     case NotFound
     case Forbidden
-    case NeedsLogin
     case Parsing
     case Unknown
     case Network(ErrorType)
+    #if os(iOS)
+    case NeedsLogin
+    #endif
 }
 
 extension SoundcloudError: RequestError {
@@ -63,6 +67,7 @@ extension PaginatedAPIResponse {
 // MARK: - Session
 ////////////////////////////////////////////////////////////////////////////
 
+#if os(iOS)
 public class Session: NSObject, NSCoding, NSCopying {
     //First session info
     internal var authorizationCode: String
@@ -307,6 +312,7 @@ extension Session {
 
     ////////////////////////////////////////////////////////////////////////////
 }
+#endif
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -318,6 +324,7 @@ public class Soundcloud: NSObject {
     // MARK: Properties
     ////////////////////////////////////////////////////////////////////////////
 
+    #if os(iOS)
     private static let sessionKey = "sessionKey"
 
     private static let keychain = UICKeyChainStore(server: NSURL(string: "https://soundcloud.com")!,
@@ -340,6 +347,7 @@ public class Soundcloud: NSObject {
             }
         }
     }
+    #endif
 
     /// Your Soundcloud app client identifier
     public static var clientIdentifier: String?

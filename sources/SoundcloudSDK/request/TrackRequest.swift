@@ -120,6 +120,7 @@ public extension Track {
         request.start()
     }
 
+    #if os(iOS)
     /**
     Create a new comment on a track
     
@@ -153,6 +154,7 @@ public extension Track {
         }
         request.start()
     }
+    #endif
 
     /**
     Fetch the list of users that favorited the track.
@@ -183,6 +185,7 @@ public extension Track {
         request.start()
     }
 
+    #if os(iOS)
     /**
     Favorites a track for the logged user
     
@@ -212,4 +215,5 @@ public extension Track {
         }
         request.start()
     }
+    #endif
 }
