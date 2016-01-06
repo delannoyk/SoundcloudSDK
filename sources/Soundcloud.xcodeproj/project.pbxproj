@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		059018AEB2D10E1AD3F29379 /* Pods_Soundcloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D30FC7D40302255658E8AD24 /* Pods_Soundcloud.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		0D5135CA06A44078918D5342 /* Pods_Soundcloud_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB64DDADBD0E531FD35228B /* Pods_Soundcloud_iOS.framework */; };
 		460388C41C3D901000997DC8 /* Soundcloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0CB1AEC04F800D3B495 /* Soundcloud.swift */; };
 		460388C51C3D901000997DC8 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BC1AEBC58100D3B495 /* DictionaryExtension.swift */; };
 		460388C61C3D901000997DC8 /* NSURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */; };
@@ -74,8 +75,8 @@
 		46BA61A21B5D4DBA0066ECE4 /* Soundcloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4656CE6A1A9CF05600319B94 /* Soundcloud.framework */; };
 		46BA61A31B5D4DBA0066ECE4 /* Soundcloud.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4656CE6A1A9CF05600319B94 /* Soundcloud.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		46D1CC351B5A38210043381B /* SoundcloudWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D1CC341B5A38210043381B /* SoundcloudWebViewController.swift */; };
-		BBDD9AC1E96725B7BBA05DDE /* Pods_SoundcloudTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769BFC9C3A1C147A600BAAD1 /* Pods_SoundcloudTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		CA620035B153D1D48ADAAF7D /* Pods_SoundcloudAppTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0E8566B3D32EE75738D6BC /* Pods_SoundcloudAppTest.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		BBDD9AC1E96725B7BBA05DDE /* Pods_SoundcloudTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769BFC9C3A1C147A600BAAD1 /* Pods_SoundcloudTests.framework */; };
+		CA620035B153D1D48ADAAF7D /* Pods_SoundcloudAppTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0E8566B3D32EE75738D6BC /* Pods_SoundcloudAppTest.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,7 +111,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		20A7960B691EC98D29B1654C /* Pods-Soundcloud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soundcloud.release.xcconfig"; path = "Pods/Target Support Files/Pods-Soundcloud/Pods-Soundcloud.release.xcconfig"; sourceTree = "<group>"; };
+		1F8BB7505836BCEDE4CC48A7 /* Pods-Soundcloud iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soundcloud iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Soundcloud iOS/Pods-Soundcloud iOS.release.xcconfig"; sourceTree = "<group>"; };
 		460B334A1B636A0E00B76558 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
 		460EEF871B5A4B1A004444C6 /* SoundcloudAppTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundcloudAppTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		460EEF8A1B5A4B1A004444C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -156,8 +157,9 @@
 		6DFFF015B8F460A56E3C99B9 /* Pods-SoundcloudAppTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundcloudAppTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SoundcloudAppTest/Pods-SoundcloudAppTest.debug.xcconfig"; sourceTree = "<group>"; };
 		769BFC9C3A1C147A600BAAD1 /* Pods_SoundcloudTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SoundcloudTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A7A8785631C97010BFC8BC /* Pods-SoundcloudTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundcloudTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SoundcloudTests/Pods-SoundcloudTests.release.xcconfig"; sourceTree = "<group>"; };
-		CAAC9B43BDD1225D2C55BC4D /* Pods-Soundcloud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soundcloud.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Soundcloud/Pods-Soundcloud.debug.xcconfig"; sourceTree = "<group>"; };
+		9CB64DDADBD0E531FD35228B /* Pods_Soundcloud_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Soundcloud_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D30FC7D40302255658E8AD24 /* Pods_Soundcloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Soundcloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F976A0A423E5E40D489D5DD8 /* Pods-Soundcloud iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soundcloud iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Soundcloud iOS/Pods-Soundcloud iOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				059018AEB2D10E1AD3F29379 /* Pods_Soundcloud.framework in Frameworks */,
+				0D5135CA06A44078918D5342 /* Pods_Soundcloud_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,12 +203,12 @@
 		1ACFFB8AE08CD90965C3053D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				CAAC9B43BDD1225D2C55BC4D /* Pods-Soundcloud.debug.xcconfig */,
-				20A7960B691EC98D29B1654C /* Pods-Soundcloud.release.xcconfig */,
 				6DFFF015B8F460A56E3C99B9 /* Pods-SoundcloudAppTest.debug.xcconfig */,
 				4F277BE0F3C96D640D9D29F7 /* Pods-SoundcloudAppTest.release.xcconfig */,
 				6586E4359493BA207B4543E5 /* Pods-SoundcloudTests.debug.xcconfig */,
 				85A7A8785631C97010BFC8BC /* Pods-SoundcloudTests.release.xcconfig */,
+				F976A0A423E5E40D489D5DD8 /* Pods-Soundcloud iOS.debug.xcconfig */,
+				1F8BB7505836BCEDE4CC48A7 /* Pods-Soundcloud iOS.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				D30FC7D40302255658E8AD24 /* Pods_Soundcloud.framework */,
 				4F0E8566B3D32EE75738D6BC /* Pods_SoundcloudAppTest.framework */,
 				769BFC9C3A1C147A600BAAD1 /* Pods_SoundcloudTests.framework */,
+				9CB64DDADBD0E531FD35228B /* Pods_Soundcloud_iOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -568,7 +572,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Soundcloud/Pods-Soundcloud-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Soundcloud iOS/Pods-Soundcloud iOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		46339D121B6022100098030A /* Copy Pods Resources */ = {
@@ -976,7 +980,7 @@
 		};
 		4656CE811A9CF05600319B94 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CAAC9B43BDD1225D2C55BC4D /* Pods-Soundcloud.debug.xcconfig */;
+			baseConfigurationReference = F976A0A423E5E40D489D5DD8 /* Pods-Soundcloud iOS.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
@@ -996,7 +1000,7 @@
 		};
 		4656CE821A9CF05600319B94 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 20A7960B691EC98D29B1654C /* Pods-Soundcloud.release.xcconfig */;
+			baseConfigurationReference = 1F8BB7505836BCEDE4CC48A7 /* Pods-Soundcloud iOS.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;

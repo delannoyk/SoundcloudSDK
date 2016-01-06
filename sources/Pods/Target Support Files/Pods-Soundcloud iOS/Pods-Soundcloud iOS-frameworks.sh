@@ -84,10 +84,10 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-SoundcloudTests/OnePasswordExtension.framework"
-  install_framework "Pods-SoundcloudTests/UICKeyChainStore.framework"
+  install_framework "Pods-Soundcloud iOS/OnePasswordExtension.framework"
+  install_framework "Pods-Soundcloud iOS/UICKeyChainStore.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-SoundcloudTests/OnePasswordExtension.framework"
-  install_framework "Pods-SoundcloudTests/UICKeyChainStore.framework"
+  install_framework "Pods-Soundcloud iOS/OnePasswordExtension.framework"
+  install_framework "Pods-Soundcloud iOS/UICKeyChainStore.framework"
 fi
