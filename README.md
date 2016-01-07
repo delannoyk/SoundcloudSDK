@@ -1,5 +1,6 @@
 SoundcloudSDK
 =============
+[![Build Status](https://travis-ci.org/delannoyk/SoundcloudSDK.svg)](https://travis-ci.org/delannoyk/SoundcloudSDK)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 ![Cocoapods Compatible](https://img.shields.io/cocoapods/v/Soundcloud.svg)
 ![Platform iOS | tvOS](https://img.shields.io/badge/platform-iOS%20%7C%20tvOS%20%7C%20OSX-lightgrey.svg)
