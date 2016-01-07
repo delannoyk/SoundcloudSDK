@@ -43,6 +43,25 @@
 		460388E51C3D903C00997DC8 /* ImageURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4626792D1AED041B003771C9 /* ImageURLs.swift */; };
 		460388E61C3D903C00997DC8 /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465877181BD394AA0080F05A /* SearchQuery.swift */; };
 		460388E71C3D903C00997DC8 /* SoundcloudWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D1CC341B5A38210043381B /* SoundcloudWebViewController.swift */; };
+		460388F01C3EDE5C00997DC8 /* Soundcloud OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 460388EF1C3EDE5C00997DC8 /* Soundcloud OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		460388F51C3EDE8000997DC8 /* Soundcloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0CB1AEC04F800D3B495 /* Soundcloud.swift */; };
+		460388F61C3EDE8000997DC8 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BC1AEBC58100D3B495 /* DictionaryExtension.swift */; };
+		460388F71C3EDE8000997DC8 /* NSURLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */; };
+		460388F81C3EDE8000997DC8 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461FA2CB1AFBC6DD00F585C8 /* StringExtension.swift */; };
+		460388F91C3EDE8000997DC8 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465308A91AB5C73700766A62 /* Request.swift */; };
+		460388FA1C3EDE8000997DC8 /* TrackRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0C01AEBD01900D3B495 /* TrackRequest.swift */; };
+		460388FB1C3EDE8000997DC8 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0C21AEBD0FA00D3B495 /* UserRequest.swift */; };
+		460388FC1C3EDE8000997DC8 /* PlaylistRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464565D21B73BCC500839812 /* PlaylistRequest.swift */; };
+		460388FD1C3EDE8000997DC8 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4641ECB11BD7F79900D0D315 /* APIResponse.swift */; };
+		460388FE1C3EDE8000997DC8 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4637FD891B30A39700286C14 /* Comment.swift */; };
+		460388FF1C3EDE8000997DC8 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8F1A9D098300319B94 /* Enums.swift */; };
+		460389001C3EDE8000997DC8 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8D1A9CF0DC00319B94 /* App.swift */; };
+		460389011C3EDE8000997DC8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE871A9CF0A800319B94 /* User.swift */; };
+		460389021C3EDE8000997DC8 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE891A9CF0BE00319B94 /* Track.swift */; };
+		460389031C3EDE8000997DC8 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE8B1A9CF0CD00319B94 /* Playlist.swift */; };
+		460389041C3EDE8000997DC8 /* ImageURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4626792D1AED041B003771C9 /* ImageURLs.swift */; };
+		460389051C3EDE8000997DC8 /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465877181BD394AA0080F05A /* SearchQuery.swift */; };
+		460389071C3EE2AF00997DC8 /* SoundcloudWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D1CC341B5A38210043381B /* SoundcloudWebViewController.swift */; };
 		460B334C1B636A0E00B76558 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460B334A1B636A0E00B76558 /* UserTests.swift */; };
 		460EEF8C1B5A4B1A004444C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460EEF8B1B5A4B1A004444C6 /* AppDelegate.swift */; };
 		460EEF8E1B5A4B1A004444C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460EEF8D1B5A4B1A004444C6 /* ViewController.swift */; };
@@ -74,7 +93,9 @@
 		46BA61A21B5D4DBA0066ECE4 /* Soundcloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4656CE6A1A9CF05600319B94 /* Soundcloud.framework */; };
 		46BA61A31B5D4DBA0066ECE4 /* Soundcloud.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4656CE6A1A9CF05600319B94 /* Soundcloud.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		46D1CC351B5A38210043381B /* SoundcloudWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D1CC341B5A38210043381B /* SoundcloudWebViewController.swift */; };
+		5590A8EA3555FA22B2F67449 /* Pods_SoundcloudAppTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A8317868D6BC7E30EDBCC19 /* Pods_SoundcloudAppTest.framework */; };
 		BBDD9AC1E96725B7BBA05DDE /* Pods_SoundcloudTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769BFC9C3A1C147A600BAAD1 /* Pods_SoundcloudTests.framework */; };
+		E3638C13002032CD30848B1F /* Pods_Soundcloud_OSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FEEA9F80B5054DC6622DC9E /* Pods_Soundcloud_OSX.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +131,10 @@
 
 /* Begin PBXFileReference section */
 		1F8BB7505836BCEDE4CC48A7 /* Pods-Soundcloud iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soundcloud iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Soundcloud iOS/Pods-Soundcloud iOS.release.xcconfig"; sourceTree = "<group>"; };
+		2FEEA9F80B5054DC6622DC9E /* Pods_Soundcloud_OSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Soundcloud_OSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		460388ED1C3EDE5C00997DC8 /* Soundcloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Soundcloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		460388EF1C3EDE5C00997DC8 /* Soundcloud OSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Soundcloud OSX.h"; sourceTree = "<group>"; };
+		460388F11C3EDE5C00997DC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		460B334A1B636A0E00B76558 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
 		460EEF871B5A4B1A004444C6 /* SoundcloudAppTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundcloudAppTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		460EEF8A1B5A4B1A004444C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -147,21 +172,33 @@
 		465923761B636A8A0090056E /* TrackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackTests.swift; sourceTree = "<group>"; };
 		465923781B636AA40090056E /* RequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTests.swift; sourceTree = "<group>"; };
 		46D1CC341B5A38210043381B /* SoundcloudWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundcloudWebViewController.swift; sourceTree = "<group>"; };
+		4E2BB96BC1E72F6F66E5745C /* Pods-Soundcloud OSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soundcloud OSX.release.xcconfig"; path = "Pods/Target Support Files/Pods-Soundcloud OSX/Pods-Soundcloud OSX.release.xcconfig"; sourceTree = "<group>"; };
 		4F277BE0F3C96D640D9D29F7 /* Pods-SoundcloudAppTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundcloudAppTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-SoundcloudAppTest/Pods-SoundcloudAppTest.release.xcconfig"; sourceTree = "<group>"; };
 		6586E4359493BA207B4543E5 /* Pods-SoundcloudTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundcloudTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SoundcloudTests/Pods-SoundcloudTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6DFFF015B8F460A56E3C99B9 /* Pods-SoundcloudAppTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundcloudAppTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SoundcloudAppTest/Pods-SoundcloudAppTest.debug.xcconfig"; sourceTree = "<group>"; };
 		769BFC9C3A1C147A600BAAD1 /* Pods_SoundcloudTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SoundcloudTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A7A8785631C97010BFC8BC /* Pods-SoundcloudTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundcloudTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SoundcloudTests/Pods-SoundcloudTests.release.xcconfig"; sourceTree = "<group>"; };
+		85B8A7A39C2C7780C2FE8376 /* Pods-Soundcloud OSX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soundcloud OSX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Soundcloud OSX/Pods-Soundcloud OSX.debug.xcconfig"; sourceTree = "<group>"; };
+		8A8317868D6BC7E30EDBCC19 /* Pods_SoundcloudAppTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SoundcloudAppTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CB64DDADBD0E531FD35228B /* Pods_Soundcloud_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Soundcloud_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F976A0A423E5E40D489D5DD8 /* Pods-Soundcloud iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soundcloud iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Soundcloud iOS/Pods-Soundcloud iOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		460388E91C3EDE5C00997DC8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3638C13002032CD30848B1F /* Pods_Soundcloud_OSX.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		460EEF841B5A4B1A004444C6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				46BA61A21B5D4DBA0066ECE4 /* Soundcloud.framework in Frameworks */,
+				5590A8EA3555FA22B2F67449 /* Pods_SoundcloudAppTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,8 +238,19 @@
 				85A7A8785631C97010BFC8BC /* Pods-SoundcloudTests.release.xcconfig */,
 				F976A0A423E5E40D489D5DD8 /* Pods-Soundcloud iOS.debug.xcconfig */,
 				1F8BB7505836BCEDE4CC48A7 /* Pods-Soundcloud iOS.release.xcconfig */,
+				85B8A7A39C2C7780C2FE8376 /* Pods-Soundcloud OSX.debug.xcconfig */,
+				4E2BB96BC1E72F6F66E5745C /* Pods-Soundcloud OSX.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		460388EE1C3EDE5C00997DC8 /* Soundcloud OSX */ = {
+			isa = PBXGroup;
+			children = (
+				460388EF1C3EDE5C00997DC8 /* Soundcloud OSX.h */,
+				460388F11C3EDE5C00997DC8 /* Info.plist */,
+			);
+			path = "Soundcloud OSX";
 			sourceTree = "<group>";
 		};
 		460EEF881B5A4B1A004444C6 /* SoundcloudAppTest */ = {
@@ -287,6 +335,7 @@
 				4656CE6C1A9CF05600319B94 /* Soundcloud */,
 				46263CB51C3D899A00FA0E03 /* Soundcloud iOS */,
 				46263CAE1C3D894000FA0E03 /* Soundcloud tvOS */,
+				460388EE1C3EDE5C00997DC8 /* Soundcloud OSX */,
 				4656CE791A9CF05600319B94 /* SoundcloudTests */,
 				460EEF881B5A4B1A004444C6 /* SoundcloudAppTest */,
 				4656CE6B1A9CF05600319B94 /* Products */,
@@ -302,6 +351,7 @@
 				4656CE751A9CF05600319B94 /* SoundcloudTests.xctest */,
 				460EEF871B5A4B1A004444C6 /* SoundcloudAppTest.app */,
 				46263CAD1C3D894000FA0E03 /* Soundcloud.framework */,
+				460388ED1C3EDE5C00997DC8 /* Soundcloud.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -361,6 +411,8 @@
 			children = (
 				769BFC9C3A1C147A600BAAD1 /* Pods_SoundcloudTests.framework */,
 				9CB64DDADBD0E531FD35228B /* Pods_Soundcloud_iOS.framework */,
+				2FEEA9F80B5054DC6622DC9E /* Pods_Soundcloud_OSX.framework */,
+				8A8317868D6BC7E30EDBCC19 /* Pods_SoundcloudAppTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -368,6 +420,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		460388EA1C3EDE5C00997DC8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				460388F01C3EDE5C00997DC8 /* Soundcloud OSX.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		46263CAA1C3D893F00FA0E03 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -386,6 +446,26 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		460388EC1C3EDE5C00997DC8 /* Soundcloud OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 460388F41C3EDE5C00997DC8 /* Build configuration list for PBXNativeTarget "Soundcloud OSX" */;
+			buildPhases = (
+				A8A28B2BFBFED5D41A85BEBA /* Check Pods Manifest.lock */,
+				460388E81C3EDE5C00997DC8 /* Sources */,
+				460388E91C3EDE5C00997DC8 /* Frameworks */,
+				460388EA1C3EDE5C00997DC8 /* Headers */,
+				460388EB1C3EDE5C00997DC8 /* Resources */,
+				35E8304143758628007A98D9 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Soundcloud OSX";
+			productName = "Soundcloud OSX";
+			productReference = 460388ED1C3EDE5C00997DC8 /* Soundcloud.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		460EEF861B5A4B1A004444C6 /* SoundcloudAppTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 460EEFA71B5A4B1A004444C6 /* Build configuration list for PBXNativeTarget "SoundcloudAppTest" */;
@@ -478,6 +558,9 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Kevin Delannoy";
 				TargetAttributes = {
+					460388EC1C3EDE5C00997DC8 = {
+						CreatedOnToolsVersion = 7.2;
+					};
 					460EEF861B5A4B1A004444C6 = {
 						CreatedOnToolsVersion = 6.4;
 					};
@@ -507,6 +590,7 @@
 			targets = (
 				4656CE691A9CF05600319B94 /* Soundcloud iOS */,
 				46263CAC1C3D893F00FA0E03 /* Soundcloud tvOS */,
+				460388EC1C3EDE5C00997DC8 /* Soundcloud OSX */,
 				4656CE741A9CF05600319B94 /* SoundcloudTests */,
 				460EEF861B5A4B1A004444C6 /* SoundcloudAppTest */,
 			);
@@ -514,6 +598,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		460388EB1C3EDE5C00997DC8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		460EEF851B5A4B1A004444C6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -563,6 +654,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Soundcloud iOS/Pods-Soundcloud iOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		35E8304143758628007A98D9 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Soundcloud OSX/Pods-Soundcloud OSX-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		46339D121B6022100098030A /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -606,6 +712,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SoundcloudTests/Pods-SoundcloudTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A8A28B2BFBFED5D41A85BEBA /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		BB44B525A8724FB732177A24 /* Embed Pods Frameworks */ = {
@@ -671,6 +792,31 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		460388E81C3EDE5C00997DC8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				460389011C3EDE8000997DC8 /* User.swift in Sources */,
+				460388F81C3EDE8000997DC8 /* StringExtension.swift in Sources */,
+				460388F51C3EDE8000997DC8 /* Soundcloud.swift in Sources */,
+				460389041C3EDE8000997DC8 /* ImageURLs.swift in Sources */,
+				460388F91C3EDE8000997DC8 /* Request.swift in Sources */,
+				460389051C3EDE8000997DC8 /* SearchQuery.swift in Sources */,
+				460388FC1C3EDE8000997DC8 /* PlaylistRequest.swift in Sources */,
+				460389071C3EE2AF00997DC8 /* SoundcloudWebViewController.swift in Sources */,
+				460388F71C3EDE8000997DC8 /* NSURLExtension.swift in Sources */,
+				460388FE1C3EDE8000997DC8 /* Comment.swift in Sources */,
+				460388F61C3EDE8000997DC8 /* DictionaryExtension.swift in Sources */,
+				460388FA1C3EDE8000997DC8 /* TrackRequest.swift in Sources */,
+				460388FB1C3EDE8000997DC8 /* UserRequest.swift in Sources */,
+				460389001C3EDE8000997DC8 /* App.swift in Sources */,
+				460388FD1C3EDE8000997DC8 /* APIResponse.swift in Sources */,
+				460388FF1C3EDE8000997DC8 /* Enums.swift in Sources */,
+				460389021C3EDE8000997DC8 /* Track.swift in Sources */,
+				460389031C3EDE8000997DC8 /* Playlist.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		460EEF831B5A4B1A004444C6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -793,6 +939,55 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		460388F21C3EDE5C00997DC8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 85B8A7A39C2C7780C2FE8376 /* Pods-Soundcloud OSX.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Soundcloud OSX/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "be.delannoyk.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = Soundcloud;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		460388F31C3EDE5C00997DC8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4E2BB96BC1E72F6F66E5745C /* Pods-Soundcloud OSX.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Soundcloud OSX/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "be.delannoyk.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = Soundcloud;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		460EEFA31B5A4B1A004444C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6DFFF015B8F460A56E3C99B9 /* Pods-SoundcloudAppTest.debug.xcconfig */;
@@ -1036,6 +1231,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		460388F41C3EDE5C00997DC8 /* Build configuration list for PBXNativeTarget "Soundcloud OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				460388F21C3EDE5C00997DC8 /* Debug */,
+				460388F31C3EDE5C00997DC8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		460EEFA71B5A4B1A004444C6 /* Build configuration list for PBXNativeTarget "SoundcloudAppTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

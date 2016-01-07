@@ -2,8 +2,16 @@ use_frameworks!
 inhibit_all_warnings!
 
 target 'Soundcloud iOS' do
+    platform :ios, '8.0'
+
     pod 'UICKeyChainStore', '~> 2.0.6'
     pod '1PasswordExtension', '~> 1.2'
+end
+
+target 'Soundcloud OSX' do
+    platform :osx, '10.10'
+
+    pod 'UICKeyChainStore', '~> 2.0.6'
 end
 
 target 'SoundcloudTests' do

@@ -6,11 +6,18 @@
 //  Copyright (c) 2015 Kevin Delannoy. All rights reserved.
 //
 
-import UIKit
-import WebKit
-import OnePasswordExtension
+#if os(OSX)
+    import AppKit
+    public typealias ViewController = NSViewController
+#else
+    import UIKit
+    import OnePasswordExtension
+    public typealias ViewController = UIViewController
+#endif
 
-internal class SoundcloudWebViewController: UIViewController, WKNavigationDelegate {
+import WebKit
+
+internal class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
     private lazy var webView = WKWebView()
 
     // MARK: View loading
@@ -24,6 +31,7 @@ internal class SoundcloudWebViewController: UIViewController, WKNavigationDelega
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        #if os(iOS)
         //Right button is OnePassword if available
         if OnePasswordExtension.sharedExtension().isAppExtensionAvailable() {
             let bundle = NSBundle(forClass: OnePasswordExtension.self)
@@ -39,6 +47,7 @@ internal class SoundcloudWebViewController: UIViewController, WKNavigationDelega
         //Left button is a Cancel button
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel,
             target: self, action: "buttonCancelPressed:")
+        #endif
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -47,6 +56,7 @@ internal class SoundcloudWebViewController: UIViewController, WKNavigationDelega
     // MARK: Actions
     ////////////////////////////////////////////////////////////////////////////
 
+    #if os(iOS)
     @objc private func buttonCancelPressed(sender: AnyObject) {
         onDismiss?(nil)
         dismissViewControllerAnimated(true, completion: nil)
@@ -61,6 +71,7 @@ internal class SoundcloudWebViewController: UIViewController, WKNavigationDelega
                 completion: nil)
         }
     }
+    #endif
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -108,7 +119,11 @@ internal class SoundcloudWebViewController: UIViewController, WKNavigationDelega
             decisionHandler(.Cancel)
 
             onDismiss?(navigationAction.request.URL)
-            dismissViewControllerAnimated(true, completion: nil)
+            #if os(OSX)
+                dismissViewController(self)
+            #else
+                dismissViewControllerAnimated(true, completion: nil)
+            #endif
         }
         else {
             decisionHandler(.Allow)

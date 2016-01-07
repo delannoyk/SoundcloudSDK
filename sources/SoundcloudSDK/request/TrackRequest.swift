@@ -120,7 +120,7 @@ public extension Track {
         request.start()
     }
 
-    #if os(iOS)
+    #if os(iOS) || os(OSX)
     /**
     Create a new comment on a track
     
@@ -185,7 +185,7 @@ public extension Track {
         request.start()
     }
 
-    #if os(iOS)
+    #if os(iOS) || os(OSX)
     /**
     Favorites a track for the logged user
     

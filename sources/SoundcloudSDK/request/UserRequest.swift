@@ -182,7 +182,7 @@ public extension User {
         request.start()
     }
 
-    #if os(iOS)
+    #if os(iOS) || os(OSX)
     /**
     Follow the given user.
 
