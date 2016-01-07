@@ -242,7 +242,10 @@ extension Session {
         }
 
         #if os(OSX)
-            displayViewController.presentViewControllerAsModalWindow(web)
+            web.title = "Soundcloud"
+            web.preferredContentSize = displayViewController.view.bounds.size
+
+            displayViewController.presentViewControllerAsSheet(web)
         #else
             web.navigationItem.title = "Soundcloud"
 
