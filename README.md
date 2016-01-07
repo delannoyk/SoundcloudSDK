@@ -2,7 +2,7 @@ SoundcloudSDK
 =============
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 ![Cocoapods Compatible](https://img.shields.io/cocoapods/v/Soundcloud.svg)
-![Platform iOS | tvOS](https://img.shields.io/badge/platform-iOS%20%7C%20tvOS-lightgrey.svg)
+![Platform iOS | tvOS](https://img.shields.io/badge/platform-iOS%20%7C%20tvOS%20%7COSX-lightgrey.svg)
 [![Contact](https://img.shields.io/badge/contact-%40kdelannoy-blue.svg)](https://twitter.com/kdelannoy)
 
 SoundcloudSDK is a framework written in Swift over Soundcloud API.
