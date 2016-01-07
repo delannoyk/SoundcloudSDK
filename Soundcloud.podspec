@@ -14,7 +14,6 @@ Pod::Spec.new do |s|
     :tag => s.version.to_s
   }
   s.source_files = 'sources/SoundcloudSDK/**/*.swift'
-  s.framework    =  'UIKit'
 
   s.ios.deployment_target = '8.0'
   s.ios.dependency 'UICKeyChainStore', '~> 2.0.6'
