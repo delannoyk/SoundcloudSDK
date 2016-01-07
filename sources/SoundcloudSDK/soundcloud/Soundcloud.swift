@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Kevin Delannoy. All rights reserved.
 //
 
-import UIKit
+import Foundation
 #if os(iOS)
     import UICKeyChainStore
 #endif

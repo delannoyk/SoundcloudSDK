@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Kevin Delannoy. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 public extension User {
     internal static let BaseURL = NSURL(string: "https://api.soundcloud.com/users")!

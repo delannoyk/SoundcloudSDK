@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Kevin Delannoy. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 public extension Track {
     internal static let BaseURL = NSURL(string: "https://api.soundcloud.com/tracks")!

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Kevin Delannoy. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 public protocol APIResponse {
     typealias U

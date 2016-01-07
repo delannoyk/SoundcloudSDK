@@ -6,7 +6,7 @@
 //
 //
 
-import UIKit
+import Foundation
 
 public extension Playlist {
     internal static let BaseURL = NSURL(string: "https://api.soundcloud.com/playlists")!
