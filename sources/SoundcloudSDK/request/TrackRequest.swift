@@ -195,6 +195,22 @@ public extension Track {
     - parameter completion:     The closure that will be called when the track has been favorited or upon error
     */
     public func favorite(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void) {
+        changeFavoriteStatus(true, userIdentifier: userIdentifier, completion: completion)
+    }
+
+    /**
+     Unfavorites a track for the logged user
+     
+     **This method requires a Session.**
+
+     - parameter userIdentifier: The identifier of the logged user
+     - parameter completion:     The closure that will be called when the track has been unfavorited or upon error
+     */
+    public func unfavorite(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void) {
+        changeFavoriteStatus(false, userIdentifier: userIdentifier, completion: completion)
+    }
+
+    private func changeFavoriteStatus(favorite: Bool, userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void) {
         guard let clientIdentifier = Soundcloud.clientIdentifier else {
             completion(SimpleAPIResponse(.CredentialsNotSet))
             return
@@ -208,7 +224,7 @@ public extension Track {
         let URL = User.BaseURL.URLByAppendingPathComponent("\(userIdentifier)/favorites/\(identifier).json")
         let parameters = ["client_id": clientIdentifier, "oauth_token": oauthToken]
 
-        let request = Request(URL: URL, method: .PUT, parameters: parameters, parse: { _ in
+        let request = Request(URL: URL, method: favorite ? .PUT : .DELETE, parameters: parameters, parse: { _ in
             return .Success(true)
             }) { result in
                 completion(SimpleAPIResponse(result))
