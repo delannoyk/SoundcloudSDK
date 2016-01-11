@@ -62,6 +62,11 @@ After that, you're good to go.
     ]
     Track.search(queries, completion: PaginatedAPIResponse<Track> -> Void)
     ```
+    
+* Relative tracks
+    ```swift
+    Track.relatedTracks(identifier: Int, completion: SimpleAPIResponse<[Track]> -> Void)
+    ```
 
 ### User
 
@@ -150,6 +155,12 @@ The login method implements the standard OAuth2 of Soundcloud. Some private meth
     ```swift
     let track: Track
     track.favorite(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void)
+    ```
+* Unfavorite a track
+
+    ```swift
+    let track: Track
+    track.unfavorite(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void)
     ```
 * Follow a user
 
