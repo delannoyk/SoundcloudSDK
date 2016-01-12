@@ -36,7 +36,7 @@ script:
       xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO build | xcpretty -c;
     fi
 after_success:
-  - cd $TRAVIS_BUILD_DIR && slather
+  - slather
 notifications:
   slack:
     secure: NEQe/oeGbSMk15WxHgVVliEYk5+ZhJbmRp+KjhRNQKFuADo5BhMvBg50XmKgTJinsVCARVqqZO1yxWB0SKB/KGC0ijG6Z5mGYnxskYwREh57CBng+MOtMhJxpWVRaYZtyKQDBM9gY+bY+CW46RrwsTlW+3jfqVaCAUDBL4tqu14=
