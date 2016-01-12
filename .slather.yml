@@ -1,5 +1,5 @@
 ci_service: travis_ci
 coverage_service: coveralls
-xcodeproj: Soundcloud.xcodeproj
+xcodeproj: sources/Soundcloud.xcodeproj
 ignore:
-  - Pods/
+  - sources/Pods/
