@@ -49,6 +49,36 @@ extension SoundcloudError: RequestError {
     }
 }
 
+extension SoundcloudError: Equatable { }
+
+public func ==(lhs: SoundcloudError, rhs: SoundcloudError) -> Bool {
+    switch (lhs, rhs) {
+    case (.CredentialsNotSet, .CredentialsNotSet):
+        return true
+    case (.NotFound, .NotFound):
+        return true
+    case (.Forbidden, .Forbidden):
+        return true
+    case (.Parsing, .Parsing):
+        return true
+    case (.Unknown, .Unknown):
+        return true
+    case (.Network(let e1), .Network(let e2)):
+        return e1 as NSError == e2 as NSError
+    default:
+        //TODO: find a better way to express this
+        #if os(iOS) || os(OSX)
+            switch (lhs, rhs) {
+            case (.NeedsLogin, .NeedsLogin):
+                return true
+            default:
+                return false
+            }
+        #endif
+        return false
+    }
+}
+
 extension PaginatedAPIResponse {
     internal init(_ error: SoundcloudError) {
         self.init(response: .Failure(error), nextPageURL: nil) { _ in
