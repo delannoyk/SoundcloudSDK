@@ -7,7 +7,6 @@
 //
 
 import XCTest
-@testable import Soundcloud
 
 class SoundcloudTests: XCTestCase {
     func testCredentialsError() {
