@@ -256,7 +256,9 @@ extension Session {
 
         let URL = NSURL(string: "https://soundcloud.com/connect")!
 
-        let parameters = ["client_id": clientIdentifier, "redirect_uri": redirectURI, "response_type": "code"]
+        let parameters = ["client_id": clientIdentifier,
+            "redirect_uri": redirectURI,
+            "response_type": "code"]
 
         let web = SoundcloudWebViewController()
         web.autoDismissScheme = NSURL(string: redirectURI)?.scheme
