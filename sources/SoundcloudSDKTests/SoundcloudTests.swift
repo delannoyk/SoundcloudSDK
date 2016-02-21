@@ -17,8 +17,6 @@ class SoundcloudTests: XCTestCase {
             resolveExpectation.fulfill()
         }
 
-
-
         waitForExpectationsWithTimeout(1) { e in
             if let _ = e {
                 XCTFail("Expectations should have been fulfilled immediatly")
