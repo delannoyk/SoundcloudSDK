@@ -37,7 +37,7 @@ extension SoundcloudError: RequestError {
 
     internal init?(httpURLResponse: NSHTTPURLResponse) {
         switch httpURLResponse.statusCode {
-        case 200:
+        case 200, 201:
             return nil
         case 401:
             self = .Forbidden

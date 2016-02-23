@@ -221,10 +221,11 @@ public extension Track {
             return
         }
 
-        let URL = User.BaseURL.URLByAppendingPathComponent("\(userIdentifier)/favorites/\(identifier).json")
         let parameters = ["client_id": clientIdentifier, "oauth_token": oauthToken]
+        let URL = User.BaseURL.URLByAppendingPathComponent("\(userIdentifier)/favorites/\(identifier).json")
+            .URLByAppendingQueryString(parameters.queryString)
 
-        let request = Request(URL: URL, method: favorite ? .PUT : .DELETE, parameters: parameters, parse: { _ in
+        let request = Request(URL: URL, method: favorite ? .PUT : .DELETE, parameters: nil, parse: { _ in
             return .Success(true)
             }) { result in
                 completion(SimpleAPIResponse(result))
