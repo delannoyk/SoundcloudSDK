@@ -45,10 +45,12 @@ public struct PaginatedAPIResponse<T>: APIResponse {
     // MARK: Initialization
     ////////////////////////////////////////////////////////////////////////////
 
-    internal init(response: Result<[T], SoundcloudError>, nextPageURL: NSURL?, parse: JSONObject -> Result<[T], SoundcloudError>) {
-        self.response = response
-        self.nextPageURL = nextPageURL
-        self.parse = parse
+    internal init(response: Result<[T], SoundcloudError>,
+        nextPageURL: NSURL?,
+        parse: JSONObject -> Result<[T], SoundcloudError>) {
+            self.response = response
+            self.nextPageURL = nextPageURL
+            self.parse = parse
     }
 
     ////////////////////////////////////////////////////////////////////////////

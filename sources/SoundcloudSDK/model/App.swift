@@ -46,8 +46,8 @@ internal extension App {
         if let identifier = JSON["id"].intValue {
             self.init(
                 identifier: identifier,
-                URL: JSON["uri"].URLValue,
-                permalinkURL: JSON["permalink_url"].URLValue,
+                URL: JSON["uri"].urlValue,
+                permalinkURL: JSON["permalink_url"].urlValue,
                 name: JSON["name"].stringValue ?? ""
             )
         }

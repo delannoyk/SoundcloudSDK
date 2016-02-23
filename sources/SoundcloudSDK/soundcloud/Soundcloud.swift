@@ -35,8 +35,8 @@ extension SoundcloudError: RequestError {
         self = .Parsing
     }
 
-    internal init?(HTTPURLResponse: NSHTTPURLResponse) {
-        switch HTTPURLResponse.statusCode {
+    internal init?(httpURLResponse: NSHTTPURLResponse) {
+        switch httpURLResponse.statusCode {
         case 200:
             return nil
         case 401:
@@ -87,7 +87,7 @@ extension PaginatedAPIResponse {
     }
 
     internal init(_ JSON: JSONObject, parse: JSONObject -> Result<[T], SoundcloudError>) {
-        self.init(response: parse(JSON["collection"]), nextPageURL: JSON["next_href"].URLValue, parse: parse)
+        self.init(response: parse(JSON["collection"]), nextPageURL: JSON["next_href"].urlValue, parse: parse)
     }
 }
 
@@ -254,7 +254,7 @@ extension Session {
             return
         }
 
-        let URL = NSURL(string: "https://soundcloud.com/connect")!
+        let url = NSURL(string: "https://soundcloud.com/connect")!
 
         let parameters = ["client_id": clientIdentifier,
             "redirect_uri": redirectURI,
@@ -262,9 +262,9 @@ extension Session {
 
         let web = SoundcloudWebViewController()
         web.autoDismissScheme = NSURL(string: redirectURI)?.scheme
-        web.URL = URL.URLByAppendingQueryString(parameters.queryString)
-        web.onDismiss = { URL in
-            if let accessCode = URL?.query?.queryDictionary["code"] {
+        web.url = url.URLByAppendingQueryString(parameters.queryString)
+        web.onDismiss = { url in
+            if let accessCode = url?.query?.queryDictionary["code"] {
                 let session = Session(authorizationCode: accessCode)
                 completion(SimpleAPIResponse(session))
             }

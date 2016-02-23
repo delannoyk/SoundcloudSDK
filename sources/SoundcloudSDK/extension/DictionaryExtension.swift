@@ -15,9 +15,9 @@ internal extension String {
     // MARK: URL Encoding
     ////////////////////////////////////////////////////////////////////////////
 
-    var URLEncodedValue: String {
-        let customAllowedSet =  NSCharacterSet(charactersInString: "=\"#%/<>?@\\^`{|}&: ").invertedSet
-        let escapedString = stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet)
+    var urlEncodedValue: String {
+        let allowedSet = NSCharacterSet(charactersInString: "=\"#%/<>?@\\^`{|}&: ").invertedSet
+        let escapedString = stringByAddingPercentEncodingWithAllowedCharacters(allowedSet)
         return escapedString ?? self
     }
 
@@ -38,7 +38,7 @@ internal extension Dictionary {
         let parts = map({(key, value) -> String in
             let keyStr = "\(key)"
             let valueStr = "\(value)"
-            return "\(keyStr)=\(valueStr.URLEncodedValue)"
+            return "\(keyStr)=\(valueStr.urlEncodedValue)"
         })
         return parts.joinWithSeparator("&")
     }

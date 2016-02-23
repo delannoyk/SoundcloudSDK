@@ -44,7 +44,9 @@ public struct ImageURLs {
     }
 
     private func URLWithFormat(format: String) -> NSURL? {
-        let URLString = baseURL?.absoluteString.stringByReplacingOccurrencesOfString("large", withString: format)
-        return NSURL(string: URLString ?? "")
+        let urlString = baseURL?
+            .absoluteString
+            .stringByReplacingOccurrencesOfString("large", withString: format)
+        return NSURL(string: urlString ?? "")
     }
 }

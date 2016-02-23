@@ -15,9 +15,9 @@ public struct Playlist {
     public init(identifier: Int, createdAt: NSDate, createdBy: User, duration: NSTimeInterval,
         streamable: Bool, downloadable: Bool, permalinkURL: NSURL?, purchaseURL: NSURL?,
         releaseYear: Int?, releaseMonth: Int?, releaseDay: Int?, releaseNumber: String?,
-        description: String?, genre: String?, type: PlaylistType?, title: String, artworkURL: ImageURLs,
-        tracks: [Track], ean: String?, sharingAccess: SharingAccess, labelIdentifier: Int?,
-        labelName: String?, license: String?) {
+        description: String?, genre: String?, type: PlaylistType?, title: String,
+        artworkURL: ImageURLs, tracks: [Track], ean: String?, sharingAccess: SharingAccess,
+        labelIdentifier: Int?, labelName: String?, license: String?) {
             self.identifier = identifier
 
             self.createdAt = createdAt
@@ -66,10 +66,12 @@ public struct Playlist {
     public let duration: NSTimeInterval
 
 
-    ///Streamable via API (This will aggregate the playlists tracks streamable attribute. Its value will be nil if not all tracks have the same streamable value.)
+    ///Streamable via API (This will aggregate the playlists tracks streamable attribute.
+    ///Its value will be nil if not all tracks have the same streamable value.)
     public let streamable: Bool
 
-    ///Downloadable (This will aggregate the playlists tracks downloadable attribute. Its value will be nil if not all tracks have the same downloadable value.)
+    ///Downloadable (This will aggregate the playlists tracks downloadable attribute.
+    ///Its value will be nil if not all tracks have the same downloadable value.)
     public let downloadable: Bool
 
 
@@ -166,8 +168,8 @@ internal extension Playlist {
                 duration: JSON["duration"].doubleValue ?? 0,
                 streamable: JSON["streamable"].boolValue ?? false,
                 downloadable: JSON["downloadable"].boolValue ?? false,
-                permalinkURL: JSON["permalink_url"].URLValue,
-                purchaseURL: JSON["purchase_url"].URLValue,
+                permalinkURL: JSON["permalink_url"].urlValue,
+                purchaseURL: JSON["purchase_url"].urlValue,
                 releaseYear: JSON["release_year"].intValue,
                 releaseMonth: JSON["release_month"].intValue,
                 releaseDay: JSON["release_day"].intValue,
@@ -176,7 +178,7 @@ internal extension Playlist {
                 genre: JSON["genre"].stringValue,
                 type: PlaylistType(rawValue: JSON["playlist_type"].stringValue ?? ""),
                 title: JSON["title"].stringValue ?? "",
-                artworkURL: ImageURLs(baseURL: JSON["artwork_url"].URLValue),
+                artworkURL: ImageURLs(baseURL: JSON["artwork_url"].urlValue),
                 tracks: JSON["tracks"].flatMap { return Track(JSON: $0) } ?? [],
                 ean: JSON["ean"].stringValue,
                 sharingAccess: SharingAccess(rawValue: JSON["sharing"].stringValue ?? "") ?? .Private,

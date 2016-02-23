@@ -27,16 +27,16 @@ internal class JSONObject {
         return (value as? NSDictionary).map { JSONObject($0[key]) } ?? JSONObject(nil)
     }
 
-    func map<U>(f: JSONObject -> U) -> [U]? {
+    func map<U>(transform: JSONObject -> U) -> [U]? {
         if let value = value as? [AnyObject] {
-            return value.map({ f(JSONObject($0)) })
+            return value.map({ transform(JSONObject($0)) })
         }
         return nil
     }
 
-    func flatMap<U>(f: JSONObject -> U?) -> [U]? {
+    func flatMap<U>(transform: JSONObject -> U?) -> [U]? {
         if let value = value as? [AnyObject] {
-            return value.flatMap { f(JSONObject($0)) }
+            return value.flatMap { transform(JSONObject($0)) }
         }
         return nil
     }
@@ -67,7 +67,7 @@ internal extension JSONObject {
         return (value as? String)
     }
 
-    internal var URLValue: NSURL? {
+    internal var urlValue: NSURL? {
         return (value as? String).map { NSURL(string: $0)?.URLByAppendingQueryString("client_id=\(Soundcloud.clientIdentifier!)") } ?? nil
     }
 
@@ -195,7 +195,7 @@ internal protocol HTTPParametersConvertible {
 internal protocol RequestError {
     init(networkError: ErrorType)
     init(jsonError: ErrorType)
-    init?(HTTPURLResponse: NSHTTPURLResponse)
+    init?(httpURLResponse: NSHTTPURLResponse)
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -211,7 +211,7 @@ internal struct Request<T, E: RequestError> {
         let URLRequest = method.URLRequest(URL, parameters: parameters)
 
         dataTask = NSURLSession.sharedSession().dataTaskWithRequest(URLRequest) { data, response, error in
-            if let response = response as? NSHTTPURLResponse, error = E(HTTPURLResponse: response) {
+            if let response = response as? NSHTTPURLResponse, error = E(httpURLResponse: response) {
                 dispatch_async(dispatch_get_main_queue()) {
                     completion(.Failure(error))
                 }

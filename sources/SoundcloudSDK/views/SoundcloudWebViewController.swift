@@ -79,24 +79,24 @@ internal class SoundcloudWebViewController: ViewController, WKNavigationDelegate
     // MARK: Properties
     ////////////////////////////////////////////////////////////////////////////
 
-    var URL: NSURL? {
+    var url: NSURL? {
         get {
-            return URLRequest?.URL
+            return urlRequest?.URL
         }
         set {
             if let URL = newValue {
-                URLRequest = NSURLRequest(URL: URL)
+                urlRequest = NSURLRequest(URL: URL)
             }
             else {
-                URLRequest = nil
+                urlRequest = nil
             }
         }
     }
 
-    var URLRequest: NSURLRequest? {
+    var urlRequest: NSURLRequest? {
         didSet {
-            if let URLRequest = URLRequest {
-                webView.loadRequest(URLRequest)
+            if let urlRequest = urlRequest {
+                webView.loadRequest(urlRequest)
             }
             else {
                 webView.loadHTMLString("", baseURL: nil)
