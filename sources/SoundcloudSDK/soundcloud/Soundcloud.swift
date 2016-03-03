@@ -74,8 +74,9 @@ public func ==(lhs: SoundcloudError, rhs: SoundcloudError) -> Bool {
             default:
                 return false
             }
+        #else
+            return false
         #endif
-        return false
     }
 }
 
@@ -238,6 +239,42 @@ extension Session {
             return .Failure(.Parsing)
             }) { result in
                 completion(SimpleAPIResponse(result))
+        }
+        request.start()
+    }
+
+    /**
+     Fetch current user's profile.
+
+     **This method requires a Session.**
+
+     - parameter completion: The closure that will be called when the activities are loaded or upon error
+     */
+    public func activities(completion: PaginatedAPIResponse<Activity> -> Void) {
+        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+            completion(PaginatedAPIResponse(.CredentialsNotSet))
+            return
+        }
+
+        guard let oauthToken = accessToken else {
+            completion(PaginatedAPIResponse(.NeedsLogin))
+            return
+        }
+
+        let URL = NSURL(string: "https://api.soundcloud.com/me/activities")!
+        let parameters = ["client_id": clientIdentifier, "oauth_token": oauthToken, "linked_partitioning": "true"]
+
+        let parse = { (JSON: JSONObject) -> Result<[Activity], SoundcloudError> in
+            guard let activities = JSON.flatMap({ return Activity(JSON: $0) }) else {
+                return .Failure(.Parsing)
+            }
+            return .Success(activities)
+        }
+
+        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Activity>, SoundcloudError> in
+            return .Success(PaginatedAPIResponse(JSON, parse: parse))
+            }) { result in
+                completion(result.result!)
         }
         request.start()
     }

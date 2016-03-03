@@ -80,6 +80,10 @@
 		4644B0CC1AEC04F800D3B495 /* Soundcloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4644B0CB1AEC04F800D3B495 /* Soundcloud.swift */; };
 		464565D31B73BCC500839812 /* PlaylistRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464565D21B73BCC500839812 /* PlaylistRequest.swift */; };
 		465308AA1AB5C73700766A62 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465308A91AB5C73700766A62 /* Request.swift */; };
+		4655B81D1C88B7E2003B378E /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4655B81C1C88B7E2003B378E /* Activity.swift */; };
+		4655B81E1C88B7E2003B378E /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4655B81C1C88B7E2003B378E /* Activity.swift */; };
+		4655B81F1C88B7E2003B378E /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4655B81C1C88B7E2003B378E /* Activity.swift */; };
+		4655B8201C88BA14003B378E /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4655B81C1C88B7E2003B378E /* Activity.swift */; };
 		4656CE7D1A9CF05600319B94 /* SoundcloudTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE7C1A9CF05600319B94 /* SoundcloudTests.swift */; };
 		4656CE881A9CF0A800319B94 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE871A9CF0A800319B94 /* User.swift */; };
 		4656CE8A1A9CF0BE00319B94 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656CE891A9CF0BE00319B94 /* Track.swift */; };
@@ -157,6 +161,7 @@
 		4644B0CB1AEC04F800D3B495 /* Soundcloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Soundcloud.swift; sourceTree = "<group>"; };
 		464565D21B73BCC500839812 /* PlaylistRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistRequest.swift; sourceTree = "<group>"; };
 		465308A91AB5C73700766A62 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		4655B81C1C88B7E2003B378E /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		4656CE6A1A9CF05600319B94 /* Soundcloud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Soundcloud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4656CE6E1A9CF05600319B94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4656CE751A9CF05600319B94 /* SoundcloudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundcloudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -400,6 +405,7 @@
 				4656CE8B1A9CF0CD00319B94 /* Playlist.swift */,
 				4626792D1AED041B003771C9 /* ImageURLs.swift */,
 				465877181BD394AA0080F05A /* SearchQuery.swift */,
+				4655B81C1C88B7E2003B378E /* Activity.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -803,6 +809,7 @@
 				460388FC1C3EDE8000997DC8 /* PlaylistRequest.swift in Sources */,
 				460389071C3EE2AF00997DC8 /* SoundcloudWebViewController.swift in Sources */,
 				460388F71C3EDE8000997DC8 /* NSURLExtension.swift in Sources */,
+				4655B81F1C88B7E2003B378E /* Activity.swift in Sources */,
 				460388FE1C3EDE8000997DC8 /* Comment.swift in Sources */,
 				460388F61C3EDE8000997DC8 /* DictionaryExtension.swift in Sources */,
 				460388FA1C3EDE8000997DC8 /* TrackRequest.swift in Sources */,
@@ -834,6 +841,7 @@
 				460388D31C3D901000997DC8 /* ImageURLs.swift in Sources */,
 				460388C81C3D901000997DC8 /* Request.swift in Sources */,
 				460388D41C3D901000997DC8 /* SearchQuery.swift in Sources */,
+				4655B81E1C88B7E2003B378E /* Activity.swift in Sources */,
 				460388CB1C3D901000997DC8 /* PlaylistRequest.swift in Sources */,
 				460388C61C3D901000997DC8 /* NSURLExtension.swift in Sources */,
 				460388CD1C3D901000997DC8 /* Comment.swift in Sources */,
@@ -861,6 +869,7 @@
 				465877191BD394AA0080F05A /* SearchQuery.swift in Sources */,
 				4656CE8A1A9CF0BE00319B94 /* Track.swift in Sources */,
 				4656CE901A9D098300319B94 /* Enums.swift in Sources */,
+				4655B81D1C88B7E2003B378E /* Activity.swift in Sources */,
 				4644B0BD1AEBC58100D3B495 /* DictionaryExtension.swift in Sources */,
 				461FA2CC1AFBC6DD00F585C8 /* StringExtension.swift in Sources */,
 				4626792E1AED041B003771C9 /* ImageURLs.swift in Sources */,
@@ -899,6 +908,7 @@
 				460388D61C3D903C00997DC8 /* Soundcloud.swift in Sources */,
 				460388DA1C3D903C00997DC8 /* Request.swift in Sources */,
 				460388D81C3D903C00997DC8 /* NSURLExtension.swift in Sources */,
+				4655B8201C88BA14003B378E /* Activity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
