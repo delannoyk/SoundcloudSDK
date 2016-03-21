@@ -13,6 +13,8 @@ public enum SearchQueryOptions {
     case Tags([String])
     case Genres([String])
     case Types([TrackType])
+    case BpmFrom(Int)
+    case BpmTo(Int)
 
     internal var query: (String, String) {
         switch self {
@@ -24,6 +26,10 @@ public enum SearchQueryOptions {
             return ("genres", genres.joinWithSeparator(","))
         case .Types(let types):
             return ("types", types.map { $0.rawValue }.joinWithSeparator(","))
+        case .BpmFrom(let from):
+            return ("bpm[from]", String(from))
+        case .BpmTo(let to):
+            return ("bpm[to]", String(to))
         }
     }
 }
