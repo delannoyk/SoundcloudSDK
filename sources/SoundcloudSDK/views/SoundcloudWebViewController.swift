@@ -37,16 +37,20 @@ internal class SoundcloudWebViewController: ViewController, WKNavigationDelegate
             let bundle = NSBundle(forClass: OnePasswordExtension.self)
             if let path = bundle.pathForResource("OnePasswordExtensionResources", ofType: "bundle") {
                 let resourceBundle = NSBundle(path: path)
-                let image = UIImage(named: "onepassword-navbar", inBundle: resourceBundle, compatibleWithTraitCollection: nil)
+                let image = UIImage(
+                    named: "onepassword-navbar", inBundle: resourceBundle,
+                    compatibleWithTraitCollection: nil)
 
-                navigationItem.rightBarButtonItem = UIBarButtonItem(image: image,
-                    style: .Plain, target: self, action: "buttonOnePasswordPressed:")
+                navigationItem.rightBarButtonItem = UIBarButtonItem(
+                    image: image, style: .Plain, target: self,
+                    action: #selector(SoundcloudWebViewController.buttonOnePasswordPressed(_:)))
             }
         }
 
         //Left button is a Cancel button
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel,
-            target: self, action: "buttonCancelPressed:")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .Cancel, target: self,
+            action: #selector(SoundcloudWebViewController.buttonCancelPressed(_:)))
         #endif
     }
 
@@ -64,7 +68,8 @@ internal class SoundcloudWebViewController: ViewController, WKNavigationDelegate
 
     @objc private func buttonOnePasswordPressed(sender: AnyObject) {
         if OnePasswordExtension.sharedExtension().isAppExtensionAvailable() {
-            OnePasswordExtension.sharedExtension().fillItemIntoWebView(webView,
+            OnePasswordExtension.sharedExtension().fillItemIntoWebView(
+                webView,
                 forViewController: self,
                 sender: sender,
                 showOnlyLogins: true,

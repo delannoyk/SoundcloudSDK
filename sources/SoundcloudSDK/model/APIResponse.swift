@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol APIResponse {
-    typealias U
+    associatedtype U
     var response: Result<U, SoundcloudError> { get }
 }
 
