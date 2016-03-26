@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'Soundcloud'
-  s.version      = '0.7.1'
+  s.version      = '0.8.0'
   s.license      =  { :type => 'MIT' }
   s.homepage     = 'https://github.com/delannoyk/SoundcloudSDK'
   s.authors      = {
