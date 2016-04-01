@@ -42,7 +42,7 @@ public struct Track {
         tags: [String]?, description: String?, genre: String?,
         trackType: TrackType?, title: String, format: String?,
         contentSize: UInt64?, artworkImageURL: ImageURLs, waveformImageURL: ImageURLs,
-        playbackCount: Int?, downloadCount: Int?, favoriteCount: Int?, commentCount: Int?) {
+        playbackCount: Int?, downloadCount: Int?, favoriteCount: Int?, commentCount: Int?, bpm: Int?) {
             self.identifier = identifier
 
             self.createdAt = createdAt
@@ -79,6 +79,7 @@ public struct Track {
             self.downloadCount = downloadCount
             self.favoriteCount = favoriteCount
             self.commentCount = commentCount
+            self.bpm = bpm
     }
 
     ///Track's identifier
@@ -121,6 +122,9 @@ public struct Track {
 
     ///Release year
     public let releaseYear: Int?
+    
+    // BPM
+    public let bpm: Int?
 
     ///Release month
     public let releaseMonth: Int?
@@ -230,7 +234,8 @@ internal extension Track {
                 playbackCount: JSON["playback_count"].intValue,
                 downloadCount: JSON["download_count"].intValue,
                 favoriteCount: JSON["favoritings_count"].intValue,
-                commentCount: JSON["comment_count"].intValue
+                commentCount: JSON["comment_count"].intValue,
+                bpm: JSON["bpm"].intValue
             )
         }
         else {
