@@ -218,10 +218,10 @@ public extension User {
             return
         }
 
-        let URL = User.BaseURL.URLByAppendingPathComponent("\(identifier)/followings/\(userIdentifier).json")
         let parameters = ["client_id": clientIdentifier, "oauth_token": oauthToken]
+        let URL = User.BaseURL.URLByDeletingLastPathComponent!.URLByAppendingPathComponent("me/followings/\(userIdentifier).json").URLByAppendingQueryString(parameters.queryString)
 
-        let request = Request(URL: URL, method: follow ? .PUT : .DELETE, parameters: parameters, parse: { _ in
+        let request = Request(URL: URL, method: follow ? .PUT : .DELETE, parameters: nil, parse: { _ in
             return .Success(true)
             }) { result in
                 completion(SimpleAPIResponse(result))
