@@ -47,11 +47,11 @@ internal extension Dictionary {
 }
 
 extension Dictionary: HTTPParametersConvertible {
-    var stringValue: String {
+    var queryStringValue: String {
         return queryString
     }
 
-    var dataValue: NSData {
+    var formDataValue: NSData {
         return queryString.dataUsingEncoding(NSUTF8StringEncoding) ?? NSData()
     }
 }

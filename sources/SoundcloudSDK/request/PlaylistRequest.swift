@@ -76,4 +76,58 @@ public extension Playlist {
         }
         request.start()
     }
+
+    public func addTrack(trackIdentifier: Int, completion: SimpleAPIResponse<Playlist> -> Void) {
+        addTracks([trackIdentifier], completion: completion)
+    }
+
+    public func addTracks(trackIdentifiers: [Int], completion: SimpleAPIResponse<Playlist> -> Void) {
+        updateTracksWithNewList(tracks.map { $0.identifier } + trackIdentifiers, completion: completion)
+    }
+
+    public func removeTrack(trackIdentifier: Int, completion: SimpleAPIResponse<Playlist> -> Void) {
+        removeTracks([trackIdentifier], completion: completion)
+    }
+
+    public func removeTracks(trackIdentifiers: [Int], completion: SimpleAPIResponse<Playlist> -> Void) {
+        updateTracksWithNewList(tracks
+            .map { $0.identifier }
+            .filter { !trackIdentifiers.contains($0) }, completion: completion)
+    }
+
+    private func updateTracksWithNewList(trackIdentifiers: [Int], completion: SimpleAPIResponse<Playlist> -> Void) {
+        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+            completion(SimpleAPIResponse(.CredentialsNotSet))
+            return
+        }
+
+        guard let oauthToken = Soundcloud.session?.accessToken else {
+            completion(SimpleAPIResponse(.NeedsLogin))
+            return
+        }
+
+        let queryStringParameters = ["client_id": clientIdentifier, "oauth_token": oauthToken]
+        let URL = Playlist.BaseURL.URLByAppendingPathComponent("\(identifier)")
+            .URLByAppendingQueryString(queryStringParameters.queryString)
+
+        let parameters = [
+            "playlist": [
+                "tracks": trackIdentifiers.map { ["id": "\($0)"] }
+            ]
+        ]
+        guard let JSONEncoded = try? NSJSONSerialization.dataWithJSONObject(parameters, options: []) else {
+            completion(SimpleAPIResponse(.Parsing))
+            return
+        }
+
+        let request = Request(URL: URL, method: .PUT, parameters: JSONEncoded, headers: ["Content-Type": "application/json"], parse: {
+            if let playlist = Playlist(JSON: $0) {
+                return .Success(playlist)
+            }
+            return .Failure(.Parsing)
+        }) { result in
+            completion(SimpleAPIResponse(result))
+        }
+        request.start()
+    }
 }

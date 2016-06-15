@@ -157,13 +157,13 @@ internal enum HTTPMethod: String {
     case PUT = "PUT"
     case DELETE = "DELETE"
 
-    func URLRequest(URL: NSURL, parameters: HTTPParametersConvertible? = nil) -> NSURLRequest {
+    func URLRequest(URL: NSURL, parameters: HTTPParametersConvertible? = nil, headers: [String: String]? = nil) -> NSURLRequest {
         let URLRequestInfo: (URL: NSURL, HTTPBody: NSData?) = {
             if let parameters = parameters {
                 if self == .GET {
-                    return (URL: URL.URLByAppendingQueryString(parameters.stringValue), HTTPBody: nil)
+                    return (URL: URL.URLByAppendingQueryString(parameters.queryStringValue), HTTPBody: nil)
                 }
-                return (URL: URL, HTTPBody: parameters.dataValue)
+                return (URL: URL, HTTPBody: parameters.formDataValue)
             }
             return (URL: URL, HTTPBody: nil)
         }()
@@ -171,6 +171,9 @@ internal enum HTTPMethod: String {
         let URLRequest = NSMutableURLRequest(URL: URLRequestInfo.URL)
         URLRequest.HTTPBody = URLRequestInfo.HTTPBody
         URLRequest.HTTPMethod = rawValue
+        headers?.forEach { key, value in
+            URLRequest.addValue(value, forHTTPHeaderField: key)
+        }
         return URLRequest
     }
 }
@@ -182,8 +185,8 @@ internal enum HTTPMethod: String {
 ////////////////////////////////////////////////////////////////////////////
 
 internal protocol HTTPParametersConvertible {
-    var stringValue: String { get }
-    var dataValue: NSData { get }
+    var queryStringValue: String { get }
+    var formDataValue: NSData { get }
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -207,8 +210,8 @@ internal protocol RequestError {
 internal struct Request<T, E: RequestError> {
     private let dataTask: NSURLSessionDataTask
 
-    init(URL: NSURL, method: HTTPMethod, parameters: HTTPParametersConvertible?, parse: JSONObject -> Result<T, E>, completion: Result<T, E> -> Void) {
-        let URLRequest = method.URLRequest(URL, parameters: parameters)
+    init(URL: NSURL, method: HTTPMethod, parameters: HTTPParametersConvertible?, headers: [String: String]? = nil, parse: JSONObject -> Result<T, E>, completion: Result<T, E> -> Void) {
+        let URLRequest = method.URLRequest(URL, parameters: parameters, headers: headers)
 
         dataTask = NSURLSession.sharedSession().dataTaskWithRequest(URLRequest) { data, response, error in
             if let response = response as? NSHTTPURLResponse, error = E(httpURLResponse: response) {

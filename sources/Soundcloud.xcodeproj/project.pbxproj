@@ -93,6 +93,7 @@
 		465877191BD394AA0080F05A /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465877181BD394AA0080F05A /* SearchQuery.swift */; };
 		465923771B636A8A0090056E /* TrackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465923761B636A8A0090056E /* TrackTests.swift */; };
 		465923791B636AA40090056E /* RequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465923781B636AA40090056E /* RequestTests.swift */; };
+		46A2CED41D11CED4005DA1FB /* NSDataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A2CED31D11CED4005DA1FB /* NSDataExtension.swift */; };
 		46BA61A21B5D4DBA0066ECE4 /* Soundcloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4656CE6A1A9CF05600319B94 /* Soundcloud.framework */; };
 		46BA61A31B5D4DBA0066ECE4 /* Soundcloud.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4656CE6A1A9CF05600319B94 /* Soundcloud.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		46D1CC351B5A38210043381B /* SoundcloudWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D1CC341B5A38210043381B /* SoundcloudWebViewController.swift */; };
@@ -175,6 +176,7 @@
 		465877181BD394AA0080F05A /* SearchQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchQuery.swift; sourceTree = "<group>"; };
 		465923761B636A8A0090056E /* TrackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackTests.swift; sourceTree = "<group>"; };
 		465923781B636AA40090056E /* RequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTests.swift; sourceTree = "<group>"; };
+		46A2CED31D11CED4005DA1FB /* NSDataExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDataExtension.swift; sourceTree = "<group>"; };
 		46D1CC341B5A38210043381B /* SoundcloudWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundcloudWebViewController.swift; sourceTree = "<group>"; };
 		4E2BB96BC1E72F6F66E5745C /* Pods-Soundcloud OSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soundcloud OSX.release.xcconfig"; path = "Pods/Target Support Files/Pods-Soundcloud OSX/Pods-Soundcloud OSX.release.xcconfig"; sourceTree = "<group>"; };
 		4F277BE0F3C96D640D9D29F7 /* Pods-SoundcloudAppTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SoundcloudAppTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-SoundcloudAppTest/Pods-SoundcloudAppTest.release.xcconfig"; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				4644B0BC1AEBC58100D3B495 /* DictionaryExtension.swift */,
 				4644B0BE1AEBC76E00D3B495 /* NSURLExtension.swift */,
 				461FA2CB1AFBC6DD00F585C8 /* StringExtension.swift */,
+				46A2CED31D11CED4005DA1FB /* NSDataExtension.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -876,6 +879,7 @@
 				4637FD8A1B30A39700286C14 /* Comment.swift in Sources */,
 				46D1CC351B5A38210043381B /* SoundcloudWebViewController.swift in Sources */,
 				4656CE8C1A9CF0CD00319B94 /* Playlist.swift in Sources */,
+				46A2CED41D11CED4005DA1FB /* NSDataExtension.swift in Sources */,
 				464565D31B73BCC500839812 /* PlaylistRequest.swift in Sources */,
 				4644B0C31AEBD0FA00D3B495 /* UserRequest.swift in Sources */,
 				4644B0C11AEBD01900D3B495 /* TrackRequest.swift in Sources */,

@@ -12,11 +12,11 @@ import Foundation
 ////////////////////////////////////////////////////////////////////////////
 
 extension String: HTTPParametersConvertible {
-    var stringValue: String {
+    var queryStringValue: String {
         return self
     }
 
-    var dataValue: NSData {
+    var formDataValue: NSData {
         return self.dataUsingEncoding(NSUTF8StringEncoding) ?? NSData()
     }
 }
