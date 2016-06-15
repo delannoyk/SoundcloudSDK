@@ -42,6 +42,7 @@ public extension Playlist {
         request.start()
     }
 
+    #if os(iOS) || os(OSX)
     /**
      Creates a playlist with a name and a specific sharing access
 
@@ -130,4 +131,5 @@ public extension Playlist {
         }
         request.start()
     }
+    #endif
 }
