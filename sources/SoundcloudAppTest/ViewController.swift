@@ -20,7 +20,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     ////////////////////////////////////////////////////////////////////////////
 
     @IBAction func buttonLoginPressed(_: AnyObject) {
-        Session.login(self, completion: { result in
+        Session.login(displayViewController: self, completion: { result in
             result.response.result?.me { user in
                 print(user.response)
             }
@@ -40,12 +40,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
             print(result.response.result)
         }*/
 
-        Playlist.createWithName("Test SC de Test", sharingAccess: .Private) { response in
+        Playlist.create(withName: "Test SC de Test", sharingAccess: .Private) { response in
             print(response.response)
-            Track.search([.Genres(["punk"])]) { trackResult in
+            Track.search(queries: [.genres(["punk"])]) { trackResult in
                 print(trackResult.response)
 
-                response.response.result?.addTrack(trackResult.response.result!.first!.identifier) { add in
+                response.response.result?.addTrack(withIdentifier: trackResult.response.result!.first!.identifier) { add in
                     print(add.response)
                 }
             }
@@ -53,11 +53,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func buttonFollowPressed(_: AnyObject) {
-        user?.follow(Int(textFieldUserIdentifier.text!)!, completion: { result in
+        user?.follow(userIdentifier: Int(textFieldUserIdentifier.text!)!, completion: { result in
             print(result.response.result)
             print(result.response.error)
 
-            self.user?.unfollow(Int(self.textFieldUserIdentifier.text!)!, completion: { result in
+            self.user?.unfollow(userIdentifier: Int(self.textFieldUserIdentifier.text!)!, completion: { result in
                 print(result.response.result)
                 print(result.response.error)
             })
@@ -65,8 +65,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func buttonFavoritePressed(_: AnyObject) {
-        Track.track(Int(textFieldTrackIdentifier.text!)!, completion: { result in
-            result.response.result?.favorite(self.user!.identifier, completion: { result in
+        Track.track(identifier: Int(textFieldTrackIdentifier.text!)!, completion: { result in
+            result.response.result?.favorite(userIdentifier: self.user!.identifier, completion: { result in
                 print(result.response.result)
                 print(result.response.error)
             })
@@ -74,7 +74,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func buttonSearchPressed(_: AnyObject) {
-        Track.search([.QueryString(textFieldSearchText.text!)], completion: { result in
+        Track.search(queries: [.queryString(textFieldSearchText.text!)], completion: { result in
             print(result.response.result)
             print(result.response.error)
         })
@@ -86,7 +86,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     // MARK: UITextFieldDelegate
     ////////////////////////////////////////////////////////////////////////////
 
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
     }
