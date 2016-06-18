@@ -21,17 +21,35 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func buttonLoginPressed(_: AnyObject) {
         Session.login(self, completion: { result in
+            result.response.result?.me { user in
+                print(user.response)
+            }
         })
     }
 
     @IBAction func buttonLoadMePressed(_: AnyObject) {
-        Soundcloud.session?.me({ result in
+        /*Soundcloud.session?.me({ result in
             self.user = result.response.result
 
-            if let user = result.response.result {
+            /*if let user = result.response.result {
                 print(user)
-            }
+            }*/
         })
+
+        Soundcloud.session?.activities { result in
+            print(result.response.result)
+        }*/
+
+        Playlist.createWithName("Test SC de Test", sharingAccess: .Private) { response in
+            print(response.response)
+            Track.search([.Genres(["punk"])]) { trackResult in
+                print(trackResult.response)
+
+                response.response.result?.addTrack(trackResult.response.result!.first!.identifier) { add in
+                    print(add.response)
+                }
+            }
+        }
     }
 
     @IBAction func buttonFollowPressed(_: AnyObject) {

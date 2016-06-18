@@ -11,15 +11,15 @@ import Foundation
 // MARK: - NSURLExtension
 ////////////////////////////////////////////////////////////////////////////
 
-internal extension NSURL {
+extension URL {
     // MARK: Adding parameters
     ////////////////////////////////////////////////////////////////////////////
 
-    func URLByAppendingQueryString(queryString: String) -> NSURL {
+    func appendingQueryString(_ queryString: String) -> URL {
         if !queryString.isEmpty {
             let delimiter = (self.query == nil ? "?" : "&")
             let URLString = "\(self.absoluteString)\(delimiter)\(queryString)"
-            if let URL = NSURL(string: URLString) {
+            if let URL = URL(string: URLString) {
                 return URL
             }
         }

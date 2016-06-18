@@ -14,28 +14,28 @@ import Foundation
 // MARK: - Errors
 ////////////////////////////////////////////////////////////////////////////
 
-public enum SoundcloudError: ErrorType {
+public enum SoundcloudError: ErrorProtocol {
     case CredentialsNotSet
     case NotFound
     case Forbidden
     case Parsing
     case Unknown
-    case Network(ErrorType)
+    case Network(ErrorProtocol)
     #if os(iOS) || os(OSX)
     case NeedsLogin
     #endif
 }
 
 extension SoundcloudError: RequestError {
-    internal init(networkError: ErrorType) {
+    init(networkError: ErrorProtocol) {
         self = .Network(networkError)
     }
 
-    internal init(jsonError: ErrorType) {
+    init(jsonError: ErrorProtocol) {
         self = .Parsing
     }
 
-    internal init?(httpURLResponse: NSHTTPURLResponse) {
+    init?(httpURLResponse: HTTPURLResponse) {
         switch httpURLResponse.statusCode {
         case 200, 201:
             return nil
@@ -81,13 +81,13 @@ public func ==(lhs: SoundcloudError, rhs: SoundcloudError) -> Bool {
 }
 
 extension PaginatedAPIResponse {
-    internal init(_ error: SoundcloudError) {
-        self.init(response: .Failure(error), nextPageURL: nil) { _ in
-            return .Failure(error)
+    init(_ error: SoundcloudError) {
+        self.init(response: .failure(error), nextPageURL: nil) { _ in
+            return .failure(error)
         }
     }
 
-    internal init(_ JSON: JSONObject, parse: JSONObject -> Result<[T], SoundcloudError>) {
+    init(_ JSON: JSONObject, parse: (JSONObject) -> Result<[T], SoundcloudError>) {
         self.init(response: parse(JSON["collection"]), nextPageURL: JSON["next_href"].urlValue, parse: parse)
     }
 }
@@ -101,20 +101,20 @@ extension PaginatedAPIResponse {
 #if os(iOS) || os(OSX)
 public class Session: NSObject, NSCoding, NSCopying {
     //First session info
-    internal var authorizationCode: String
+    var authorizationCode: String
 
     //Token
-    internal var accessToken: String?
-    internal var accessTokenExpireDate: NSDate?
-    internal var scope: String?
+    var accessToken: String?
+    var accessTokenExpireDate: NSDate?
+    var scope: String?
 
     //Future session
-    internal var refreshToken: String?
+    var refreshToken: String?
 
     // MARK: Initialization
     ////////////////////////////////////////////////////////////////////////////
 
-    internal init(authorizationCode: String) {
+    init(authorizationCode: String) {
         self.authorizationCode = authorizationCode
     }
 
@@ -131,19 +131,19 @@ public class Session: NSObject, NSCoding, NSCopying {
     private static let refreshTokenKey = "refreshTokenKey"
 
     required public init?(coder aDecoder: NSCoder) {
-        authorizationCode = aDecoder.decodeObjectForKey(Session.authorizationCodeKey) as! String
-        accessToken = aDecoder.decodeObjectForKey(Session.accessTokenKey) as? String
-        accessTokenExpireDate = aDecoder.decodeObjectForKey(Session.accessTokenExpireDateKey) as? NSDate
-        scope = aDecoder.decodeObjectForKey(Session.scopeKey) as? String
-        refreshToken = aDecoder.decodeObjectForKey(Session.refreshTokenKey) as? String
+        authorizationCode = aDecoder.decodeObject(forKey: Session.authorizationCodeKey) as! String
+        accessToken = aDecoder.decodeObject(forKey: Session.accessTokenKey) as? String
+        accessTokenExpireDate = aDecoder.decodeObject(forKey: Session.accessTokenExpireDateKey) as? NSDate
+        scope = aDecoder.decodeObject(forKey: Session.scopeKey) as? String
+        refreshToken = aDecoder.decodeObject(forKey: Session.refreshTokenKey) as? String
     }
 
-    public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(authorizationCode, forKey: Session.authorizationCodeKey)
-        aCoder.encodeObject(accessToken, forKey: Session.accessTokenKey)
-        aCoder.encodeObject(accessTokenExpireDate, forKey: Session.accessTokenExpireDateKey)
-        aCoder.encodeObject(scope, forKey: Session.scopeKey)
-        aCoder.encodeObject(refreshToken, forKey: Session.refreshTokenKey)
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(authorizationCode, forKey: Session.authorizationCodeKey)
+        aCoder.encode(accessToken, forKey: Session.accessTokenKey)
+        aCoder.encode(accessTokenExpireDate, forKey: Session.accessTokenExpireDateKey)
+        aCoder.encode(scope, forKey: Session.scopeKey)
+        aCoder.encode(refreshToken, forKey: Session.refreshTokenKey)
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -152,7 +152,7 @@ public class Session: NSObject, NSCoding, NSCopying {
     // MARK: NSCopying
     ////////////////////////////////////////////////////////////////////////////
 
-    public func copyWithZone(zone: NSZone) -> AnyObject {
+    public func copy(with zone: NSZone? = nil) -> AnyObject {
         let session = Session(authorizationCode: authorizationCode)
         session.accessToken = accessToken
         session.accessTokenExpireDate = accessTokenExpireDate
@@ -175,13 +175,13 @@ extension Session {
     - parameter displayViewController: An UIViewController that is in the view hierarchy
     - parameter completion:            The closure that will be called when the user is logged in or upon error
     */
-    public static func login(displayViewController: ViewController, completion: SimpleAPIResponse<Session> -> Void) {
-        authorize(displayViewController, completion: { result in
+    public static func login(displayViewController: ViewController, completion: (SimpleAPIResponse<Session>) -> Void) {
+        authorize(displayViewController: displayViewController, completion: { result in
             if let session = result.response.result {
-                session.getToken({ result in
+                session.getToken { result in
                     Soundcloud.session = result.response.result
                     completion(result)
-                })
+                }
             }
             else {
                 completion(result)
@@ -195,13 +195,13 @@ extension Session {
 
     - parameter completion: The closure that will be called when the session is refreshed or upon error
     */
-    public func refreshSession(completion: SimpleAPIResponse<Session> -> Void) {
-        _refreshToken({ result in
+    public func refreshSession(completion: (SimpleAPIResponse<Session>) -> Void) {
+        _refreshToken { result in
             if let session = result.response.result {
                 Soundcloud.session = session
             }
             completion(result)
-        })
+        }
     }
 
     /**
@@ -218,7 +218,7 @@ extension Session {
 
     - parameter completion: The closure that will be called when the profile is loaded or upon error
     */
-    public func me(completion: SimpleAPIResponse<User> -> Void) {
+    public func me(completion: (SimpleAPIResponse<User>) -> Void) {
         guard let clientIdentifier = Soundcloud.clientIdentifier else {
             completion(SimpleAPIResponse(.CredentialsNotSet))
             return
@@ -229,14 +229,14 @@ extension Session {
             return
         }
 
-        let URL = NSURL(string: "https://api.soundcloud.com/me")!
+        let url = URL(string: "https://api.soundcloud.com/me")!
         let parameters = ["client_id": clientIdentifier, "oauth_token": oauthToken]
 
-        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
+        let request = Request(url: url, method: .GET, parameters: parameters, parse: {
             if let user = User(JSON: $0) {
-                return .Success(user)
+                return .success(user)
             }
-            return .Failure(.Parsing)
+            return .failure(.Parsing)
             }) { result in
                 completion(SimpleAPIResponse(result))
         }
@@ -250,7 +250,7 @@ extension Session {
 
      - parameter completion: The closure that will be called when the activities are loaded or upon error
      */
-    public func activities(completion: PaginatedAPIResponse<Activity> -> Void) {
+    public func activities(completion: (PaginatedAPIResponse<Activity>) -> Void) {
         guard let clientIdentifier = Soundcloud.clientIdentifier else {
             completion(PaginatedAPIResponse(.CredentialsNotSet))
             return
@@ -261,18 +261,18 @@ extension Session {
             return
         }
 
-        let URL = NSURL(string: "https://api.soundcloud.com/me/activities")!
+        let url = URL(string: "https://api.soundcloud.com/me/activities")!
         let parameters = ["client_id": clientIdentifier, "oauth_token": oauthToken, "linked_partitioning": "true"]
 
         let parse = { (JSON: JSONObject) -> Result<[Activity], SoundcloudError> in
-            guard let activities = JSON.flatMap({ return Activity(JSON: $0) }) else {
-                return .Failure(.Parsing)
+            guard let activities = JSON.flatMap({ Activity(JSON: $0) }) else {
+                return .failure(.Parsing)
             }
-            return .Success(activities)
+            return .success(activities)
         }
 
-        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Activity>, SoundcloudError> in
-            return .Success(PaginatedAPIResponse(JSON, parse: parse))
+        let request = Request(url: url, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Activity>, SoundcloudError> in
+            return .success(PaginatedAPIResponse(JSON, parse: parse))
             }) { result in
                 completion(result.result!)
         }
@@ -285,21 +285,21 @@ extension Session {
     // MARK: Authorize
     ////////////////////////////////////////////////////////////////////////////
 
-    internal static func authorize(displayViewController: ViewController, completion: SimpleAPIResponse<Session> -> Void) {
+    static func authorize(displayViewController: ViewController, completion: (SimpleAPIResponse<Session>) -> Void) {
         guard let clientIdentifier = Soundcloud.clientIdentifier, redirectURI = Soundcloud.redirectURI else {
             completion(SimpleAPIResponse(.CredentialsNotSet))
             return
         }
 
-        let url = NSURL(string: "https://soundcloud.com/connect")!
+        let url = URL(string: "https://soundcloud.com/connect")!
 
         let parameters = ["client_id": clientIdentifier,
             "redirect_uri": redirectURI,
             "response_type": "code"]
 
         let web = SoundcloudWebViewController()
-        web.autoDismissScheme = NSURL(string: redirectURI)?.scheme
-        web.url = url.URLByAppendingQueryString(parameters.queryString)
+        web.autoDismissScheme = URL(string: redirectURI)?.scheme
+        web.url = url.appendingQueryString(parameters.queryString)
         web.onDismiss = { url in
             if let accessCode = url?.query?.queryDictionary["code"] {
                 let session = Session(authorizationCode: accessCode)
@@ -319,7 +319,7 @@ extension Session {
             web.navigationItem.title = "Soundcloud"
 
             let nav = UINavigationController(rootViewController: web)
-            displayViewController.presentViewController(nav, animated: true, completion: nil)
+            displayViewController.present(nav, animated: true, completion: nil)
         #endif
     }
 
@@ -329,7 +329,7 @@ extension Session {
     // MARK: Token
     ////////////////////////////////////////////////////////////////////////////
 
-    internal func getToken(completion: SimpleAPIResponse<Session> -> Void) {
+    func getToken(completion: (SimpleAPIResponse<Session>) -> Void) {
         guard let clientId = Soundcloud.clientIdentifier, clientSecret = Soundcloud.clientSecret, redirectURI = Soundcloud.redirectURI else {
             completion(SimpleAPIResponse(.CredentialsNotSet))
             return
@@ -337,7 +337,7 @@ extension Session {
 
         let parameters = ["client_id": clientId, "client_secret": clientSecret, "redirect_uri": redirectURI,
             "grant_type": "authorization_code", "code": authorizationCode]
-        token(parameters, completion: completion)
+        token(parameters: parameters, completion: completion)
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -346,7 +346,7 @@ extension Session {
     // MARK: Refresh Token
     ////////////////////////////////////////////////////////////////////////////
 
-    internal func _refreshToken(completion: SimpleAPIResponse<Session> -> Void) {
+    func _refreshToken(completion: (SimpleAPIResponse<Session>) -> Void) {
         guard let clientId = Soundcloud.clientIdentifier, clientSecret = Soundcloud.clientSecret, redirectURI = Soundcloud.redirectURI else {
             completion(SimpleAPIResponse(.CredentialsNotSet))
             return
@@ -359,7 +359,7 @@ extension Session {
 
         let parameters = ["client_id": clientId, "client_secret": clientSecret, "redirect_uri": redirectURI,
             "grant_type": "refresh_token", "code": authorizationCode, "refresh_token": refreshToken]
-        token(parameters, completion: completion)
+        token(parameters: parameters, completion: completion)
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -368,19 +368,19 @@ extension Session {
     // MARK: Token requests
     ////////////////////////////////////////////////////////////////////////////
 
-    private func token(parameters: HTTPParametersConvertible, completion: SimpleAPIResponse<Session> -> Void) {
-        let URL = NSURL(string: "https://api.soundcloud.com/oauth2/token")!
+    private func token(parameters: HTTPParametersConvertible, completion: (SimpleAPIResponse<Session>) -> Void) {
+        let url = URL(string: "https://api.soundcloud.com/oauth2/token")!
 
-        let request = Request(URL: URL, method: .POST, parameters: parameters, parse: {
+        let request = Request(url: url, method: .POST, parameters: parameters, parse: {
             if let accessToken = $0["access_token"].stringValue, expires = $0["expires_in"].doubleValue, scope = $0["scope"].stringValue {
                 let newSession = self.copy() as! Session
                 newSession.accessToken = accessToken
                 newSession.accessTokenExpireDate = NSDate(timeIntervalSinceNow: expires)
                 newSession.scope = scope
                 newSession.refreshToken = $0["refresh_token"].stringValue
-                return .Success(newSession)
+                return .success(newSession)
             }
-            return .Failure(.Parsing)
+            return .failure(.Parsing)
             }) { result in
                 completion(SimpleAPIResponse(result))
         }
@@ -404,23 +404,23 @@ public class Soundcloud: NSObject {
     #if os(iOS) || os(OSX)
     private static let sessionKey = "sessionKey"
 
-    private static let keychain = UICKeyChainStore(server: NSURL(string: "https://soundcloud.com")!,
+    private static let keychain = UICKeyChainStore(server: URL(string: "https://soundcloud.com")!,
         protocolType: .HTTPS)
 
     /// The session property is only set when a user has logged in.
     public private(set) static var session: Session? = {
-        if let data = keychain.dataForKey(sessionKey), session = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? Session {
+        if let data = keychain.data(forKey: sessionKey), session = NSKeyedUnarchiver.unarchiveObject(with: data) as? Session {
             return session
         }
         return nil
     }() {
         didSet {
             if let session = session {
-                let data = NSKeyedArchiver.archivedDataWithRootObject(session)
+                let data = NSKeyedArchiver.archivedData(withRootObject: session)
                 keychain.setData(data, forKey: sessionKey)
             }
             else {
-                keychain.removeItemForKey(sessionKey)
+                keychain.removeItem(forKey: sessionKey)
             }
         }
     }
@@ -450,39 +450,39 @@ public class Soundcloud: NSObject {
     - parameter URI:        The URI to lookup
     - parameter completion: The closure that will be called when the result is ready or upon error
     */
-    public static func resolve(URI: String, completion: SimpleAPIResponse<ResolveResponse> -> Void) {
+    public static func resolve(URI: String, completion: (SimpleAPIResponse<ResolveResponse>) -> Void) {
         guard let clientIdentifier = Soundcloud.clientIdentifier else {
             completion(SimpleAPIResponse(.CredentialsNotSet))
             return
         }
 
-        let URL = NSURL(string: "http://api.soundcloud.com/resolve")!
+        let url = URL(string: "http://api.soundcloud.com/resolve")!
         let parameters = ["client_id": clientIdentifier, "url": URI]
 
-        let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
+        let request = Request(url: url, method: .GET, parameters: parameters, parse: {
             if let user = User(JSON: $0) {
-                return .Success(ResolveResponse(users: [user], tracks: nil, playlist: nil))
+                return .success(ResolveResponse(users: [user], tracks: nil, playlist: nil))
             }
 
             if let playlist = Playlist(JSON: $0) {
-                return .Success(ResolveResponse(users: nil, tracks: nil, playlist: playlist))
+                return .success(ResolveResponse(users: nil, tracks: nil, playlist: playlist))
             }
 
             if let track = Track(JSON: $0) {
-                return .Success(ResolveResponse(users: nil, tracks: [track], playlist: nil))
+                return .success(ResolveResponse(users: nil, tracks: [track], playlist: nil))
             }
 
-            let users = $0.flatMap { return User(JSON: $0) }
+            let users = $0.flatMap { User(JSON: $0) }
             if let users = users where users.count > 0 {
-                return .Success(ResolveResponse(users: users, tracks: nil, playlist: nil))
+                return .success(ResolveResponse(users: users, tracks: nil, playlist: nil))
             }
 
-            let tracks = $0.flatMap { return Track(JSON: $0) }
+            let tracks = $0.flatMap { Track(JSON: $0) }
             if let tracks = tracks where tracks.count > 0 {
-                return .Success(ResolveResponse(users: nil, tracks: tracks, playlist: nil))
+                return .success(ResolveResponse(users: nil, tracks: tracks, playlist: nil))
             }
 
-            return .Failure(.Parsing)
+            return .failure(.Parsing)
             }) { result in
                 completion(SimpleAPIResponse(result))
         }

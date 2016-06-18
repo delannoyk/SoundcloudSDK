@@ -9,44 +9,44 @@
 import Foundation
 
 public struct ImageURLs {
-    private let baseURL: NSURL?
+    private let baseURL: URL?
 
-    public init(baseURL: NSURL?) {
+    public init(baseURL: URL?) {
         self.baseURL = baseURL
     }
 
-    public var miniURL: NSURL? {
+    public var miniURL: URL? {
         return URLWithFormat("mini")
     }
 
-    public var tinyURL: NSURL? {
+    public var tinyURL: URL? {
         return URLWithFormat("tiny")
     }
 
-    public var smallURL: NSURL? {
+    public var smallURL: URL? {
         return URLWithFormat("small")
     }
 
-    public var badgeURL: NSURL? {
+    public var badgeURL: URL? {
         return URLWithFormat("badge")
     }
 
-    public var largeURL: NSURL? {
+    public var largeURL: URL? {
         return URLWithFormat("large")
     }
 
-    public var cropURL: NSURL? {
+    public var cropURL: URL? {
         return URLWithFormat("crop")
     }
 
-    public var highURL: NSURL? {
+    public var highURL: URL? {
         return URLWithFormat("t500x500")
     }
 
-    private func URLWithFormat(format: String) -> NSURL? {
+    private func URLWithFormat(_ format: String) -> URL? {
         let urlString = baseURL?
-            .absoluteString
-            .stringByReplacingOccurrencesOfString("large", withString: format)
-        return NSURL(string: urlString ?? "")
+            .absoluteString?
+            .replacingOccurrences(of: "large", with: format)
+        return URL(string: urlString ?? "")
     }
 }

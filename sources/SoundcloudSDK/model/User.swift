@@ -14,7 +14,7 @@ import Foundation
 public struct User {
     public init(identifier: Int, username: String, fullname: String,
         city: String?, country: String?, biography: String?,
-        URL: NSURL?, permalinkURL: NSURL?, websiteURL: NSURL?,
+        url: URL?, permalinkURL: URL?, websiteURL: URL?,
         websiteTitle: String?, avatarURL: ImageURLs, tracksCount: Int,
         playlistsCount: Int, followersCount: Int, followingsCount: Int) {
             self.identifier = identifier
@@ -25,7 +25,7 @@ public struct User {
             self.country = country
             self.biography = biography
 
-            self.URL = URL
+            self.url = url
             self.permalinkURL = permalinkURL
             self.websiteURL = websiteURL
             self.websiteTitle = websiteTitle
@@ -59,13 +59,13 @@ public struct User {
 
 
     ///URL to user (api)
-    internal let URL: NSURL?
+    let url: URL?
 
     ///URL to user (website)
-    public let permalinkURL: NSURL?
+    public let permalinkURL: Foundation.URL?
 
     ///URL to user's website
-    public let websiteURL: NSURL?
+    public let websiteURL: Foundation.URL?
 
     ///Title of user's website
     public let websiteTitle: String?
@@ -97,7 +97,7 @@ public struct User {
 // MARK: Parsing
 ////////////////////////////////////////////////////////////////////////////
 
-internal extension User {
+extension User {
     init?(JSON: JSONObject) {
         if let identifier = JSON["id"].intValue, username = JSON["username"].stringValue {
             self.init(
@@ -107,7 +107,7 @@ internal extension User {
                 city: JSON["city"].stringValue,
                 country: JSON["country"].stringValue,
                 biography: JSON["description"].stringValue,
-                URL: JSON["uri"].urlValue,
+                url: JSON["uri"].urlValue,
                 permalinkURL: JSON["permalink_url"].urlValue,
                 websiteURL: JSON["website"].urlValue,
                 websiteTitle: JSON["website_title"].stringValue,

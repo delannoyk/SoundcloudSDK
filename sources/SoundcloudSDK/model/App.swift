@@ -12,9 +12,9 @@ import Foundation
 ////////////////////////////////////////////////////////////////////////////
 
 public struct App {
-    public init(identifier: Int, URL: NSURL?, permalinkURL: NSURL?, name: String) {
+    public init(identifier: Int, url: URL?, permalinkURL: URL?, name: String) {
         self.identifier = identifier
-        self.URL = URL
+        self.url = url
         self.permalinkURL = permalinkURL
         self.name = name
     }
@@ -23,10 +23,10 @@ public struct App {
     public let identifier: Int
 
     ///URL to the app (api)
-    internal let URL: NSURL?
+    let url: URL?
 
     ///URL to the app (website)
-    public let permalinkURL: NSURL?
+    public let permalinkURL: URL?
 
     ///Name of the app
     public let name: String
@@ -41,12 +41,12 @@ public struct App {
 // MARK: Parsing
 ////////////////////////////////////////////////////////////////////////////
 
-internal extension App {
+extension App {
     init?(JSON: JSONObject) {
         if let identifier = JSON["id"].intValue {
             self.init(
                 identifier: identifier,
-                URL: JSON["uri"].urlValue,
+                url: JSON["uri"].urlValue,
                 permalinkURL: JSON["permalink_url"].urlValue,
                 name: JSON["name"].stringValue ?? ""
             )

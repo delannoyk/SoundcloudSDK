@@ -11,13 +11,13 @@ import Foundation
 // MARK: - NSDataExtension
 ////////////////////////////////////////////////////////////////////////////
 
-extension NSData: HTTPParametersConvertible {
+extension Data: HTTPParametersConvertible {
     //This is not supported
     var queryStringValue: String {
         return ""
     }
 
-    var formDataValue: NSData {
+    var formDataValue: Data {
         return self
     }
 }

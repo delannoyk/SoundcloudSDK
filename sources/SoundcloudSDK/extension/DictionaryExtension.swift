@@ -11,13 +11,13 @@ import Foundation
 // MARK: - StringExtension
 ////////////////////////////////////////////////////////////////////////////
 
-internal extension String {
+extension String {
     // MARK: URL Encoding
     ////////////////////////////////////////////////////////////////////////////
 
     var urlEncodedValue: String {
-        let allowedSet = NSCharacterSet(charactersInString: "=\"#%/<>?@\\^`{|}&: ").invertedSet
-        let escapedString = stringByAddingPercentEncodingWithAllowedCharacters(allowedSet)
+        let allowedSet = CharacterSet(charactersIn: "=\"#%/<>?@\\^`{|}&: ").inverted
+        let escapedString = addingPercentEncoding(withAllowedCharacters: allowedSet)
         return escapedString ?? self
     }
 
@@ -30,7 +30,7 @@ internal extension String {
 // MARK: - DictionaryExtension
 ////////////////////////////////////////////////////////////////////////////
 
-internal extension Dictionary {
+extension Dictionary {
     // MARK: Query string
     ////////////////////////////////////////////////////////////////////////////
 
@@ -40,7 +40,7 @@ internal extension Dictionary {
             let valueStr = "\(value)"
             return "\(keyStr)=\(valueStr.urlEncodedValue)"
         })
-        return parts.joinWithSeparator("&")
+        return parts.joined(separator: "&")
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -51,8 +51,8 @@ extension Dictionary: HTTPParametersConvertible {
         return queryString
     }
 
-    var formDataValue: NSData {
-        return queryString.dataUsingEncoding(NSUTF8StringEncoding) ?? NSData()
+    var formDataValue: Data {
+        return queryString.data(using: String.Encoding.utf8) ?? Data()
     }
 }
 

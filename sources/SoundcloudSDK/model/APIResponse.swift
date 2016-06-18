@@ -20,16 +20,16 @@ public struct SimpleAPIResponse<T>: APIResponse {
     // MARK: Initialization
     ////////////////////////////////////////////////////////////////////////////
 
-    internal init(_ response: Result<T, SoundcloudError>) {
+    init(_ response: Result<T, SoundcloudError>) {
         self.response = response
     }
 
-    internal init(_ error: SoundcloudError) {
-        self.response = .Failure(error)
+    init(_ error: SoundcloudError) {
+        self.response = .failure(error)
     }
 
-    internal init(_ value: T) {
-        self.response = .Success(value)
+    init(_ value: T) {
+        self.response = .success(value)
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -39,15 +39,15 @@ public struct PaginatedAPIResponse<T>: APIResponse {
     public typealias U = [T]
     public let response: Result<[T], SoundcloudError>
 
-    private let nextPageURL: NSURL?
-    private let parse: JSONObject -> Result<[T], SoundcloudError>
+    private let nextPageURL: URL?
+    private let parse: (JSONObject) -> Result<[T], SoundcloudError>
 
     // MARK: Initialization
     ////////////////////////////////////////////////////////////////////////////
 
-    internal init(response: Result<[T], SoundcloudError>,
-        nextPageURL: NSURL?,
-        parse: JSONObject -> Result<[T], SoundcloudError>) {
+    init(response: Result<[T], SoundcloudError>,
+        nextPageURL: URL?,
+        parse: (JSONObject) -> Result<[T], SoundcloudError>) {
             self.response = response
             self.nextPageURL = nextPageURL
             self.parse = parse
@@ -63,13 +63,13 @@ public struct PaginatedAPIResponse<T>: APIResponse {
         return (nextPageURL != nil)
     }
 
-    public func fetchNextPage(completion: PaginatedAPIResponse<T> -> Void) {
+    public func fetchNextPage(_ completion: (PaginatedAPIResponse<T>) -> Void) {
         if let nextPageURL = nextPageURL {
-            let request = Request(URL: nextPageURL,
+            let request = Request(url: nextPageURL,
                 method: .GET,
                 parameters: nil,
                 parse: { JSON -> Result<PaginatedAPIResponse, SoundcloudError> in
-                    return .Success(PaginatedAPIResponse(JSON, parse: self.parse))
+                    return .success(PaginatedAPIResponse(JSON, parse: self.parse))
                 }) { result in
                     completion(result.result!)
             }

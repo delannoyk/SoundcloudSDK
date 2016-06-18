@@ -34,10 +34,10 @@ public enum TrackType: String {
 ////////////////////////////////////////////////////////////////////////////
 
 public struct Track {
-    public init(identifier: Int, createdAt: NSDate, createdBy: User,
-        createdWith: App?, duration: NSTimeInterval, commentable: Bool,
-        streamable: Bool, downloadable: Bool, streamURL: NSURL?,
-        downloadURL: NSURL?, permalinkURL: NSURL?,
+    public init(identifier: Int, createdAt: Date, createdBy: User,
+        createdWith: App?, duration: TimeInterval, commentable: Bool,
+        streamable: Bool, downloadable: Bool, streamURL: URL?,
+        downloadURL: URL?, permalinkURL: URL?,
         releaseYear: Int?, releaseMonth: Int?, releaseDay: Int?,
         tags: [String]?, description: String?, genre: String?,
         trackType: TrackType?, title: String, format: String?,
@@ -87,7 +87,7 @@ public struct Track {
 
 
     ///Creation date of the track
-    public let createdAt: NSDate
+    public let createdAt: Date
 
     ///User that created the track (not a full user)
     public let createdBy: User
@@ -97,7 +97,7 @@ public struct Track {
 
 
     ///Track duration
-    public let duration: NSTimeInterval
+    public let duration: TimeInterval
 
 
     ///Is commentable
@@ -111,13 +111,13 @@ public struct Track {
 
 
     ///Streaming URL
-    public let streamURL: NSURL?
+    public let streamURL: URL?
 
     ///Downloading URL
-    public let downloadURL: NSURL?
+    public let downloadURL: URL?
 
     ///Permalink URL (website)
-    public let permalinkURL: NSURL?
+    public let permalinkURL: URL?
 
 
     ///Release year
@@ -204,12 +204,12 @@ public func ==(lhs: Track, rhs: Track) -> Bool {
 // MARK: Parsing
 ////////////////////////////////////////////////////////////////////////////
 
-internal extension Track {
+extension Track {
     init?(JSON: JSONObject) {
         if let identifier = JSON["id"].intValue, user = User(JSON: JSON["user"]) {
             self.init(
                 identifier: identifier,
-                createdAt: JSON["created_at"].dateValue("yyyy/MM/dd HH:mm:ss VVVV") ?? NSDate(),
+                createdAt: JSON["created_at"].dateValue(withFormat: "yyyy/MM/dd HH:mm:ss VVVV") ?? Date(),
                 createdBy: user,
                 createdWith: App(JSON: JSON["created_with"]),
                 duration: JSON["duration"].doubleValue ?? 0,

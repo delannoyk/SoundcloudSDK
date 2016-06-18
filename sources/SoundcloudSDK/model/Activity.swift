@@ -9,9 +9,9 @@
 import Foundation
 
 public enum Activity {
-    case TrackActivity(Track)
-    case TrackSharing(Track)
-    case PlaylistActivity(Playlist)
+    case trackActivity(Track)
+    case trackSharing(Track)
+    case playlistActivity(Playlist)
 }
 
 extension Activity {
@@ -25,19 +25,19 @@ extension Activity {
             guard let track = Track(JSON: JSON["origin"]) else {
                 return nil
             }
-            self = .TrackActivity(track)
+            self = .trackActivity(track)
 
         case "track-sharing", "track-repost":
             guard let track = Track(JSON: JSON["origin"]) else {
                 return nil
             }
-            self = .TrackSharing(track)
+            self = .trackSharing(track)
 
         case "playlist":
             guard let playlist = Playlist(JSON: JSON["origin"]) else {
                 return nil
             }
-            self = .PlaylistActivity(playlist)
+            self = .playlistActivity(playlist)
 
         default:
             return nil

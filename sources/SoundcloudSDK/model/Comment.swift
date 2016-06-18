@@ -13,10 +13,10 @@ import Foundation
 
 public struct Comment {
     public init(identifier: Int,
-        createdAt: NSDate,
+        createdAt: Date,
         trackIdentifier: Int?,
         userIdentifier: Int?,
-        timestamp: NSTimeInterval?,
+        timestamp: TimeInterval?,
         body: String,
         user: User?) {
             self.identifier = identifier
@@ -32,7 +32,7 @@ public struct Comment {
     public let identifier: Int
 
     ///Creation date of the track
-    public let createdAt: NSDate
+    public let createdAt: Date
 
     ///Track's identifier
     public let trackIdentifier: Int?
@@ -41,7 +41,7 @@ public struct Comment {
     public let userIdentifier: Int?
 
     ///Comment's timestamp
-    public let timestamp: NSTimeInterval?
+    public let timestamp: TimeInterval?
 
     ///Body
     public let body: String
@@ -79,18 +79,17 @@ public func ==(lhs: Comment, rhs: Comment) -> Bool {
 // MARK: Parsing
 ////////////////////////////////////////////////////////////////////////////
 
-internal extension Comment {
+extension Comment {
     init?(JSON: JSONObject) {
         if let identifier = JSON["id"].intValue, body = JSON["body"].stringValue {
             self.identifier = identifier
-            self.createdAt = JSON["created_at"].dateValue("yyyy/MM/dd HH:mm:ss VVVV") ?? NSDate()
+            self.createdAt = JSON["created_at"].dateValue(withFormat: "yyyy/MM/dd HH:mm:ss VVVV") ?? Date()
             self.trackIdentifier = JSON["track_id"].intValue
             self.userIdentifier = JSON["user_id"].intValue
             self.timestamp = JSON["timestamp"].doubleValue.map { $0 / 1000 }
             self.body = body
             self.user = User(JSON: JSON["user"])
-        }
-        else {
+        } else {
             return nil
         }
     }

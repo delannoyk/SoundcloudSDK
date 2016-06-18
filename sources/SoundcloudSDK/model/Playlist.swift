@@ -12,8 +12,8 @@ import Foundation
 ////////////////////////////////////////////////////////////////////////////
 
 public struct Playlist {
-    public init(identifier: Int, createdAt: NSDate, createdBy: User, duration: NSTimeInterval,
-        streamable: Bool, downloadable: Bool, permalinkURL: NSURL?, purchaseURL: NSURL?,
+    public init(identifier: Int, createdAt: Date, createdBy: User, duration: TimeInterval,
+        streamable: Bool, downloadable: Bool, permalinkURL: URL?, purchaseURL: URL?,
         releaseYear: Int?, releaseMonth: Int?, releaseDay: Int?, releaseNumber: String?,
         description: String?, genre: String?, type: PlaylistType?, title: String,
         artworkURL: ImageURLs, tracks: [Track], ean: String?, sharingAccess: SharingAccess,
@@ -56,14 +56,14 @@ public struct Playlist {
 
 
     ///Date of creation
-    public let createdAt: NSDate
+    public let createdAt: Date
 
     ///Mini user representation of the owner
     public let createdBy: User
 
 
     ///Duration
-    public let duration: NSTimeInterval
+    public let duration: TimeInterval
 
 
     ///Streamable via API (This will aggregate the playlists tracks streamable attribute.
@@ -76,10 +76,10 @@ public struct Playlist {
 
 
     ///URL to the SoundCloud.com page
-    public let permalinkURL: NSURL?
+    public let permalinkURL: URL?
 
     ///External purchase link
-    public let purchaseURL: NSURL?
+    public let purchaseURL: URL?
 
 
     ///Release year
@@ -159,11 +159,11 @@ public func ==(lhs: Playlist, rhs: Playlist) -> Bool {
 // MARK: Parsing
 ////////////////////////////////////////////////////////////////////////////
 
-internal extension Playlist {
+extension Playlist {
     init?(JSON: JSONObject) {
         if let identifier = JSON["id"].intValue, user = User(JSON: JSON["user"]) where JSON["kind"].stringValue == "playlist" {
             self.init(identifier: identifier,
-                createdAt: JSON["created_at"].dateValue("yyyy/MM/dd HH:mm:ss VVVV") ?? NSDate(),
+                createdAt: JSON["created_at"].dateValue(withFormat: "yyyy/MM/dd HH:mm:ss VVVV") ?? Date(),
                 createdBy: user,
                 duration: JSON["duration"].doubleValue ?? 0,
                 streamable: JSON["streamable"].boolValue ?? false,
