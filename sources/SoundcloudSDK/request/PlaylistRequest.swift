@@ -50,7 +50,7 @@ public extension Playlist {
      - parameter sharingAccess: The required sharing access
      - parameter completion:    The closure that will be called when playlist is created or upon error
      */
-    public static func createWithName(name: String, sharingAccess: SharingAccess, completion: (SimpleAPIResponse<Playlist>) -> Void) {
+    public static func create(withName name: String, sharingAccess: SharingAccess, completion: (SimpleAPIResponse<Playlist>) -> Void) {
         guard let clientIdentifier = Soundcloud.clientIdentifier else {
             completion(SimpleAPIResponse(.CredentialsNotSet))
             return
