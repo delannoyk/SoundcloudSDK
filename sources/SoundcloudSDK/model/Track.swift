@@ -212,7 +212,7 @@ internal extension Track {
                 createdAt: JSON["created_at"].dateValue("yyyy/MM/dd HH:mm:ss VVVV") ?? NSDate(),
                 createdBy: user,
                 createdWith: App(JSON: JSON["created_with"]),
-                duration: JSON["duration"].doubleValue ?? 0,
+                duration: JSON["duration"].doubleValue.map { $0 / 1000 } ?? 0,
                 commentable: JSON["commentable"].boolValue ?? false,
                 streamable: JSON["streamable"].boolValue ?? false,
                 downloadable: JSON["downloadable"].boolValue ?? false,

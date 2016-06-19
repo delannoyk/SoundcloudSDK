@@ -165,7 +165,7 @@ internal extension Playlist {
             self.init(identifier: identifier,
                 createdAt: JSON["created_at"].dateValue("yyyy/MM/dd HH:mm:ss VVVV") ?? NSDate(),
                 createdBy: user,
-                duration: JSON["duration"].doubleValue ?? 0,
+                duration: JSON["duration"].doubleValue.map { $0 / 1000 } ?? 0,
                 streamable: JSON["streamable"].boolValue ?? false,
                 downloadable: JSON["downloadable"].boolValue ?? false,
                 permalinkURL: JSON["permalink_url"].urlValue,
