@@ -10,8 +10,13 @@ SoundcloudSDK is a framework written in Swift over Soundcloud API.
 
 ## Installation
 
+### Swift 2.2
 * Cocoapods: `pod 'Soundcloud'`
 * Carthage: `github "delannoyk/SoundcloudSDK"`
+
+### Swift 3.0 (1st preview)
+* Cocoapods: `pod 'Soundcloud', :git => 'https://github.com/SoundcloudSDK', :branch => 'develop'`
+* Carthage: `github "delannoyk/SoundcloudSDK" "develop"`
 
 ## Usage
 
