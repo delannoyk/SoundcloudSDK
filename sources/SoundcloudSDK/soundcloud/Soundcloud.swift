@@ -456,7 +456,7 @@ public class Soundcloud: NSObject {
             return
         }
 
-        let URL = NSURL(string: "http://api.soundcloud.com/resolve")!
+        let URL = NSURL(string: "https://api.soundcloud.com/resolve")!
         let parameters = ["client_id": clientIdentifier, "url": URI]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
