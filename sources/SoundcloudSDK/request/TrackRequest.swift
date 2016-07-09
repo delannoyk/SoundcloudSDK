@@ -130,7 +130,6 @@ public extension Track {
         Track.comments(identifier, completion: completion)
     }
 
-    #if os(iOS) || os(OSX)
     /**
      Create a new comment on a track
 
@@ -141,7 +140,9 @@ public extension Track {
      - parameter timestamp:  The progression of the track when the comment was validated
      - parameter completion: The closure that will be called when the comment is posted or upon error
      */
+    @available(tvOS, unavailable)
     public static func comment(trackIdentifier: Int, body: String, timestamp: NSTimeInterval, completion: SimpleAPIResponse<Comment> -> Void) {
+        #if !os(tvOS)
         guard let clientIdentifier = Soundcloud.clientIdentifier else {
             completion(SimpleAPIResponse(.CredentialsNotSet))
             return
@@ -164,6 +165,7 @@ public extension Track {
             completion(SimpleAPIResponse(result))
         }
         request.start()
+        #endif
     }
 
     /**
@@ -175,10 +177,12 @@ public extension Track {
      - parameter timestamp:  The progression of the track when the comment was validated
      - parameter completion: The closure that will be called when the comment is posted or upon error
      */
+    @available(tvOS, unavailable)
     public func comment(body: String, timestamp: NSTimeInterval, completion: SimpleAPIResponse<Comment> -> Void) {
+        #if !os(tvOS)
         Track.comment(identifier, body: body, timestamp: timestamp, completion: completion)
+        #endif
     }
-    #endif
 
     /**
      Fetch the list of users that favorited the track.
@@ -219,7 +223,6 @@ public extension Track {
         Track.favoriters(identifier, completion: completion)
     }
 
-    #if os(iOS) || os(OSX)
     /**
      Favorites a track for the logged user
 
@@ -229,8 +232,11 @@ public extension Track {
      - parameter completion:     The closure that will be called when the track has been favorited or upon error
      */
     @available(*, deprecated, message="Use `favorite(completion)`")
+    @available(tvOS, unavailable)
     public func favorite(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void) {
+        #if !os(tvOS)
         Track.changeFavoriteStatus(identifier, favorite: true, completion: completion)
+        #endif
     }
 
     /**
@@ -242,8 +248,11 @@ public extension Track {
      - parameter completion:     The closure that will be called when the track has been unfavorited or upon error
      */
     @available(*, deprecated, message="Use `unfavorite(completion)`")
+    @available(tvOS, unavailable)
     public func unfavorite(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void) {
+        #if !os(tvOS)
         Track.changeFavoriteStatus(identifier, favorite: false, completion: completion)
+        #endif
     }
 
     /**
@@ -254,8 +263,11 @@ public extension Track {
      - parameter trackIdentifier: The track identifier.
      - parameter completion:      The closure that will be called when the track has been favorited or upon error
      */
+    @available(tvOS, unavailable)
     public static func favorite(trackIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void) {
+        #if !os(tvOS)
         Track.changeFavoriteStatus(trackIdentifier, favorite: true, completion: completion)
+        #endif
     }
 
     /**
@@ -265,8 +277,11 @@ public extension Track {
 
      - parameter completion: The closure that will be called when the track has been favorited or upon error
      */
+    @available(tvOS, unavailable)
     public func favorite(completion: SimpleAPIResponse<Bool> -> Void) {
+        #if !os(tvOS)
         Track.changeFavoriteStatus(identifier, favorite: true, completion: completion)
+        #endif
     }
 
     /**
@@ -277,8 +292,11 @@ public extension Track {
      - parameter trackIdentifier: The track identifier.
      - parameter completion:      The closure that will be called when the track has been unfavorited or upon error
      */
+    @available(tvOS, unavailable)
     public static func unfavorite(trackIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void) {
+        #if !os(tvOS)
         Track.changeFavoriteStatus(trackIdentifier, favorite: false, completion: completion)
+        #endif
     }
 
     /**
@@ -288,11 +306,16 @@ public extension Track {
 
      - parameter completion: The closure that will be called when the track has been unfavorited or upon error
      */
+    @available(tvOS, unavailable)
     public func unfavorite(completion: SimpleAPIResponse<Bool> -> Void) {
+        #if !os(tvOS)
         Track.changeFavoriteStatus(identifier, favorite: false, completion: completion)
+        #endif
     }
 
+    @available(tvOS, unavailable)
     private static func changeFavoriteStatus(trackIdentifier: Int, favorite: Bool, completion: SimpleAPIResponse<Bool> -> Void) {
+        #if !os(tvOS)
         guard let clientIdentifier = Soundcloud.clientIdentifier else {
             completion(SimpleAPIResponse(.CredentialsNotSet))
             return
@@ -313,8 +336,8 @@ public extension Track {
             completion(SimpleAPIResponse(result))
         }
         request.start()
+        #endif
     }
-    #endif
 
     /**
      Load related tracks of a track with a specific identifier

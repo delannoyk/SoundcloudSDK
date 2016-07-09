@@ -232,7 +232,6 @@ public extension User {
         request.start()
     }
 
-    #if os(iOS) || os(OSX)
     /**
      Follow the given user.
 
@@ -241,8 +240,11 @@ public extension User {
      - parameter userIdentifier: The identifier of the user to follow
      - parameter completion:     The closure that will be called when the user has been followed or upon error
      */
+    @available(tvOS, unavailable)
     public func follow(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void) {
+        #if !os(tvOS)
         User.changeFollowStatus(true, userIdentifier: userIdentifier, completion: completion)
+        #endif
     }
 
     /**
@@ -253,8 +255,11 @@ public extension User {
      - parameter userIdentifier: The identifier of the user to follow
      - parameter completion:     The closure that will be called when the user has been followed or upon error
      */
+    @available(tvOS, unavailable)
     public static func follow(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void) {
+        #if !os(tvOS)
         User.changeFollowStatus(true, userIdentifier: userIdentifier, completion: completion)
+        #endif
     }
 
     /**
@@ -265,8 +270,11 @@ public extension User {
      - parameter userIdentifier: The identifier of the user to unfollow
      - parameter completion:     The closure that will be called when the user has been unfollowed or upon error
      */
+    @available(tvOS, unavailable)
     public func unfollow(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void) {
+        #if !os(tvOS)
         User.changeFollowStatus(false, userIdentifier: userIdentifier, completion: completion)
+        #endif
     }
 
     /**
@@ -277,11 +285,16 @@ public extension User {
      - parameter userIdentifier: The identifier of the user to unfollow
      - parameter completion:     The closure that will be called when the user has been unfollowed or upon error
      */
+    @available(tvOS, unavailable)
     public static func unfollow(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void) {
+        #if !os(tvOS)
         User.changeFollowStatus(false, userIdentifier: userIdentifier, completion: completion)
+        #endif
     }
 
+    @available(tvOS, unavailable)
     static func changeFollowStatus(follow: Bool, userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void) {
+        #if !os(tvOS)
         guard let clientIdentifier = Soundcloud.clientIdentifier else {
             completion(SimpleAPIResponse(.CredentialsNotSet))
             return
@@ -301,8 +314,8 @@ public extension User {
             completion(SimpleAPIResponse(result))
         }
         request.start()
+        #endif
     }
-    #endif
 
     /**
      Loads user's playlists
