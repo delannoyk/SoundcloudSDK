@@ -175,18 +175,9 @@ extension Session {
     - parameter displayViewController: An UIViewController that is in the view hierarchy
     - parameter completion:            The closure that will be called when the user is logged in or upon error
     */
+    @available(*, deprecated=0.9, message="Login has been moved to Soundcloud. Please use `Soundcloud.login().`")
     public static func login(displayViewController: ViewController, completion: SimpleAPIResponse<Session> -> Void) {
-        authorize(displayViewController, completion: { result in
-            if let session = result.response.result {
-                session.getToken({ result in
-                    Soundcloud.session = result.response.result
-                    completion(result)
-                })
-            }
-            else {
-                completion(result)
-            }
-        })
+        Soundcloud.login(displayViewController, completion: completion)
     }
 
     /**
@@ -207,8 +198,9 @@ extension Session {
     /**
     Logs out the current user. This is a straight-forward call.
     */
+    @available(*, deprecated=0.9, message="Logout has been moved to Soundcloud. Please use `Soundcloud.destroySession()`.")
     public func destroy() {
-        Soundcloud.session = nil
+        Soundcloud.destroySession()
     }
 
     /**
@@ -277,50 +269,6 @@ extension Session {
                 completion(result.result!)
         }
         request.start()
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-
-    // MARK: Authorize
-    ////////////////////////////////////////////////////////////////////////////
-
-    internal static func authorize(displayViewController: ViewController, completion: SimpleAPIResponse<Session> -> Void) {
-        guard let clientIdentifier = Soundcloud.clientIdentifier, redirectURI = Soundcloud.redirectURI else {
-            completion(SimpleAPIResponse(.CredentialsNotSet))
-            return
-        }
-
-        let url = NSURL(string: "https://soundcloud.com/connect")!
-
-        let parameters = ["client_id": clientIdentifier,
-            "redirect_uri": redirectURI,
-            "response_type": "code"]
-
-        let web = SoundcloudWebViewController()
-        web.autoDismissScheme = NSURL(string: redirectURI)?.scheme
-        web.url = url.URLByAppendingQueryString(parameters.queryString)
-        web.onDismiss = { url in
-            if let accessCode = url?.query?.queryDictionary["code"] {
-                let session = Session(authorizationCode: accessCode)
-                completion(SimpleAPIResponse(session))
-            }
-            else {
-                completion(SimpleAPIResponse(.NeedsLogin))
-            }
-        }
-
-        #if os(OSX)
-            web.title = "Soundcloud"
-            web.preferredContentSize = displayViewController.view.bounds.size
-
-            displayViewController.presentViewControllerAsSheet(web)
-        #else
-            web.navigationItem.title = "Soundcloud"
-
-            let nav = UINavigationController(rootViewController: web)
-            displayViewController.presentViewController(nav, animated: true, completion: nil)
-        #endif
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -436,6 +384,79 @@ public class Soundcloud: NSObject {
     public static var redirectURI: String?
 
     ////////////////////////////////////////////////////////////////////////////
+
+
+    #if os(iOS) || os(OSX)
+
+    // MARK: Session Management
+    ////////////////////////////////////////////////////////////////////////////
+
+    /**
+     Logs a user in. This method will present an UIViewController over `displayViewController`
+     that will load a web view so that user is available to log in
+
+     - parameter displayViewController: An UIViewController that is in the view hierarchy
+     - parameter completion:            The closure that will be called when the user is logged in or upon error
+     */
+    public static func login(displayViewController: ViewController, completion: SimpleAPIResponse<Session> -> Void) {
+        authorize(displayViewController, completion: { result in
+            if let session = result.response.result {
+                session.getToken({ result in
+                    Soundcloud.session = result.response.result
+                    completion(result)
+                })
+            }
+            else {
+                completion(result)
+            }
+        })
+    }
+
+    public static func destroySession() {
+        Soundcloud.session = nil
+    }
+
+    static func authorize(displayViewController: ViewController, completion: SimpleAPIResponse<Session> -> Void) {
+        guard let clientIdentifier = Soundcloud.clientIdentifier, redirectURI = Soundcloud.redirectURI else {
+            completion(SimpleAPIResponse(.CredentialsNotSet))
+            return
+        }
+
+        let url = NSURL(string: "https://soundcloud.com/connect")!
+
+        let parameters = ["client_id": clientIdentifier,
+                          "redirect_uri": redirectURI,
+                          "response_type": "code"]
+
+        let web = SoundcloudWebViewController()
+        web.autoDismissScheme = NSURL(string: redirectURI)?.scheme
+        web.url = url.URLByAppendingQueryString(parameters.queryString)
+        web.onDismiss = { url in
+            if let accessCode = url?.query?.queryDictionary["code"] {
+                let session = Session(authorizationCode: accessCode)
+                completion(SimpleAPIResponse(session))
+            }
+            else {
+                completion(SimpleAPIResponse(.NeedsLogin))
+            }
+        }
+
+        #if os(OSX)
+            web.title = "Soundcloud"
+            web.preferredContentSize = displayViewController.view.bounds.size
+
+            displayViewController.presentViewControllerAsSheet(web)
+        #else
+            web.navigationItem.title = "Soundcloud"
+
+            let nav = UINavigationController(rootViewController: web)
+            displayViewController.presentViewController(nav, animated: true, completion: nil)
+        #endif
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    #endif
 
 
     // MARK: Requests
