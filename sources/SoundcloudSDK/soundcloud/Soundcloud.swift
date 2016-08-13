@@ -412,6 +412,9 @@ public class Soundcloud: NSObject {
         })
     }
 
+    /**
+     Logs out the current user. This is a straight-forward call.
+     */
     public static func destroySession() {
         Soundcloud.session = nil
     }
