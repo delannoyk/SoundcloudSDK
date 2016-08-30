@@ -1,6 +1,0 @@
-framework module UICKeyChainStore {
-  umbrella header "Pods-Soundcloud iOS-UICKeyChainStore-umbrella.h"
-
-  export *
-  module * { export * }
-}

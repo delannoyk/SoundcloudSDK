@@ -72,8 +72,7 @@ internal class SoundcloudWebViewController: ViewController, WKNavigationDelegate
                 webView,
                 forViewController: self,
                 sender: sender,
-                showOnlyLogins: true,
-                completion: nil)
+                showOnlyLogins: true) { success, error in }
         }
     }
     #endif

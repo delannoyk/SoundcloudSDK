@@ -1,13 +1,15 @@
 PODS:
-  - 1PasswordExtension (1.5)
-  - UICKeyChainStore (2.0.6)
+  - 1PasswordExtension (1.8.3)
+  - UICKeyChainStore (2.0.7)
 
 DEPENDENCIES:
-  - 1PasswordExtension (~> 1.2)
+  - 1PasswordExtension (~> 1.8.3)
   - UICKeyChainStore (~> 2.0.6)
 
 SPEC CHECKSUMS:
-  1PasswordExtension: d2392e44526be30ae7d23f305e96e411ede9b9d1
-  UICKeyChainStore: c5719c814e8bd69e74e4a0fc09daf8f4d6257a59
+  1PasswordExtension: 8757dc3302353731dd3e678e63b5023a708783cb
+  UICKeyChainStore: 696cd35083f7c8fb5e201d909b7e6aea6b478575
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 95759e46618de98fd147abde22f1560baf5bf863
+
+COCOAPODS: 1.0.1

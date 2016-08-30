@@ -12,7 +12,6 @@ import Foundation
 #endif
 
 // MARK: - Errors
-////////////////////////////////////////////////////////////////////////////
 
 public enum SoundcloudError: ErrorType {
     case CredentialsNotSet
@@ -112,17 +111,12 @@ public class Session: NSObject, NSCoding, NSCopying {
     internal var refreshToken: String?
 
     // MARK: Initialization
-    ////////////////////////////////////////////////////////////////////////////
 
-    internal init(authorizationCode: String) {
+    init(authorizationCode: String) {
         self.authorizationCode = authorizationCode
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-
-
     // MARK: NSCoding
-    ////////////////////////////////////////////////////////////////////////////
 
     private static let authorizationCodeKey = "authorizationCodeKey"
     private static let accessTokenKey = "accessTokenKey"
@@ -146,11 +140,8 @@ public class Session: NSObject, NSCoding, NSCopying {
         aCoder.encodeObject(refreshToken, forKey: Session.refreshTokenKey)
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-
 
     // MARK: NSCopying
-    ////////////////////////////////////////////////////////////////////////////
 
     public func copyWithZone(zone: NSZone) -> AnyObject {
         let session = Session(authorizationCode: authorizationCode)
@@ -160,13 +151,10 @@ public class Session: NSObject, NSCoding, NSCopying {
         session.refreshToken = refreshToken
         return session
     }
-
-    ////////////////////////////////////////////////////////////////////////////
 }
 
 extension Session {
     // MARK: Public methods
-    ////////////////////////////////////////////////////////////////////////////
 
     /**
     Logs a user in. This method will present an UIViewController over `displayViewController`
@@ -277,7 +265,7 @@ extension Session {
     // MARK: Token
     ////////////////////////////////////////////////////////////////////////////
 
-    internal func getToken(completion: SimpleAPIResponse<Session> -> Void) {
+    func getToken(completion: SimpleAPIResponse<Session> -> Void) {
         guard let clientId = Soundcloud.clientIdentifier, clientSecret = Soundcloud.clientSecret, redirectURI = Soundcloud.redirectURI else {
             completion(SimpleAPIResponse(.CredentialsNotSet))
             return
@@ -294,7 +282,7 @@ extension Session {
     // MARK: Refresh Token
     ////////////////////////////////////////////////////////////////////////////
 
-    internal func _refreshToken(completion: SimpleAPIResponse<Session> -> Void) {
+    func _refreshToken(completion: SimpleAPIResponse<Session> -> Void) {
         guard let clientId = Soundcloud.clientIdentifier, clientSecret = Soundcloud.clientSecret, redirectURI = Soundcloud.redirectURI else {
             completion(SimpleAPIResponse(.CredentialsNotSet))
             return
@@ -347,9 +335,21 @@ extension Session {
 
 public class Soundcloud: NSObject {
     // MARK: Properties
-    ////////////////////////////////////////////////////////////////////////////
+
+    /// Your Soundcloud app client identifier
+    public static var clientIdentifier: String?
+
+    /// Your Soundcloud app client secret
+    public static var clientSecret: String?
+
+    /// Your Soundcloud redirect URI
+    public static var redirectURI: String?
+
+
+    // MARK: Session Management
 
     #if os(iOS) || os(OSX)
+
     private static let sessionKey = "sessionKey"
 
     private static let keychain = UICKeyChainStore(server: NSURL(string: "https://soundcloud.com")!,
@@ -372,24 +372,6 @@ public class Soundcloud: NSObject {
             }
         }
     }
-    #endif
-
-    /// Your Soundcloud app client identifier
-    public static var clientIdentifier: String?
-
-    /// Your Soundcloud app client secret
-    public static var clientSecret: String?
-
-    /// Your Soundcloud redirect URI
-    public static var redirectURI: String?
-
-    ////////////////////////////////////////////////////////////////////////////
-
-
-    #if os(iOS) || os(OSX)
-
-    // MARK: Session Management
-    ////////////////////////////////////////////////////////////////////////////
 
     /**
      Logs a user in. This method will present an UIViewController over `displayViewController`
@@ -457,13 +439,10 @@ public class Soundcloud: NSObject {
         #endif
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-
     #endif
 
 
-    // MARK: Requests
-    ////////////////////////////////////////////////////////////////////////////
+    // MARK: Resolve 
 
     /// A resolve response can either be a/some User(s) or a/some Track(s) or a Playlist.
     public typealias ResolveResponse = (users: [User]?, tracks: [Track]?, playlist: Playlist?)
@@ -512,8 +491,4 @@ public class Soundcloud: NSObject {
         }
         request.start()
     }
-
-    ////////////////////////////////////////////////////////////////////////////
 }
-
-////////////////////////////////////////////////////////////////////////////
