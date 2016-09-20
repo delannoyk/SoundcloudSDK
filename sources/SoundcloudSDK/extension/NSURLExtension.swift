@@ -18,7 +18,7 @@ internal extension NSURL {
     func URLByAppendingQueryString(queryString: String) -> NSURL {
         if !queryString.isEmpty {
             let delimiter = (self.query == nil ? "?" : "&")
-            let URLString = "\(self.absoluteString)\(delimiter)\(queryString)"
+            let URLString = "\(self.absoluteString!)\(delimiter)\(queryString)"
             if let URL = NSURL(string: URLString) {
                 return URL
             }
