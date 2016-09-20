@@ -1047,38 +1047,23 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0F0F07AE98059A4DC76F0B77AA0EA75B /* Release */ = {
+		0159A372886A0223BAA132C8E78EF3C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 574045848C6F204B387AF27CC79210C4 /* Pods-SoundcloudTests.release.xcconfig */;
+			baseConfigurationReference = 7581F09087550437D11DA94C458C9E6D /* 1PasswordExtension-iOS8.4.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/1PasswordExtension-iOS8.4";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SoundcloudTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.4/ResourceBundle-OnePasswordExtensionResources-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SoundcloudTests/Pods-SoundcloudTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SoundcloudTests;
+				PRODUCT_NAME = OnePasswordExtensionResources;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
+				WRAPPER_EXTENSION = bundle;
 			};
-			name = Release;
+			name = Debug;
 		};
 		194EBF87DB66B026A34702F580C0D10C /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1119,7 +1104,55 @@
 			};
 			name = Release;
 		};
-		1982CEB0B8B6427DD7D1EE13FC292582 /* Release */ = {
+		2598EB6759B79DFD58EB188C75F13CD6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7581F09087550437D11DA94C458C9E6D /* 1PasswordExtension-iOS8.4.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/1PasswordExtension-iOS8.4";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.4/ResourceBundle-OnePasswordExtensionResources-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = OnePasswordExtensionResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		2611D73D5470397A6BF3CB80C94AD310 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0A042FB591EB3654112BB2D8F3D04779 /* UICKeyChainStore-iOS8.4.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/UICKeyChainStore-iOS8.4/UICKeyChainStore-iOS8.4-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/UICKeyChainStore-iOS8.4/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/UICKeyChainStore-iOS8.4/UICKeyChainStore-iOS8.4.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = UICKeyChainStore;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		4235C9C03932F106644EF259643D054C /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3D593F9AAFB9540639D9A22A780E7429 /* Pods-Soundcloud iOS.release.xcconfig */;
 			buildSettings = {
@@ -1146,157 +1179,20 @@
 				PRODUCT_NAME = Pods_Soundcloud_iOS;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		20419132611DDB40C279C14C995FFD2D /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5D09F0634DC062C4A003C6AAC8C147FE /* UICKeyChainStore-iOS8.0.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/UICKeyChainStore-iOS8.0/UICKeyChainStore-iOS8.0-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/UICKeyChainStore-iOS8.0/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/UICKeyChainStore-iOS8.0/UICKeyChainStore-iOS8.0.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = UICKeyChainStore;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		24FA30771D0A600C2FB65CECCEAEE9D6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7581F09087550437D11DA94C458C9E6D /* 1PasswordExtension-iOS8.4.xcconfig */;
-			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/1PasswordExtension-iOS8.4";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.4/ResourceBundle-OnePasswordExtensionResources-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_NAME = OnePasswordExtensionResources;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		309A97B49982FE9E20BCF12E677BD02D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1CFFE1EF41854B114956663DCF0D3703 /* UICKeyChainStore-OSX10.10.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_VERSION = A;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/UICKeyChainStore-OSX10.10/UICKeyChainStore-OSX10.10-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/UICKeyChainStore-OSX10.10/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				MODULEMAP_FILE = "Target Support Files/UICKeyChainStore-OSX10.10/UICKeyChainStore-OSX10.10.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = UICKeyChainStore;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		389E5714BF37BC12C1DF6E6BE33EF06A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7792BF372C9C2D9C51F5C1B9CE45AA71 /* Pods-SoundcloudTests.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SoundcloudTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SoundcloudTests/Pods-SoundcloudTests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SoundcloudTests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		3AAAAE3413AEC314245E816C0ACE99C3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 68EC6E59B77F7A66C3CF84A278C2B07B /* 1PasswordExtension-iOS8.0.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/1PasswordExtension-iOS8.0/1PasswordExtension-iOS8.0-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.0/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/1PasswordExtension-iOS8.0/1PasswordExtension-iOS8.0.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = OnePasswordExtension;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		3C2073880D72974E3491C63788F8C2F4 /* Debug */ = {
+		478ABCE83391842F9B0818560372295D /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0A042FB591EB3654112BB2D8F3D04779 /* UICKeyChainStore-iOS8.4.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1309,50 +1205,18 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/UICKeyChainStore-iOS8.4/UICKeyChainStore-iOS8.4.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = UICKeyChainStore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		3C9875C29C393378A38CA292F5E9D132 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C32E79B76886DD526D88F46B1D4FF3B9 /* Pods-SoundcloudAppTest.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-SoundcloudAppTest/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SoundcloudAppTest/Pods-SoundcloudAppTest.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SoundcloudAppTest;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		591957EE1FFA818406C1015B7344E89B /* Debug */ = {
+		49BC3B7B1B64F7E99436C7885D63FEE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C1CBFF5B827BD40EC86934E2C881896A /* Pods-Soundcloud OSX.debug.xcconfig */;
 			buildSettings = {
@@ -1381,93 +1245,19 @@
 				PRODUCT_NAME = Pods_Soundcloud_OSX;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		5B87DD5A91E4760C6A33E2C0772126D6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7581F09087550437D11DA94C458C9E6D /* 1PasswordExtension-iOS8.4.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/1PasswordExtension-iOS8.4/1PasswordExtension-iOS8.4-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.4/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/1PasswordExtension-iOS8.4/1PasswordExtension-iOS8.4.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = OnePasswordExtension;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		5CCFE487C7ED178B64948A2F94EBA3E2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 68EC6E59B77F7A66C3CF84A278C2B07B /* 1PasswordExtension-iOS8.0.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/1PasswordExtension-iOS8.0/1PasswordExtension-iOS8.0-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.0/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/1PasswordExtension-iOS8.0/1PasswordExtension-iOS8.0.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = OnePasswordExtension;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		64798826FFD8B63AEA67AD598291EB80 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 68EC6E59B77F7A66C3CF84A278C2B07B /* 1PasswordExtension-iOS8.0.xcconfig */;
-			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/1PasswordExtension-iOS8.0";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.0/ResourceBundle-OnePasswordExtensionResources-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_NAME = OnePasswordExtensionResources;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		6DF1FB8A5B42749EAF10FC29BCC8E0F2 /* Debug */ = {
+		57A0D7A295801F663B9D5AEB7E90C854 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5D09F0634DC062C4A003C6AAC8C147FE /* UICKeyChainStore-iOS8.0.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1480,17 +1270,130 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/UICKeyChainStore-iOS8.0/UICKeyChainStore-iOS8.0.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = UICKeyChainStore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		5981114C9033D11B446029C668FF3E0A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7581F09087550437D11DA94C458C9E6D /* 1PasswordExtension-iOS8.4.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/1PasswordExtension-iOS8.4/1PasswordExtension-iOS8.4-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.4/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/1PasswordExtension-iOS8.4/1PasswordExtension-iOS8.4.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = OnePasswordExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		98F46DBB551227849EEEEAA928A91DE9 /* Release */ = {
+		6717799534DE69E45DB53F412C2D2CA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68EC6E59B77F7A66C3CF84A278C2B07B /* 1PasswordExtension-iOS8.0.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/1PasswordExtension-iOS8.0";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.0/ResourceBundle-OnePasswordExtensionResources-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = OnePasswordExtensionResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		7170188DC72D3C59A68562DE459BC44B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68EC6E59B77F7A66C3CF84A278C2B07B /* 1PasswordExtension-iOS8.0.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/1PasswordExtension-iOS8.0/1PasswordExtension-iOS8.0-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.0/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/1PasswordExtension-iOS8.0/1PasswordExtension-iOS8.0.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = OnePasswordExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		747143BDF1DB14C6945B90A70E7CBCA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 574045848C6F204B387AF27CC79210C4 /* Pods-SoundcloudTests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SoundcloudTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SoundcloudTests/Pods-SoundcloudTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SoundcloudTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		884D727BF643E384FA10DBB7DA5A7A4E /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1CFFE1EF41854B114956663DCF0D3703 /* UICKeyChainStore-OSX10.10.xcconfig */;
 			buildSettings = {
@@ -1515,58 +1418,77 @@
 				PRODUCT_NAME = UICKeyChainStore;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		9FF1BA19BE97414BAD33B0822EA0A1BF /* Debug */ = {
+		93DC35FEA5EA728EFE54F8F8C4E7F2AB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 68EC6E59B77F7A66C3CF84A278C2B07B /* 1PasswordExtension-iOS8.0.xcconfig */;
-			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/1PasswordExtension-iOS8.0";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.0/ResourceBundle-OnePasswordExtensionResources-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_NAME = OnePasswordExtensionResources;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		ABD24E948F6AD75CA607B598EEB1E412 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A042FB591EB3654112BB2D8F3D04779 /* UICKeyChainStore-iOS8.4.xcconfig */;
+			baseConfigurationReference = 7792BF372C9C2D9C51F5C1B9CE45AA71 /* Pods-SoundcloudTests.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/UICKeyChainStore-iOS8.4/UICKeyChainStore-iOS8.4-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/UICKeyChainStore-iOS8.4/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-SoundcloudTests/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/UICKeyChainStore-iOS8.4/UICKeyChainStore-iOS8.4.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = UICKeyChainStore;
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SoundcloudTests/Pods-SoundcloudTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SoundcloudTests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
-		D200BB8406F97CA532CA6A39722663CA /* Debug */ = {
+		9EA3D90D8D5E4B6508497C1C7A96BB30 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D09F0634DC062C4A003C6AAC8C147FE /* UICKeyChainStore-iOS8.0.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/UICKeyChainStore-iOS8.0/UICKeyChainStore-iOS8.0-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/UICKeyChainStore-iOS8.0/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/UICKeyChainStore-iOS8.0/UICKeyChainStore-iOS8.0.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = UICKeyChainStore;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A89CA31D90E8FB392C83801FD0A74302 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 23FB1C3ED6FC5EB526A09C95D8564465 /* Pods-Soundcloud iOS.debug.xcconfig */;
 			buildSettings = {
@@ -1593,19 +1515,54 @@
 				PRODUCT_NAME = Pods_Soundcloud_iOS;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		DA674CC102E964975F991FA71A5D49C8 /* Debug */ = {
+		A94AB839D7DC81CED8EDFFFDBBDC7B15 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E3BD6DF7BAF07B7E921958AC0CCDC766 /* Pods-SoundcloudAppTest.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SoundcloudAppTest/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SoundcloudAppTest/Pods-SoundcloudAppTest.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SoundcloudAppTest;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C0C1E2CCE5E7BCB5FF35D96CAE5BB8B2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7581F09087550437D11DA94C458C9E6D /* 1PasswordExtension-iOS8.4.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1618,17 +1575,18 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/1PasswordExtension-iOS8.4/1PasswordExtension-iOS8.4.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = OnePasswordExtension;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
-		DC0739AF4A3A591EF6A319A182135F57 /* Release */ = {
+		CCFE375C909BCF5F83B2BB2916C69B44 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C46825B6B29C8F8A1E29EB06461FF5B8 /* Pods-Soundcloud OSX.release.xcconfig */;
 			buildSettings = {
@@ -1657,18 +1615,80 @@
 				PRODUCT_NAME = Pods_Soundcloud_OSX;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		DF15DB5BC780437FC74962824D5B9BEE /* Debug */ = {
+		CDD48FE1082A5D757B83602E1B6712EF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E3BD6DF7BAF07B7E921958AC0CCDC766 /* Pods-SoundcloudAppTest.debug.xcconfig */;
+			baseConfigurationReference = 68EC6E59B77F7A66C3CF84A278C2B07B /* 1PasswordExtension-iOS8.0.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/1PasswordExtension-iOS8.0/1PasswordExtension-iOS8.0-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.0/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/1PasswordExtension-iOS8.0/1PasswordExtension-iOS8.0.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = OnePasswordExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E92196211B495472DDFE3A61F037D434 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1CFFE1EF41854B114956663DCF0D3703 /* UICKeyChainStore-OSX10.10.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_VERSION = A;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/UICKeyChainStore-OSX10.10/UICKeyChainStore-OSX10.10-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/UICKeyChainStore-OSX10.10/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MODULEMAP_FILE = "Target Support Files/UICKeyChainStore-OSX10.10/UICKeyChainStore-OSX10.10.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = UICKeyChainStore;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		EFA541D54E68FBCD5F395006D3FDA74A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C32E79B76886DD526D88F46B1D4FF3B9 /* Pods-SoundcloudAppTest.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1681,7 +1701,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-SoundcloudAppTest/Pods-SoundcloudAppTest.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
@@ -1689,28 +1709,12 @@
 				PRODUCT_NAME = Pods_SoundcloudAppTest;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
-		};
-		E8518CCBD9615E235E33213D67311166 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7581F09087550437D11DA94C458C9E6D /* 1PasswordExtension-iOS8.4.xcconfig */;
-			buildSettings = {
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/1PasswordExtension-iOS8.4";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.4/ResourceBundle-OnePasswordExtensionResources-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_NAME = OnePasswordExtensionResources;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
+			name = Release;
 		};
 		F527F6231285BD1DB7B4BCA9AB0B69BC /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1755,14 +1759,32 @@
 			};
 			name = Debug;
 		};
+		FB8F218FE5CA68AF41A94DB79CA4F97A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68EC6E59B77F7A66C3CF84A278C2B07B /* 1PasswordExtension-iOS8.0.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/1PasswordExtension-iOS8.0";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/1PasswordExtension-iOS8.0/ResourceBundle-OnePasswordExtensionResources-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = OnePasswordExtensionResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
 		02DEDDDF139BA3A8A23A88DCFA7A3AE8 /* Build configuration list for PBXNativeTarget "UICKeyChainStore-iOS8.4" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3C2073880D72974E3491C63788F8C2F4 /* Debug */,
-				ABD24E948F6AD75CA607B598EEB1E412 /* Release */,
+				2611D73D5470397A6BF3CB80C94AD310 /* Debug */,
+				478ABCE83391842F9B0818560372295D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1770,8 +1792,8 @@
 		0BED4193110D66A932C2B3F707169334 /* Build configuration list for PBXNativeTarget "Pods-SoundcloudTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				389E5714BF37BC12C1DF6E6BE33EF06A /* Debug */,
-				0F0F07AE98059A4DC76F0B77AA0EA75B /* Release */,
+				93DC35FEA5EA728EFE54F8F8C4E7F2AB /* Debug */,
+				747143BDF1DB14C6945B90A70E7CBCA0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1779,8 +1801,8 @@
 		11D7EC8FFC53D517ECCF4365959011D3 /* Build configuration list for PBXNativeTarget "Pods-Soundcloud OSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				591957EE1FFA818406C1015B7344E89B /* Debug */,
-				DC0739AF4A3A591EF6A319A182135F57 /* Release */,
+				49BC3B7B1B64F7E99436C7885D63FEE6 /* Debug */,
+				CCFE375C909BCF5F83B2BB2916C69B44 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1797,8 +1819,8 @@
 		5194022901A2700FC2F17D946D15AADE /* Build configuration list for PBXNativeTarget "1PasswordExtension-iOS8.0-OnePasswordExtensionResources" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9FF1BA19BE97414BAD33B0822EA0A1BF /* Debug */,
-				64798826FFD8B63AEA67AD598291EB80 /* Release */,
+				6717799534DE69E45DB53F412C2D2CA8 /* Debug */,
+				FB8F218FE5CA68AF41A94DB79CA4F97A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1806,8 +1828,8 @@
 		8191FD193FFB0B00E200961476658AE3 /* Build configuration list for PBXNativeTarget "1PasswordExtension-iOS8.4-OnePasswordExtensionResources" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E8518CCBD9615E235E33213D67311166 /* Debug */,
-				24FA30771D0A600C2FB65CECCEAEE9D6 /* Release */,
+				0159A372886A0223BAA132C8E78EF3C3 /* Debug */,
+				2598EB6759B79DFD58EB188C75F13CD6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1815,8 +1837,8 @@
 		885B8CFB570F1270258A2566897C697A /* Build configuration list for PBXNativeTarget "UICKeyChainStore-iOS8.0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6DF1FB8A5B42749EAF10FC29BCC8E0F2 /* Debug */,
-				20419132611DDB40C279C14C995FFD2D /* Release */,
+				9EA3D90D8D5E4B6508497C1C7A96BB30 /* Debug */,
+				57A0D7A295801F663B9D5AEB7E90C854 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1824,8 +1846,8 @@
 		A5B7A4FB6B6AA16BE77E282E3CB0D50E /* Build configuration list for PBXNativeTarget "Pods-SoundcloudAppTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DF15DB5BC780437FC74962824D5B9BEE /* Debug */,
-				3C9875C29C393378A38CA292F5E9D132 /* Release */,
+				A94AB839D7DC81CED8EDFFFDBBDC7B15 /* Debug */,
+				EFA541D54E68FBCD5F395006D3FDA74A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1833,8 +1855,8 @@
 		AAD9AAFC65B8EB5ED158CCD365EC2BEC /* Build configuration list for PBXNativeTarget "1PasswordExtension-iOS8.4" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DA674CC102E964975F991FA71A5D49C8 /* Debug */,
-				5B87DD5A91E4760C6A33E2C0772126D6 /* Release */,
+				5981114C9033D11B446029C668FF3E0A /* Debug */,
+				C0C1E2CCE5E7BCB5FF35D96CAE5BB8B2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1842,8 +1864,8 @@
 		C71F86ACCFF425CA02208B0379DA3F79 /* Build configuration list for PBXNativeTarget "1PasswordExtension-iOS8.0" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3AAAAE3413AEC314245E816C0ACE99C3 /* Debug */,
-				5CCFE487C7ED178B64948A2F94EBA3E2 /* Release */,
+				7170188DC72D3C59A68562DE459BC44B /* Debug */,
+				CDD48FE1082A5D757B83602E1B6712EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1851,8 +1873,8 @@
 		CB4E22EA85D66775FBB0DEF3F25F7626 /* Build configuration list for PBXNativeTarget "UICKeyChainStore-OSX10.10" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				309A97B49982FE9E20BCF12E677BD02D /* Debug */,
-				98F46DBB551227849EEEEAA928A91DE9 /* Release */,
+				E92196211B495472DDFE3A61F037D434 /* Debug */,
+				884D727BF643E384FA10DBB7DA5A7A4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1860,8 +1882,8 @@
 		D1F722EC18E2A0586637554153110E58 /* Build configuration list for PBXNativeTarget "Pods-Soundcloud iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D200BB8406F97CA532CA6A39722663CA /* Debug */,
-				1982CEB0B8B6427DD7D1EE13FC292582 /* Release */,
+				A89CA31D90E8FB392C83801FD0A74302 /* Debug */,
+				4235C9C03932F106644EF259643D054C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

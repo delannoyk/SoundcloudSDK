@@ -24,7 +24,7 @@ public extension Playlist {
             return
         }
 
-        let URL = BaseURL.URLByAppendingPathComponent("\(identifier)")
+        let URL = BaseURL.URLByAppendingPathComponent("\(identifier)")!
 
         var parameters = ["client_id": clientIdentifier]
         if let secretToken = secretToken {
@@ -108,7 +108,7 @@ public extension Playlist {
         }
 
         let queryStringParameters = ["client_id": clientIdentifier, "oauth_token": oauthToken]
-        let URL = Playlist.BaseURL.URLByAppendingPathComponent("\(identifier)")
+        let URL = Playlist.BaseURL.URLByAppendingPathComponent("\(identifier)")!
             .URLByAppendingQueryString(queryStringParameters.queryString)
 
         let parameters = [

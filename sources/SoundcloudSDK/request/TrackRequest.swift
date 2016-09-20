@@ -23,7 +23,7 @@ public extension Track {
             return
         }
 
-        let URL = BaseURL.URLByAppendingPathComponent("\(identifier).json")
+        let URL = BaseURL.URLByAppendingPathComponent("\(identifier).json")!
         let parameters = ["client_id": clientIdentifier]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
@@ -110,7 +110,7 @@ public extension Track {
             return .Success(comments)
         }
 
-        let URL = BaseURL.URLByAppendingPathComponent("\(trackIdentifier)/comments.json")
+        let URL = BaseURL.URLByAppendingPathComponent("\(trackIdentifier)/comments.json")!
         let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Comment>, SoundcloudError> in
@@ -153,7 +153,7 @@ public extension Track {
             return
         }
 
-        let URL = BaseURL.URLByAppendingPathComponent("\(trackIdentifier)/comments.json")
+        let URL = BaseURL.URLByAppendingPathComponent("\(trackIdentifier)/comments.json")!
         let parameters = ["client_id": clientIdentifier, "comment[body]": body, "comment[timestamp]": "\(timestamp)", "oauth_token": oauthToken]
 
         let request = Request(URL: URL, method: .POST, parameters: parameters, parse: {
@@ -196,7 +196,7 @@ public extension Track {
             return
         }
 
-        let URL = BaseURL.URLByAppendingPathComponent("\(trackIdentifier)/favoriters.json")
+        let URL = BaseURL.URLByAppendingPathComponent("\(trackIdentifier)/favoriters.json")!
         let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
 
         let parse = { (JSON: JSONObject) -> Result<[User], SoundcloudError> in
@@ -327,7 +327,7 @@ public extension Track {
         }
 
         let parameters = ["client_id": clientIdentifier, "oauth_token": oauthToken]
-        let URL = User.BaseURL.URLByAppendingPathComponent("me/favorites/\(trackIdentifier).json")
+        let URL = User.BaseURL.URLByAppendingPathComponent("me/favorites/\(trackIdentifier).json")!
             .URLByAppendingQueryString(parameters.queryString)
 
         let request = Request(URL: URL, method: favorite ? .PUT : .DELETE, parameters: nil, parse: { _ in
@@ -351,7 +351,7 @@ public extension Track {
             return
         }
 
-        let URL = BaseURL.URLByAppendingPathComponent("\(identifier)/related")
+        let URL = BaseURL.URLByAppendingPathComponent("\(identifier)/related")!
         let parameters = ["client_id": clientIdentifier]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {

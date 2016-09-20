@@ -23,7 +23,7 @@ public extension User {
             return
         }
 
-        let URL = BaseURL.URLByAppendingPathComponent("\(identifier).json")
+        let URL = BaseURL.URLByAppendingPathComponent("\(identifier).json")!
         let parameters = ["client_id": clientIdentifier]
 
         let request = Request(URL: URL, method: .GET, parameters: parameters, parse: {
@@ -58,7 +58,7 @@ public extension User {
             return
         }
 
-        let URL = BaseURL.URLByAppendingPathComponent("\(userIdentifier)/tracks.json")
+        let URL = BaseURL.URLByAppendingPathComponent("\(userIdentifier)/tracks.json")!
         let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
 
         let parse = { (JSON: JSONObject) -> Result<[Track], SoundcloudError> in
@@ -97,7 +97,7 @@ public extension User {
             return
         }
 
-        let URL = BaseURL.URLByAppendingPathComponent("\(userIdentifier)/comments.json")
+        let URL = BaseURL.URLByAppendingPathComponent("\(userIdentifier)/comments.json")!
         let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
 
         let parse = { (JSON: JSONObject) -> Result<[Comment], SoundcloudError> in
@@ -136,7 +136,7 @@ public extension User {
             return
         }
 
-        let URL = BaseURL.URLByAppendingPathComponent("\(userIdentifier)/favorites.json")
+        let URL = BaseURL.URLByAppendingPathComponent("\(userIdentifier)/favorites.json")!
         let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
 
         let parse = { (JSON: JSONObject) -> Result<[Track], SoundcloudError> in
@@ -175,7 +175,7 @@ public extension User {
             return
         }
 
-        let URL = User.BaseURL.URLByAppendingPathComponent("\(userIdentifier)/followers.json")
+        let URL = User.BaseURL.URLByAppendingPathComponent("\(userIdentifier)/followers.json")!
         let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
 
         let parse = { (JSON: JSONObject) -> Result<[User], SoundcloudError> in
@@ -214,7 +214,7 @@ public extension User {
             return
         }
 
-        let URL = User.BaseURL.URLByAppendingPathComponent("\(userIdentifier)/followings.json")
+        let URL = User.BaseURL.URLByAppendingPathComponent("\(userIdentifier)/followings.json")!
         let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
 
         let parse = { (JSON: JSONObject) -> Result<[User], SoundcloudError> in
@@ -306,7 +306,7 @@ public extension User {
         }
 
         let parameters = ["client_id": clientIdentifier, "oauth_token": oauthToken]
-        let URL = BaseURL.URLByDeletingLastPathComponent!.URLByAppendingPathComponent("me/followings/\(userIdentifier).json").URLByAppendingQueryString(parameters.queryString)
+        let URL = BaseURL.URLByDeletingLastPathComponent!.URLByAppendingPathComponent("me/followings/\(userIdentifier).json")!.URLByAppendingQueryString(parameters.queryString)
 
         let request = Request(URL: URL, method: follow ? .PUT : .DELETE, parameters: nil, parse: { _ in
             return .Success(true)
@@ -338,7 +338,7 @@ public extension User {
             return
         }
 
-        let URL = BaseURL.URLByAppendingPathComponent("\(userIdentifier)/playlists.json")
+        let URL = BaseURL.URLByAppendingPathComponent("\(userIdentifier)/playlists.json")!
         let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
 
         let parse = { (JSON: JSONObject) -> Result<[Playlist], SoundcloudError> in
