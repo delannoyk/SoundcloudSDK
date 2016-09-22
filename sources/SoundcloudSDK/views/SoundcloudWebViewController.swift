@@ -73,7 +73,9 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
                 for: self,
                 sender: sender,
                 showOnlyLogins: true,
-                completion: nil)
+                completion: { (success, error) in
+                    
+            })
         }
     }
     #endif
