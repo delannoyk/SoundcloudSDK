@@ -161,7 +161,7 @@ public func ==(lhs: Playlist, rhs: Playlist) -> Bool {
 
 extension Playlist {
     init?(JSON: JSONObject) {
-        if let identifier = JSON["id"].intValue, user = User(JSON: JSON["user"]) where JSON["kind"].stringValue == "playlist" {
+        if let identifier = JSON["id"].intValue, let user = User(JSON: JSON["user"]) , JSON["kind"].stringValue == "playlist" {
             self.init(identifier: identifier,
                 createdAt: JSON["created_at"].dateValue(withFormat: "yyyy/MM/dd HH:mm:ss VVVV") ?? Date(),
                 createdBy: user,

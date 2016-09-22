@@ -18,7 +18,7 @@
 import WebKit
 
 class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
-    private lazy var webView = WKWebView()
+    fileprivate lazy var webView = WKWebView()
 
     // MARK: View loading
     ////////////////////////////////////////////////////////////////////////////
@@ -35,7 +35,7 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
         //Right button is OnePassword if available
         if OnePasswordExtension.shared().isAppExtensionAvailable() {
             let bundle = Bundle(for: OnePasswordExtension.self)
-            if let path = bundle.pathForResource("OnePasswordExtensionResources", ofType: "bundle") {
+            if let path = bundle.path(forResource: "OnePasswordExtensionResources", ofType: "bundle") {
                 let resourceBundle = Bundle(path: path)
                 let image = UIImage(
                     named: "onepassword-navbar", in: resourceBundle,
@@ -43,7 +43,7 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
 
                 navigationItem.rightBarButtonItem = UIBarButtonItem(
                     image: image, style: .plain, target: self,
-                    action: #selector(SoundcloudWebViewController.buttonOnePasswordPressed(sender:)))
+                    action: #selector(SoundcloudWebViewController.buttonOnePasswordPressed))
             }
         }
 
@@ -61,12 +61,12 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
     ////////////////////////////////////////////////////////////////////////////
 
     #if os(iOS)
-    @objc private func buttonCancelPressed(_: AnyObject) {
+    @objc fileprivate func buttonCancelPressed(_: AnyObject) {
         onDismiss?(nil)
         dismiss(animated: true, completion: nil)
     }
 
-    @objc private func buttonOnePasswordPressed(sender: AnyObject) {
+    @objc fileprivate func buttonOnePasswordPressed(_ sender: AnyObject) {
         if OnePasswordExtension.shared().isAppExtensionAvailable() {
             OnePasswordExtension.shared().fillItem(
                 intoWebView: webView,
@@ -119,10 +119,10 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
     // MARK: WKNavigationDelegate
     ////////////////////////////////////////////////////////////////////////////
 
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if navigationAction.request.url?.scheme == autoDismissScheme {
             decisionHandler(.cancel)
-
+            
             onDismiss?(navigationAction.request.url)
             #if os(OSX)
                 dismissViewController(self)
@@ -134,6 +134,6 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
             decisionHandler(.allow)
         }
     }
-
+    
     ////////////////////////////////////////////////////////////////////////////
 }

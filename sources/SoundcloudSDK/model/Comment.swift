@@ -81,7 +81,7 @@ public func ==(lhs: Comment, rhs: Comment) -> Bool {
 
 extension Comment {
     init?(JSON: JSONObject) {
-        if let identifier = JSON["id"].intValue, body = JSON["body"].stringValue {
+        if let identifier = JSON["id"].intValue, let body = JSON["body"].stringValue {
             self.identifier = identifier
             self.createdAt = JSON["created_at"].dateValue(withFormat: "yyyy/MM/dd HH:mm:ss VVVV") ?? Date()
             self.trackIdentifier = JSON["track_id"].intValue
