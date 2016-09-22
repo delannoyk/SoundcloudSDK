@@ -99,7 +99,7 @@ public struct User {
 
 extension User {
     init?(JSON: JSONObject) {
-        if let identifier = JSON["id"].intValue, username = JSON["username"].stringValue {
+        if let identifier = JSON["id"].intValue, let username = JSON["username"].stringValue {
             self.init(
                 identifier: identifier,
                 username: username,

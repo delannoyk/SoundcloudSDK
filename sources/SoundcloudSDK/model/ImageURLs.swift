@@ -9,7 +9,7 @@
 import Foundation
 
 public struct ImageURLs {
-    private let baseURL: URL?
+    fileprivate let baseURL: URL?
 
     public init(baseURL: URL?) {
         self.baseURL = baseURL
@@ -43,9 +43,9 @@ public struct ImageURLs {
         return URLWithFormat("t500x500")
     }
 
-    private func URLWithFormat(_ format: String) -> URL? {
+    fileprivate func URLWithFormat(_ format: String) -> URL? {
         let urlString = baseURL?
-            .absoluteString?
+            .absoluteString
             .replacingOccurrences(of: "large", with: format)
         return URL(string: urlString ?? "")
     }

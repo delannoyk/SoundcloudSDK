@@ -206,7 +206,7 @@ public func ==(lhs: Track, rhs: Track) -> Bool {
 
 extension Track {
     init?(JSON: JSONObject) {
-        if let identifier = JSON["id"].intValue, user = User(JSON: JSON["user"]) {
+        if let identifier = JSON["id"].intValue, let user = User(JSON: JSON["user"]) {
             self.init(
                 identifier: identifier,
                 createdAt: JSON["created_at"].dateValue(withFormat: "yyyy/MM/dd HH:mm:ss VVVV") ?? Date(),

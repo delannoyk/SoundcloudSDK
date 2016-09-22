@@ -39,15 +39,15 @@ public struct PaginatedAPIResponse<T>: APIResponse {
     public typealias U = [T]
     public let response: Result<[T], SoundcloudError>
 
-    private let nextPageURL: URL?
-    private let parse: (JSONObject) -> Result<[T], SoundcloudError>
+    fileprivate let nextPageURL: URL?
+    fileprivate let parse: (JSONObject) -> Result<[T], SoundcloudError>
 
     // MARK: Initialization
     ////////////////////////////////////////////////////////////////////////////
 
     init(response: Result<[T], SoundcloudError>,
         nextPageURL: URL?,
-        parse: (JSONObject) -> Result<[T], SoundcloudError>) {
+        parse: @escaping (JSONObject) -> Result<[T], SoundcloudError>) {
             self.response = response
             self.nextPageURL = nextPageURL
             self.parse = parse
@@ -63,7 +63,7 @@ public struct PaginatedAPIResponse<T>: APIResponse {
         return (nextPageURL != nil)
     }
 
-    public func fetchNextPage(_ completion: (PaginatedAPIResponse<T>) -> Void) {
+    public func fetchNextPage(_ completion: @escaping (PaginatedAPIResponse<T>) -> Void) {
         if let nextPageURL = nextPageURL {
             let request = Request(url: nextPageURL,
                 method: .GET,

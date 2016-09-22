@@ -29,7 +29,7 @@ extension String {
             let keyValue = parameter.components(separatedBy: "=")
             if keyValue.count == 2 {
                 if let key = keyValue[0].removingPercentEncoding,
-                    value = keyValue[1].removingPercentEncoding {
+                    let value = keyValue[1].removingPercentEncoding {
                         dictionary[key] = value
                 }
             }

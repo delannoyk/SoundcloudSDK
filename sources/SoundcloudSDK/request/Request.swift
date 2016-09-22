@@ -24,7 +24,7 @@ class JSONObject {
     }
 
     subscript(key: String) -> JSONObject {
-        return (value as? NSDictionary).map { JSONObject($0[key]) } ?? JSONObject(nil)
+        return (value as? Dictionary<String, AnyObject>).map { JSONObject($0[key]) } ?? JSONObject(nil)
     }
 
     func map<U>(_ transform: (JSONObject) -> U) -> [U]? {
@@ -78,7 +78,7 @@ extension JSONObject {
         return date ?? nil
     }
     
-    func arrayValue<T>(mapping: (JSONObject) -> T?) -> [T]? {
+    func arrayValue<T>(_ mapping: (JSONObject) -> T?) -> [T]? {
         if let actualJsonArray = value as? [AnyObject] {
             return actualJsonArray.flatMap { mapping(JSONObject($0)) }
         }
@@ -93,9 +93,9 @@ extension JSONObject {
 ////////////////////////////////////////////////////////////////////////////
 
 private extension DateFormatter {
-    private static var dateFormatters = [String: DateFormatter]()
+    static var dateFormatters = [String: DateFormatter]()
 
-    private static func dateFormatter(withFormat format: String) -> DateFormatter {
+    static func dateFormatter(withFormat format: String) -> DateFormatter {
         if let dateFormatter = dateFormatters[format] {
             return dateFormatter
         }
@@ -157,7 +157,7 @@ enum HTTPMethod: String {
     case PUT = "PUT"
     case DELETE = "DELETE"
 
-    func urlRequest(url: URL, parameters: HTTPParametersConvertible? = nil, headers: [String: String]? = nil) -> URLRequest {
+    func urlRequest(_ url: URL, parameters: HTTPParametersConvertible? = nil, headers: [String: String]? = nil) -> URLRequest {
         let urlRequestInfo: (url: URL, HTTPBody: Data?) = {
             if let parameters = parameters {
                 if self == .GET {
@@ -196,8 +196,8 @@ protocol HTTPParametersConvertible {
 ////////////////////////////////////////////////////////////////////////////
 
 protocol RequestError {
-    init(networkError: ErrorProtocol)
-    init(jsonError: ErrorProtocol)
+    init(networkError: Error)
+    init(jsonError: Error)
     init?(httpURLResponse: HTTPURLResponse)
 }
 
@@ -208,13 +208,13 @@ protocol RequestError {
 ////////////////////////////////////////////////////////////////////////////
 
 struct Request<T, E: RequestError> {
-    private let dataTask: URLSessionDataTask
+    fileprivate let dataTask: URLSessionDataTask
 
-    init(url: URL, method: HTTPMethod, parameters: HTTPParametersConvertible?, headers: [String: String]? = nil, parse: (JSONObject) -> Result<T, E>, completion: (Result<T, E>) -> Void) {
-        let request = method.urlRequest(url: url, parameters: parameters, headers: headers)
+    init(url: URL, method: HTTPMethod, parameters: HTTPParametersConvertible?, headers: [String: String]? = nil, parse: @escaping (JSONObject) -> Result<T, E>, completion: @escaping (Result<T, E>) -> Void) {
+        let request = method.urlRequest(url, parameters: parameters, headers: headers)
 
-        dataTask = URLSession.shared().dataTask(with: request) { data, response, error in
-            if let response = response as? HTTPURLResponse, error = E(httpURLResponse: response) {
+        dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let response = response as? HTTPURLResponse, let error = E(httpURLResponse: response) {
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
@@ -223,7 +223,7 @@ struct Request<T, E: RequestError> {
                 if let data = data {
                     var result: Result<T, E>
                     do {
-                        let JSON = try JSONObject(JSONSerialization.jsonObject(with: data, options: []))
+                        let JSON = try JSONObject(JSONSerialization.jsonObject(with: data, options: []) as AnyObject)
                         result = parse(JSON)
                     } catch let error {
                         result = .failure(E(jsonError: error))
