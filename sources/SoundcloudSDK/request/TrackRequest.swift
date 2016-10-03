@@ -9,7 +9,7 @@
 import Foundation
 
 public extension Track {
-    internal static let BaseURL = NSURL(string: "https://api.soundcloud.com/tracks")!
+    static let BaseURL = NSURL(string: "https://api.soundcloud.com/tracks")!
 
     /**
      Load track with a specific identifier

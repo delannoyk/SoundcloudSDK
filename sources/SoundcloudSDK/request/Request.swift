@@ -11,7 +11,7 @@ import Foundation
 // MARK: - JSONObject
 ////////////////////////////////////////////////////////////////////////////
 
-internal class JSONObject {
+class JSONObject {
     let value: AnyObject?
     var index: Int = 0
 
@@ -42,43 +42,43 @@ internal class JSONObject {
     }
 }
 
-internal extension JSONObject {
-    internal var anyObjectValue: AnyObject? {
+extension JSONObject {
+    var anyObjectValue: AnyObject? {
         return value
     }
 
-    internal var intValue: Int? {
+    var intValue: Int? {
         return (value as? Int)
     }
 
-    internal var uint64Value: UInt64? {
+    var uint64Value: UInt64? {
         return (value as? UInt64)
     }
 
-    internal var doubleValue: Double? {
+    var doubleValue: Double? {
         return (value as? Double)
     }
 
-    internal var boolValue: Bool? {
+    var boolValue: Bool? {
         return (value as? Bool)
     }
 
-    internal var stringValue: String? {
+    var stringValue: String? {
         return (value as? String)
     }
 
-    internal var urlValue: NSURL? {
+    var urlValue: NSURL? {
         return (value as? String).map { NSURL(string: $0)?.URLByAppendingQueryString("client_id=\(Soundcloud.clientIdentifier!)") } ?? nil
     }
 
-    internal func dateValue(dateFormat: String) -> NSDate? {
+    func dateValue(dateFormat: String) -> NSDate? {
         let date: NSDate?? = stringValue.map {
             return NSDateFormatter.dateFormatterWithFormat(dateFormat).dateFromString($0)
         }
         return date ?? nil
     }
     
-    internal func arrayValue<T>(mapping: JSONObject -> T?) -> [T]? {
+    func arrayValue<T>(mapping: JSONObject -> T?) -> [T]? {
         if let actualJsonArray = value as? [AnyObject] {
             return actualJsonArray.flatMap { mapping(JSONObject($0)) }
         }
@@ -151,7 +151,7 @@ public enum Result<T, E> {
 // MARK: - HTTPMethod
 ////////////////////////////////////////////////////////////////////////////
 
-internal enum HTTPMethod: String {
+enum HTTPMethod: String {
     case GET = "GET"
     case POST = "POST"
     case PUT = "PUT"
@@ -184,7 +184,7 @@ internal enum HTTPMethod: String {
 // MARK: - Parameters
 ////////////////////////////////////////////////////////////////////////////
 
-internal protocol HTTPParametersConvertible {
+protocol HTTPParametersConvertible {
     var queryStringValue: String { get }
     var formDataValue: NSData { get }
 }
@@ -195,7 +195,7 @@ internal protocol HTTPParametersConvertible {
 // MARK: - Errors
 ////////////////////////////////////////////////////////////////////////////
 
-internal protocol RequestError {
+protocol RequestError {
     init(networkError: ErrorType)
     init(jsonError: ErrorType)
     init?(httpURLResponse: NSHTTPURLResponse)
@@ -207,7 +207,7 @@ internal protocol RequestError {
 // MARK: - Request
 ////////////////////////////////////////////////////////////////////////////
 
-internal struct Request<T, E: RequestError> {
+struct Request<T, E: RequestError> {
     private let dataTask: NSURLSessionDataTask
 
     init(URL: NSURL, method: HTTPMethod, parameters: HTTPParametersConvertible?, headers: [String: String]? = nil, parse: JSONObject -> Result<T, E>, completion: Result<T, E> -> Void) {

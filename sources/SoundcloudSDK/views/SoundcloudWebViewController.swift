@@ -17,7 +17,7 @@
 
 import WebKit
 
-internal class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
+class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
     private lazy var webView = WKWebView()
 
     // MARK: View loading

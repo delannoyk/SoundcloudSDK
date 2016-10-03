@@ -16,7 +16,7 @@ public enum SearchQueryOptions {
     case BpmFrom(Int)
     case BpmTo(Int)
 
-    internal var query: (String, String) {
+    var query: (String, String) {
         switch self {
         case .QueryString(let query):
             return ("q", query)

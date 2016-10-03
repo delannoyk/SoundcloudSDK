@@ -59,7 +59,7 @@ public struct User {
 
 
     ///URL to user (api)
-    internal let URL: NSURL?
+    let URL: NSURL?
 
     ///URL to user (website)
     public let permalinkURL: NSURL?
@@ -97,7 +97,7 @@ public struct User {
 // MARK: Parsing
 ////////////////////////////////////////////////////////////////////////////
 
-internal extension User {
+extension User {
     init?(JSON: JSONObject) {
         if let identifier = JSON["id"].intValue, username = JSON["username"].stringValue {
             self.init(

@@ -79,7 +79,7 @@ public func ==(lhs: Comment, rhs: Comment) -> Bool {
 // MARK: Parsing
 ////////////////////////////////////////////////////////////////////////////
 
-internal extension Comment {
+extension Comment {
     init?(JSON: JSONObject) {
         if let identifier = JSON["id"].intValue, body = JSON["body"].stringValue {
             self.identifier = identifier

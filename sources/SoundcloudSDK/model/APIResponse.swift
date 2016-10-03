@@ -20,15 +20,15 @@ public struct SimpleAPIResponse<T>: APIResponse {
     // MARK: Initialization
     ////////////////////////////////////////////////////////////////////////////
 
-    internal init(_ response: Result<T, SoundcloudError>) {
+    init(_ response: Result<T, SoundcloudError>) {
         self.response = response
     }
 
-    internal init(_ error: SoundcloudError) {
+    init(_ error: SoundcloudError) {
         self.response = .Failure(error)
     }
 
-    internal init(_ value: T) {
+    init(_ value: T) {
         self.response = .Success(value)
     }
 
@@ -45,7 +45,7 @@ public struct PaginatedAPIResponse<T>: APIResponse {
     // MARK: Initialization
     ////////////////////////////////////////////////////////////////////////////
 
-    internal init(response: Result<[T], SoundcloudError>,
+    init(response: Result<[T], SoundcloudError>,
         nextPageURL: NSURL?,
         parse: JSONObject -> Result<[T], SoundcloudError>) {
             self.response = response

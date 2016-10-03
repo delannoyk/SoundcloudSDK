@@ -23,7 +23,7 @@ public struct App {
     public let identifier: Int
 
     ///URL to the app (api)
-    internal let URL: NSURL?
+    let URL: NSURL?
 
     ///URL to the app (website)
     public let permalinkURL: NSURL?
@@ -41,7 +41,7 @@ public struct App {
 // MARK: Parsing
 ////////////////////////////////////////////////////////////////////////////
 
-internal extension App {
+extension App {
     init?(JSON: JSONObject) {
         if let identifier = JSON["id"].intValue {
             self.init(

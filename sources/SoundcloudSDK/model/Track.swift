@@ -204,7 +204,7 @@ public func ==(lhs: Track, rhs: Track) -> Bool {
 // MARK: Parsing
 ////////////////////////////////////////////////////////////////////////////
 
-internal extension Track {
+extension Track {
     init?(JSON: JSONObject) {
         if let identifier = JSON["id"].intValue, user = User(JSON: JSON["user"]) {
             self.init(

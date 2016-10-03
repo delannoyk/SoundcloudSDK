@@ -9,7 +9,7 @@
 import Foundation
 
 public extension User {
-    internal static let BaseURL = NSURL(string: "https://api.soundcloud.com/users")!
+    static let BaseURL = NSURL(string: "https://api.soundcloud.com/users")!
 
     /**
      Loads an user profile

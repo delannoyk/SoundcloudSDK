@@ -26,15 +26,15 @@ public enum SoundcloudError: ErrorType {
 }
 
 extension SoundcloudError: RequestError {
-    internal init(networkError: ErrorType) {
+    init(networkError: ErrorType) {
         self = .Network(networkError)
     }
 
-    internal init(jsonError: ErrorType) {
+    init(jsonError: ErrorType) {
         self = .Parsing
     }
 
-    internal init?(httpURLResponse: NSHTTPURLResponse) {
+    init?(httpURLResponse: NSHTTPURLResponse) {
         switch httpURLResponse.statusCode {
         case 200, 201:
             return nil
@@ -80,13 +80,13 @@ public func ==(lhs: SoundcloudError, rhs: SoundcloudError) -> Bool {
 }
 
 extension PaginatedAPIResponse {
-    internal init(_ error: SoundcloudError) {
+    init(_ error: SoundcloudError) {
         self.init(response: .Failure(error), nextPageURL: nil) { _ in
             return .Failure(error)
         }
     }
 
-    internal init(_ JSON: JSONObject, parse: JSONObject -> Result<[T], SoundcloudError>) {
+    init(_ JSON: JSONObject, parse: JSONObject -> Result<[T], SoundcloudError>) {
         self.init(response: parse(JSON["collection"]), nextPageURL: JSON["next_href"].urlValue, parse: parse)
     }
 }
@@ -100,15 +100,15 @@ extension PaginatedAPIResponse {
 #if os(iOS) || os(OSX)
 public class Session: NSObject, NSCoding, NSCopying {
     //First session info
-    internal var authorizationCode: String
+    var authorizationCode: String
 
     //Token
-    internal var accessToken: String?
-    internal var accessTokenExpireDate: NSDate?
-    internal var scope: String?
+    var accessToken: String?
+    var accessTokenExpireDate: NSDate?
+    var scope: String?
 
     //Future session
-    internal var refreshToken: String?
+    var refreshToken: String?
 
     // MARK: Initialization
 
