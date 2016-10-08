@@ -8,86 +8,28 @@
 
 import Foundation
 
-// MARK: - TrackType
-////////////////////////////////////////////////////////////////////////////
-
 public enum TrackType: String {
-    case Original = "original"
-    case Remix = "remix"
-    case Live = "live"
-    case Recording = "recording"
-    case Spoken = "spoken"
-    case Podcast = "podcast"
-    case Demo = "demo"
-    case InProgress = "in progress"
-    case Stem = "stem"
-    case Loop = "loop"
-    case SoundEffect = "sound effect"
-    case Sample = "sample"
-    case Other = "other"
+    case original = "original"
+    case remix = "remix"
+    case live = "live"
+    case recording = "recording"
+    case spoken = "spoken"
+    case podcast = "podcast"
+    case demo = "demo"
+    case inProgress = "in progress"
+    case stem = "stem"
+    case loop = "loop"
+    case soundEffect = "sound effect"
+    case sample = "sample"
+    case other = "other"
 }
 
-////////////////////////////////////////////////////////////////////////////
-
-
-// MARK: - Track definition
-////////////////////////////////////////////////////////////////////////////
-
 public struct Track {
-    public init(identifier: Int, createdAt: NSDate, createdBy: User,
-        createdWith: App?, duration: NSTimeInterval, commentable: Bool,
-        streamable: Bool, downloadable: Bool, streamURL: NSURL?,
-        downloadURL: NSURL?, permalinkURL: NSURL?,
-        releaseYear: Int?, releaseMonth: Int?, releaseDay: Int?,
-        tags: [String]?, description: String?, genre: String?,
-        trackType: TrackType?, title: String, format: String?,
-        contentSize: UInt64?, artworkImageURL: ImageURLs, waveformImageURL: ImageURLs,
-        playbackCount: Int?, downloadCount: Int?, favoriteCount: Int?, commentCount: Int?, bpm: Int?) {
-            self.identifier = identifier
-
-            self.createdAt = createdAt
-            self.createdBy = createdBy
-            self.createdWith = createdWith
-
-            self.duration = duration
-
-            self.commentable = commentable
-            self.streamable = streamable
-            self.downloadable = downloadable
-
-            self.streamURL = streamURL
-            self.downloadURL = downloadURL
-            self.permalinkURL = permalinkURL
-
-            self.releaseYear = releaseYear
-            self.releaseMonth = releaseMonth
-            self.releaseDay = releaseDay
-
-            self.tags = tags
-
-            self.description = description
-            self.genre = genre
-            self.trackType = trackType
-            self.title = title
-            self.format = format
-            self.contentSize = contentSize
-
-            self.artworkImageURL = artworkImageURL
-            self.waveformImageURL = waveformImageURL
-
-            self.playbackCount = playbackCount
-            self.downloadCount = downloadCount
-            self.favoriteCount = favoriteCount
-            self.commentCount = commentCount
-            self.bpm = bpm
-    }
-
     ///Track's identifier
     public let identifier: Int
 
-
     ///Creation date of the track
-    public let createdAt: NSDate
+    public let createdAt: Date
 
     ///User that created the track (not a full user)
     public let createdBy: User
@@ -95,10 +37,8 @@ public struct Track {
     ///App used to create the track
     public let createdWith: App?
 
-
     ///Track duration
-    public let duration: NSTimeInterval
-
+    public let duration: TimeInterval
 
     ///Is commentable
     public let commentable: Bool
@@ -109,16 +49,14 @@ public struct Track {
     ///Is downloadable
     public let downloadable: Bool
 
-
     ///Streaming URL
-    public let streamURL: NSURL?
+    public let streamURL: URL?
 
     ///Downloading URL
-    public let downloadURL: NSURL?
+    public let downloadURL: URL?
 
     ///Permalink URL (website)
-    public let permalinkURL: NSURL?
-
+    public let permalinkURL: URL?
 
     ///Release year
     public let releaseYear: Int?
@@ -132,9 +70,8 @@ public struct Track {
     ///Release day
     public let releaseDay: Int?
 
-
     ///Tags
-    public let tags: [String]? /// "tag_list": "soundcloud:source=iphone-record",
+    public let tags: [String]?
 
     ///Track's description
     public let description: String?
@@ -154,13 +91,11 @@ public struct Track {
     ///File size (in bytes)
     public let contentSize: UInt64?
 
-
     ///Image URL to artwork
     public let artworkImageURL: ImageURLs
 
     ///Image URL to waveform
     public let waveformImageURL: ImageURLs
-
 
     ///Playback count
     public let playbackCount: Int?
@@ -175,14 +110,7 @@ public struct Track {
     public let commentCount: Int?
 }
 
-////////////////////////////////////////////////////////////////////////////
-
-
-// MARK: - Track Extensions
-////////////////////////////////////////////////////////////////////////////
-
 // MARK: Equatable
-////////////////////////////////////////////////////////////////////////////
 
 extension Track: Equatable {}
 
@@ -198,52 +126,41 @@ public func ==(lhs: Track, rhs: Track) -> Bool {
     return lhs.identifier == rhs.identifier
 }
 
-////////////////////////////////////////////////////////////////////////////
-
-
 // MARK: Parsing
-////////////////////////////////////////////////////////////////////////////
 
 extension Track {
     init?(JSON: JSONObject) {
-        if let identifier = JSON["id"].intValue, user = User(JSON: JSON["user"]) {
-            self.init(
-                identifier: identifier,
-                createdAt: JSON["created_at"].dateValue("yyyy/MM/dd HH:mm:ss VVVV") ?? NSDate(),
-                createdBy: user,
-                createdWith: App(JSON: JSON["created_with"]),
-                duration: JSON["duration"].doubleValue.map { $0 / 1000 } ?? 0,
-                commentable: JSON["commentable"].boolValue ?? false,
-                streamable: JSON["streamable"].boolValue ?? false,
-                downloadable: JSON["downloadable"].boolValue ?? false,
-                streamURL: JSON["stream_url"].urlValue,
-                downloadURL: JSON["download_url"].urlValue,
-                permalinkURL: JSON["permalink_url"].urlValue,
-                releaseYear: JSON["release_year"].intValue,
-                releaseMonth: JSON["release_month"].intValue,
-                releaseDay: JSON["release_day"].intValue,
-                tags: JSON["tag_list"].stringValue.map { return [$0] }, //TODO: check this
-                description: JSON["description"].stringValue,
-                genre: JSON["genre"].stringValue,
-                trackType: TrackType(rawValue: JSON["track_type"].stringValue ?? ""),
-                title: JSON["title"].stringValue ?? "",
-                format: JSON["original_format"].stringValue,
-                contentSize: JSON["original_content_size"].intValue.map { UInt64($0) },
-                artworkImageURL: ImageURLs(baseURL: JSON["artwork_url"].urlValue),
-                waveformImageURL: ImageURLs(baseURL: JSON["waveform_url"].urlValue),
-                playbackCount: JSON["playback_count"].intValue,
-                downloadCount: JSON["download_count"].intValue,
-                favoriteCount: JSON["favoritings_count"].intValue,
-                commentCount: JSON["comment_count"].intValue,
-                bpm: JSON["bpm"].intValue
-            )
-        }
-        else {
+        guard let identifier = JSON["id"].intValue, let user = User(JSON: JSON["user"]) else {
             return nil
         }
+
+        self.identifier = identifier
+        self.createdAt = JSON["created_at"].dateValue(format: "yyyy/MM/dd HH:mm:ss VVVV") ?? Date()
+        self.createdBy = user
+        self.createdWith = App(JSON: JSON["created_with"])
+        self.duration = JSON["duration"].doubleValue.map { $0 / 1000 } ?? 0
+        self.commentable = JSON["commentable"].boolValue ?? false
+        self.streamable = JSON["streamable"].boolValue ?? false
+        self.downloadable = JSON["downloadable"].boolValue ?? false
+        self.streamURL = JSON["stream_url"].urlValue
+        self.downloadURL = JSON["download_url"].urlValue
+        self.permalinkURL = JSON["permalink_url"].urlValue
+        self.releaseYear = JSON["release_year"].intValue
+        self.releaseMonth = JSON["release_month"].intValue
+        self.releaseDay = JSON["release_day"].intValue
+        self.tags = JSON["tag_list"].stringValue.map { [$0] }
+        self.description = JSON["description"].stringValue
+        self.genre = JSON["genre"].stringValue
+        self.trackType = TrackType(rawValue: JSON["track_type"].stringValue ?? "")
+        self.title = JSON["title"].stringValue ?? ""
+        self.format = JSON["original_format"].stringValue
+        self.contentSize = JSON["original_content_size"].intValue.map { UInt64($0) }
+        self.artworkImageURL = ImageURLs(baseURL: JSON["artwork_url"].urlValue)
+        self.waveformImageURL = ImageURLs(baseURL: JSON["waveform_url"].urlValue)
+        self.playbackCount = JSON["playback_count"].intValue
+        self.downloadCount = JSON["download_count"].intValue
+        self.favoriteCount = JSON["favoritings_count"].intValue
+        self.commentCount = JSON["comment_count"].intValue
+        self.bpm = JSON["bpm"].intValue
     }
 }
-
-////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////

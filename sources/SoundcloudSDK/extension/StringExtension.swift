@@ -8,34 +8,30 @@
 
 import Foundation
 
-// MARK: - StringExtension
-////////////////////////////////////////////////////////////////////////////
-
+// MARK: - HTTPParametersConvertible
 extension String: HTTPParametersConvertible {
     var queryStringValue: String {
         return self
     }
 
-    var formDataValue: NSData {
-        return self.dataUsingEncoding(NSUTF8StringEncoding) ?? NSData()
+    var formDataValue: Data {
+        return data(using: .utf8) ?? Data()
     }
 }
 
+// MARK: - Query dictionary
 extension String {
     var queryDictionary: [String: String] {
-        let parameters = componentsSeparatedByString("&")
+        let parameters = components(separatedBy: "&")
         var dictionary = [String: String]()
         for parameter in parameters {
-            let keyValue = parameter.componentsSeparatedByString("=")
-            if keyValue.count == 2 {
-                if let key = keyValue[0].stringByRemovingPercentEncoding,
-                    value = keyValue[1].stringByRemovingPercentEncoding {
-                        dictionary[key] = value
-                }
+            let keyValue = parameter.components(separatedBy: "=")
+            if keyValue.count == 2,
+                let key = keyValue[0].removingPercentEncoding,
+                let value = keyValue[1].removingPercentEncoding {
+                    dictionary[key] = value
             }
         }
         return dictionary
     }
 }
-
-////////////////////////////////////////////////////////////////////////////

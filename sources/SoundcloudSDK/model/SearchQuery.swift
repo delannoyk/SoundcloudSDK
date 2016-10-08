@@ -9,26 +9,26 @@
 import Foundation
 
 public enum SearchQueryOptions {
-    case QueryString(String)
-    case Tags([String])
-    case Genres([String])
-    case Types([TrackType])
-    case BpmFrom(Int)
-    case BpmTo(Int)
+    case queryString(String)
+    case tags([String])
+    case genres([String])
+    case types([TrackType])
+    case bpmFrom(Int)
+    case bpmTo(Int)
 
     var query: (String, String) {
         switch self {
-        case .QueryString(let query):
+        case .queryString(let query):
             return ("q", query)
-        case .Tags(let tags):
-            return ("tags", tags.joinWithSeparator(","))
-        case .Genres(let genres):
-            return ("genres", genres.joinWithSeparator(","))
-        case .Types(let types):
-            return ("types", types.map { $0.rawValue }.joinWithSeparator(","))
-        case .BpmFrom(let from):
+        case .tags(let tags):
+            return ("tags", tags.joined(separator: ","))
+        case .genres(let genres):
+            return ("genres", genres.joined(separator: ","))
+        case .types(let types):
+            return ("types", types.map { $0.rawValue }.joined(separator: ","))
+        case .bpmFrom(let from):
             return ("bpm[from]", String(from))
-        case .BpmTo(let to):
+        case .bpmTo(let to):
             return ("bpm[to]", String(to))
         }
     }

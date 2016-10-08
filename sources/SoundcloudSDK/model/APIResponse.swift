@@ -10,6 +10,7 @@ import Foundation
 
 public protocol APIResponse {
     associatedtype U
+
     var response: Result<U, SoundcloudError> { get }
 }
 
@@ -18,64 +19,55 @@ public struct SimpleAPIResponse<T>: APIResponse {
     public let response: Result<T, SoundcloudError>
 
     // MARK: Initialization
-    ////////////////////////////////////////////////////////////////////////////
 
-    init(_ response: Result<T, SoundcloudError>) {
-        self.response = response
+    init(result: Result<T, SoundcloudError>) {
+        response = result
     }
 
-    init(_ error: SoundcloudError) {
-        self.response = .Failure(error)
+    init(error: SoundcloudError) {
+        response = .Failure(error)
     }
 
-    init(_ value: T) {
-        self.response = .Success(value)
+    init(value: T) {
+        response = .Success(value)
     }
-
-    ////////////////////////////////////////////////////////////////////////////
 }
 
 public struct PaginatedAPIResponse<T>: APIResponse {
     public typealias U = [T]
     public let response: Result<[T], SoundcloudError>
 
-    private let nextPageURL: NSURL?
-    private let parse: JSONObject -> Result<[T], SoundcloudError>
+    private let nextPageURL: URL?
+    private let parse: (JSONObject) -> Result<[T], SoundcloudError>
 
     // MARK: Initialization
-    ////////////////////////////////////////////////////////////////////////////
 
     init(response: Result<[T], SoundcloudError>,
-        nextPageURL: NSURL?,
-        parse: JSONObject -> Result<[T], SoundcloudError>) {
+        nextPageURL: URL?,
+        parse: @escaping (JSONObject) -> Result<[T], SoundcloudError>) {
             self.response = response
             self.nextPageURL = nextPageURL
             self.parse = parse
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-
-
     // MARK: Next page
-    ////////////////////////////////////////////////////////////////////////////
 
     public var hasNextPage: Bool {
         return (nextPageURL != nil)
     }
 
-    public func fetchNextPage(completion: PaginatedAPIResponse<T> -> Void) {
+    public func fetchNextPage(completion: @escaping (PaginatedAPIResponse<T>) -> Void) {
         if let nextPageURL = nextPageURL {
-            let request = Request(URL: nextPageURL,
+            let request = Request(
+                url: nextPageURL,
                 method: .GET,
                 parameters: nil,
                 parse: { JSON -> Result<PaginatedAPIResponse, SoundcloudError> in
-                    return .Success(PaginatedAPIResponse(JSON, parse: self.parse))
-                }) { result in
-                    completion(result.result!)
+                    return .Success(PaginatedAPIResponse(JSON: JSON, parse: self.parse))
+            }) { result in
+                completion(result.result!)
             }
             request.start()
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////
 }

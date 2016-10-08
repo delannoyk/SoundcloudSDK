@@ -9,18 +9,18 @@
 import Foundation
 
 public enum SharingAccess: String {
-    case Public = "public"
-    case Private = "private"
+    case `public` = "public"
+    case `private` = "private"
 }
 
 public enum PlaylistType: String {
-    case EPSingle = "ep single"
-    case Album = "album"
-    case Compilation = "compilation"
-    case ProjectFiles = "project files"
-    case Archive = "archive"
-    case Showcase = "showcase"
-    case Demo = "demo"
-    case SamplePack = "sample pack"
-    case Other = "other"
+    case epSingle = "ep single"
+    case album = "album"
+    case compilation = "compilation"
+    case projectFiles = "project files"
+    case archive = "archive"
+    case showcase = "showcase"
+    case demo = "demo"
+    case samplePack = "sample pack"
+    case other = "other"
 }

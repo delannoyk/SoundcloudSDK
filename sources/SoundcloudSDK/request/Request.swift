@@ -27,14 +27,14 @@ class JSONObject {
         return (value as? NSDictionary).map { JSONObject($0[key]) } ?? JSONObject(nil)
     }
 
-    func map<U>(transform: JSONObject -> U) -> [U]? {
+    func map<U>(transform: (JSONObject) -> U) -> [U]? {
         if let value = value as? [AnyObject] {
             return value.map({ transform(JSONObject($0)) })
         }
         return nil
     }
 
-    func flatMap<U>(transform: JSONObject -> U?) -> [U]? {
+    func flatMap<U>(transform: (JSONObject) -> U?) -> [U]? {
         if let value = value as? [AnyObject] {
             return value.flatMap { transform(JSONObject($0)) }
         }
@@ -67,40 +67,29 @@ extension JSONObject {
         return (value as? String)
     }
 
-    var urlValue: NSURL? {
-        return (value as? String).map { NSURL(string: $0)?.URLByAppendingQueryString("client_id=\(Soundcloud.clientIdentifier!)") } ?? nil
+    var urlValue: URL? {
+        return (value as? String).map { URL(string: $0)?.appendingQueryString("client_id=\(Soundcloud.clientIdentifier!)") } ?? nil
     }
 
-    func dateValue(dateFormat: String) -> NSDate? {
-        let date: NSDate?? = stringValue.map {
-            return NSDateFormatter.dateFormatterWithFormat(dateFormat).dateFromString($0)
+    func dateValue(format: String) -> Date? {
+        let date: Date?? = stringValue.map {
+            return DateFormatter.dateFormatter(with: format).date(from: $0)
         }
         return date ?? nil
     }
-    
-    func arrayValue<T>(mapping: JSONObject -> T?) -> [T]? {
-        if let actualJsonArray = value as? [AnyObject] {
-            return actualJsonArray.flatMap { mapping(JSONObject($0)) }
-        }
-        return nil
-    }
 }
 
-////////////////////////////////////////////////////////////////////////////
-
-
 // MARK: - DateFormatter
-////////////////////////////////////////////////////////////////////////////
 
-private extension NSDateFormatter {
-    private static var dateFormatters = [String: NSDateFormatter]()
+extension DateFormatter {
+    private static var dateFormatters = [String: DateFormatter]()
 
-    private static func dateFormatterWithFormat(format: String) -> NSDateFormatter {
+    fileprivate static func dateFormatter(with format: String) -> DateFormatter {
         if let dateFormatter = dateFormatters[format] {
             return dateFormatter
         }
 
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         dateFormatters[format] = dateFormatter
         return dateFormatter
@@ -157,8 +146,8 @@ enum HTTPMethod: String {
     case PUT = "PUT"
     case DELETE = "DELETE"
 
-    func URLRequest(URL: NSURL, parameters: HTTPParametersConvertible? = nil, headers: [String: String]? = nil) -> NSURLRequest {
-        let URLRequestInfo: (URL: NSURL, HTTPBody: NSData?) = {
+    func URLRequest(URL: URL, parameters: HTTPParametersConvertible? = nil, headers: [String: String]? = nil) -> URLRequest {
+        let URLRequestInfo: (URL: URL, HTTPBody: Data?) = {
             if let parameters = parameters {
                 if self == .GET {
                     return (URL: URL.URLByAppendingQueryString(parameters.queryStringValue), HTTPBody: nil)
@@ -186,7 +175,7 @@ enum HTTPMethod: String {
 
 protocol HTTPParametersConvertible {
     var queryStringValue: String { get }
-    var formDataValue: NSData { get }
+    var formDataValue: Data { get }
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -210,7 +199,7 @@ protocol RequestError {
 struct Request<T, E: RequestError> {
     private let dataTask: NSURLSessionDataTask
 
-    init(URL: NSURL, method: HTTPMethod, parameters: HTTPParametersConvertible?, headers: [String: String]? = nil, parse: JSONObject -> Result<T, E>, completion: Result<T, E> -> Void) {
+    init(url: URL, method: HTTPMethod, parameters: HTTPParametersConvertible?, headers: [String: String]? = nil, parse: JSONObject -> Result<T, E>, completion: Result<T, E> -> Void) {
         let URLRequest = method.URLRequest(URL, parameters: parameters, headers: headers)
 
         dataTask = NSURLSession.sharedSession().dataTaskWithRequest(URLRequest) { data, response, error in

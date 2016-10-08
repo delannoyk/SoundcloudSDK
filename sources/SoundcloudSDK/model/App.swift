@@ -8,60 +8,32 @@
 
 import Foundation
 
-// MARK: - App definition
-////////////////////////////////////////////////////////////////////////////
-
 public struct App {
-    public init(identifier: Int, URL: NSURL?, permalinkURL: NSURL?, name: String) {
-        self.identifier = identifier
-        self.URL = URL
-        self.permalinkURL = permalinkURL
-        self.name = name
-    }
-
     ///App Identifier
     public let identifier: Int
 
-    ///URL to the app (api)
-    let URL: NSURL?
-
     ///URL to the app (website)
-    public let permalinkURL: NSURL?
+    public let permalinkURL: URL?
 
     ///Name of the app
     public let name: String
 }
 
-////////////////////////////////////////////////////////////////////////////
-
-
-// MARK: - App Extensions
-////////////////////////////////////////////////////////////////////////////
-
 // MARK: Parsing
-////////////////////////////////////////////////////////////////////////////
 
 extension App {
     init?(JSON: JSONObject) {
-        if let identifier = JSON["id"].intValue {
-            self.init(
-                identifier: identifier,
-                URL: JSON["uri"].urlValue,
-                permalinkURL: JSON["permalink_url"].urlValue,
-                name: JSON["name"].stringValue ?? ""
-            )
-        }
-        else {
+        guard let identifier = JSON["id"].intValue else {
             return nil
         }
+
+        self.identifier = identifier
+        self.permalinkURL = JSON["permalink_url"].urlValue
+        self.name = JSON["name"].stringValue ?? ""
     }
 }
 
-////////////////////////////////////////////////////////////////////////////
-
-
 // MARK: Equatable
-////////////////////////////////////////////////////////////////////////////
 
 extension App: Equatable {}
 
@@ -76,7 +48,3 @@ Compares 2 Apps based on their identifier
 public func ==(lhs: App, rhs: App) -> Bool {
     return lhs.identifier == rhs.identifier
 }
-
-////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////

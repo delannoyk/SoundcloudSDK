@@ -16,6 +16,7 @@
 #endif
 
 import WebKit
+import Foundation
 
 class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
     private lazy var webView = WKWebView()
@@ -83,13 +84,13 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
     // MARK: Properties
     ////////////////////////////////////////////////////////////////////////////
 
-    var url: NSURL? {
+    var url: URL? {
         get {
             return urlRequest?.URL
         }
         set {
             if let URL = newValue {
-                urlRequest = NSURLRequest(URL: URL)
+                urlRequest = URLRequest(URL: URL)
             }
             else {
                 urlRequest = nil
@@ -97,7 +98,7 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
         }
     }
 
-    var urlRequest: NSURLRequest? {
+    var urlRequest: URLRequest? {
         didSet {
             if let urlRequest = urlRequest {
                 webView.loadRequest(urlRequest)
@@ -110,7 +111,7 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
 
     var autoDismissScheme: String?
 
-    var onDismiss: (NSURL? -> Void)?
+    var onDismiss: ((URL?) -> Void)?
 
     ////////////////////////////////////////////////////////////////////////////
 
