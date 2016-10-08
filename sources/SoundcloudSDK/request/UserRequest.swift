@@ -26,11 +26,11 @@ public extension User {
         let url = BaseURL.appendingPathComponent("\(identifier).json")
         let parameters = ["client_id": clientIdentifier]
 
-        let request = Request(url: url, method: .GET, parameters: parameters, parse: {
+        let request = Request(url: url, method: .get, parameters: parameters, parse: {
             if let user = User(JSON: $0) {
-                return .Success(user)
+                return .success(user)
             }
-            return .Failure(.parsing)
+            return .failure(.parsing)
         }) { result in
             completion(SimpleAPIResponse(result: result))
         }
@@ -63,13 +63,13 @@ public extension User {
 
         let parse = { (JSON: JSONObject) -> Result<[Track], SoundcloudError> in
             guard let tracks = JSON.flatMap(transform: { Track(JSON: $0) }) else {
-                return .Failure(.parsing)
+                return .failure(.parsing)
             }
-            return .Success(tracks)
+            return .success(tracks)
         }
 
-        let request = Request(url: url, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Track>, SoundcloudError> in
-            return .Success(PaginatedAPIResponse(JSON: JSON, parse: parse))
+        let request = Request(url: url, method: .get, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Track>, SoundcloudError> in
+            return .success(PaginatedAPIResponse(JSON: JSON, parse: parse))
         }) { result in
             completion(result.result!)
         }
@@ -102,13 +102,13 @@ public extension User {
 
         let parse = { (JSON: JSONObject) -> Result<[Comment], SoundcloudError> in
             guard let comments = JSON.flatMap(transform: { Comment(JSON: $0) }) else {
-                return .Failure(.parsing)
+                return .failure(.parsing)
             }
-            return .Success(comments)
+            return .success(comments)
         }
 
-        let request = Request(url: url, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Comment>, SoundcloudError> in
-            return .Success(PaginatedAPIResponse(JSON: JSON, parse: parse))
+        let request = Request(url: url, method: .get, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Comment>, SoundcloudError> in
+            return .success(PaginatedAPIResponse(JSON: JSON, parse: parse))
         }) { result in
             completion(result.result!)
         }
@@ -141,13 +141,13 @@ public extension User {
 
         let parse = { (JSON: JSONObject) -> Result<[Track], SoundcloudError> in
             guard let tracks = JSON.flatMap(transform: { Track(JSON: $0) }) else {
-                return .Failure(.parsing)
+                return .failure(.parsing)
             }
-            return .Success(tracks)
+            return .success(tracks)
         }
 
-        let request = Request(url: url, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Track>, SoundcloudError> in
-            return .Success(PaginatedAPIResponse(JSON: JSON, parse: parse))
+        let request = Request(url: url, method: .get, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Track>, SoundcloudError> in
+            return .success(PaginatedAPIResponse(JSON: JSON, parse: parse))
         }) { result in
             completion(result.result!)
         }
@@ -180,13 +180,13 @@ public extension User {
 
         let parse = { (JSON: JSONObject) -> Result<[User], SoundcloudError> in
             guard let users = JSON.flatMap(transform: { User(JSON: $0) }) else {
-                return .Failure(.parsing)
+                return .failure(.parsing)
             }
-            return .Success(users)
+            return .success(users)
         }
 
-        let request = Request(url: url, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<User>, SoundcloudError> in
-            return .Success(PaginatedAPIResponse(JSON: JSON, parse: parse))
+        let request = Request(url: url, method: .get, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<User>, SoundcloudError> in
+            return .success(PaginatedAPIResponse(JSON: JSON, parse: parse))
         }) { result in
             completion(result.result!)
         }
@@ -219,13 +219,13 @@ public extension User {
 
         let parse = { (JSON: JSONObject) -> Result<[User], SoundcloudError> in
             guard let users = JSON.flatMap(transform: { User(JSON: $0) }) else {
-                return .Failure(.parsing)
+                return .failure(.parsing)
             }
-            return .Success(users)
+            return .success(users)
         }
 
-        let request = Request(url: url, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<User>, SoundcloudError> in
-            return .Success(PaginatedAPIResponse(JSON: JSON, parse: parse))
+        let request = Request(url: url, method: .get, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<User>, SoundcloudError> in
+            return .success(PaginatedAPIResponse(JSON: JSON, parse: parse))
         }) { result in
             completion(result.result!)
         }
@@ -311,8 +311,8 @@ public extension User {
             .appendingPathComponent("me/followings/\(userIdentifier).json")
             .appendingQueryString(parameters.queryString)
 
-        let request = Request(url: url, method: follow ? .PUT : .DELETE, parameters: nil, parse: { _ in
-            return .Success(true)
+        let request = Request(url: url, method: follow ? .put : .delete, parameters: nil, parse: { _ in
+            return .success(true)
         }) { result in
             completion(SimpleAPIResponse(result: result))
         }
@@ -346,13 +346,13 @@ public extension User {
 
         let parse = { (JSON: JSONObject) -> Result<[Playlist], SoundcloudError> in
             guard let playlists = JSON.flatMap(transform: { Playlist(JSON: $0) }) else {
-                return .Failure(.parsing)
+                return .failure(.parsing)
             }
-            return .Success(playlists)
+            return .success(playlists)
         }
 
-        let request = Request(url: url, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Playlist>, SoundcloudError> in
-            return .Success(PaginatedAPIResponse(JSON: JSON, parse: parse))
+        let request = Request(url: url, method: .get, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Playlist>, SoundcloudError> in
+            return .success(PaginatedAPIResponse(JSON: JSON, parse: parse))
         }) { result in
             completion(result.result!)
         }

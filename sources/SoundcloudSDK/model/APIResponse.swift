@@ -25,11 +25,11 @@ public struct SimpleAPIResponse<T>: APIResponse {
     }
 
     init(error: SoundcloudError) {
-        response = .Failure(error)
+        response = .failure(error)
     }
 
     init(value: T) {
-        response = .Success(value)
+        response = .success(value)
     }
 }
 
@@ -60,10 +60,10 @@ public struct PaginatedAPIResponse<T>: APIResponse {
         if let nextPageURL = nextPageURL {
             let request = Request(
                 url: nextPageURL,
-                method: .GET,
+                method: .get,
                 parameters: nil,
                 parse: { JSON -> Result<PaginatedAPIResponse, SoundcloudError> in
-                    return .Success(PaginatedAPIResponse(JSON: JSON, parse: self.parse))
+                    return .success(PaginatedAPIResponse(JSON: JSON, parse: self.parse))
             }) { result in
                 completion(result.result!)
             }

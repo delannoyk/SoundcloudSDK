@@ -8,34 +8,31 @@
 
 import Foundation
 
-// MARK: - JSONObject
-////////////////////////////////////////////////////////////////////////////
-
 class JSONObject {
-    let value: AnyObject?
+    let value: Any?
     var index: Int = 0
 
-    init(_ value: AnyObject?) {
+    init(_ value: Any?) {
         self.value = value
     }
 
     subscript(index: Int) -> JSONObject {
-        return (value as? [AnyObject]).map { JSONObject($0[index]) } ?? JSONObject(nil)
+        return (value as? [Any]).map { JSONObject($0[index]) } ?? JSONObject(nil)
     }
 
     subscript(key: String) -> JSONObject {
-        return (value as? NSDictionary).map { JSONObject($0[key]) } ?? JSONObject(nil)
+        return (value as? NSDictionary).map { JSONObject($0.object(forKey: key)) } ?? JSONObject(nil)
     }
 
     func map<U>(transform: (JSONObject) -> U) -> [U]? {
-        if let value = value as? [AnyObject] {
+        if let value = value as? [Any] {
             return value.map({ transform(JSONObject($0)) })
         }
         return nil
     }
 
     func flatMap<U>(transform: (JSONObject) -> U?) -> [U]? {
-        if let value = value as? [AnyObject] {
+        if let value = value as? [Any] {
             return value.flatMap { transform(JSONObject($0)) }
         }
         return nil
@@ -43,7 +40,7 @@ class JSONObject {
 }
 
 extension JSONObject {
-    var anyObjectValue: AnyObject? {
+    var anyValue: Any? {
         return value
     }
 
@@ -96,19 +93,13 @@ extension DateFormatter {
     }
 }
 
-////////////////////////////////////////////////////////////////////////////
-
-
-// MARK: - Result
-////////////////////////////////////////////////////////////////////////////
-
 public enum Result<T, E> {
-    case Success(T)
-    case Failure(E)
+    case success(T)
+    case failure(E)
 
     public var isSuccessful: Bool {
         switch self {
-        case .Success(_):
+        case .success(_):
             return true
         default:
             return false
@@ -117,7 +108,7 @@ public enum Result<T, E> {
 
     public var result: T? {
         switch self {
-        case .Success(let result):
+        case .success(let result):
             return result
         default:
             return nil
@@ -126,7 +117,7 @@ public enum Result<T, E> {
 
     public var error: E? {
         switch self {
-        case .Failure(let error):
+        case .failure(let error):
             return error
         default:
             return nil
@@ -141,29 +132,29 @@ public enum Result<T, E> {
 ////////////////////////////////////////////////////////////////////////////
 
 enum HTTPMethod: String {
-    case GET = "GET"
-    case POST = "POST"
-    case PUT = "PUT"
-    case DELETE = "DELETE"
+    case get = "GET"
+    case post = "POST"
+    case put = "PUT"
+    case delete = "DELETE"
 
-    func URLRequest(URL: URL, parameters: HTTPParametersConvertible? = nil, headers: [String: String]? = nil) -> URLRequest {
-        let URLRequestInfo: (URL: URL, HTTPBody: Data?) = {
+    func URLRequest(url: URL, parameters: HTTPParametersConvertible? = nil, headers: [String: String]? = nil) -> URLRequest {
+        let URLRequestInfo: (url: URL, HTTPBody: Data?) = {
             if let parameters = parameters {
-                if self == .GET {
-                    return (URL: URL.URLByAppendingQueryString(parameters.queryStringValue), HTTPBody: nil)
+                if self == .get {
+                    return (url: url.appendingQueryString(parameters.queryStringValue), HTTPBody: nil)
                 }
-                return (URL: URL, HTTPBody: parameters.formDataValue)
+                return (url: url, HTTPBody: parameters.formDataValue)
             }
-            return (URL: URL, HTTPBody: nil)
+            return (url: url, HTTPBody: nil)
         }()
 
-        let URLRequest = NSMutableURLRequest(URL: URLRequestInfo.URL)
-        URLRequest.HTTPBody = URLRequestInfo.HTTPBody
-        URLRequest.HTTPMethod = rawValue
+        var request = URLRequest(url: URLRequestInfo.url)
+        request.httpBody = URLRequestInfo.HTTPBody
+        request.httpMethod = rawValue
         headers?.forEach { key, value in
-            URLRequest.addValue(value, forHTTPHeaderField: key)
+            request.addValue(value, forHTTPHeaderField: key)
         }
-        return URLRequest
+        return request
     }
 }
 
@@ -185,9 +176,9 @@ protocol HTTPParametersConvertible {
 ////////////////////////////////////////////////////////////////////////////
 
 protocol RequestError {
-    init(networkError: ErrorType)
-    init(jsonError: ErrorType)
-    init?(httpURLResponse: NSHTTPURLResponse)
+    init(networkError: Error)
+    init(jsonError: Error)
+    init?(httpURLResponse: HTTPURLResponse)
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -197,34 +188,33 @@ protocol RequestError {
 ////////////////////////////////////////////////////////////////////////////
 
 struct Request<T, E: RequestError> {
-    private let dataTask: NSURLSessionDataTask
+    private let dataTask: URLSessionDataTask
 
-    init(url: URL, method: HTTPMethod, parameters: HTTPParametersConvertible?, headers: [String: String]? = nil, parse: JSONObject -> Result<T, E>, completion: Result<T, E> -> Void) {
-        let URLRequest = method.URLRequest(URL, parameters: parameters, headers: headers)
+    init(url: URL, method: HTTPMethod, parameters: HTTPParametersConvertible?, headers: [String: String]? = nil, parse: @escaping (JSONObject) -> Result<T, E>, completion: @escaping (Result<T, E>) -> Void) {
+        let URLRequest = method.URLRequest(url: url, parameters: parameters, headers: headers)
 
-        dataTask = NSURLSession.sharedSession().dataTaskWithRequest(URLRequest) { data, response, error in
-            if let response = response as? NSHTTPURLResponse, error = E(httpURLResponse: response) {
-                dispatch_async(dispatch_get_main_queue()) {
-                    completion(.Failure(error))
+        dataTask = URLSession.shared.dataTask(with: URLRequest) { data, response, error in
+            if let response = response as? HTTPURLResponse, let error = E(httpURLResponse: response) {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
                 }
-            }
-            else {
+            } else {
                 if let data = data {
                     var result: Result<T, E>
                     do {
-                        let JSON = try JSONObject(NSJSONSerialization.JSONObjectWithData(data, options: []))
+                        let JSON = try JSONObject(JSONSerialization.jsonObject(with: data, options: []))
                         result = parse(JSON)
                     } catch let error {
-                        result = .Failure(E(jsonError: error))
+                        result = .failure(E(jsonError: error))
                     }
 
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         completion(result)
                     }
                 }
                 else if let error = error {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        completion(.Failure(E(networkError: error)))
+                    DispatchQueue.main.async {
+                        completion(.failure(E(networkError: error)))
                     }
                 }
             }

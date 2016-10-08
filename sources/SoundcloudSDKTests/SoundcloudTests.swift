@@ -10,14 +10,14 @@ import XCTest
 
 class SoundcloudTests: XCTestCase {
     func testCredentialsError() {
-        let resolveExpectation = expectationWithDescription("Waiting for `resolve` response")
-        Soundcloud.resolve("") { response in
-            XCTAssertFalse(response.response.isSuccessful, "The result should be a .Failure")
-            XCTAssert(response.response.error! == SoundcloudError.CredentialsNotSet, "Errors should be about Credentials")
+        let resolveExpectation = expectation(description: "Waiting for `resolve` response")
+        Soundcloud.resolve(URI: "") { response in
+            XCTAssertFalse(response.response.isSuccessful, "The result should be a .failure")
+            XCTAssert(response.response.error! == SoundcloudError.credentialsNotSet, "Errors should be about Credentials")
             resolveExpectation.fulfill()
         }
 
-        waitForExpectationsWithTimeout(1) { e in
+        waitForExpectations(timeout: 1) { e in
             if let _ = e {
                 XCTFail("Expectations should have been fulfilled immediatly")
             }

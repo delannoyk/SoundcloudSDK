@@ -31,11 +31,11 @@ public extension Playlist {
             parameters["secret_token"] = secretToken
         }
 
-        let request = Request(url: url, method: .GET, parameters: parameters, parse: {
+        let request = Request(url: url, method: .get, parameters: parameters, parse: {
             if let playlist = Playlist(JSON: $0) {
-                return .Success(playlist)
+                return .success(playlist)
             }
-            return .Failure(.parsing)
+            return .failure(.parsing)
         }) { result in
             completion(SimpleAPIResponse(result: result))
         }
@@ -68,11 +68,11 @@ public extension Playlist {
             "playlist[title]": name,
             "playlist[sharing]": sharingAccess.rawValue]
 
-        let request = Request(url: url, method: .POST, parameters: parameters, parse: {
+        let request = Request(url: url, method: .post, parameters: parameters, parse: {
             if let playlist = Playlist(JSON: $0) {
-                return .Success(playlist)
+                return .success(playlist)
             }
-            return .Failure(.parsing)
+            return .failure(.parsing)
         }) { result in
             completion(SimpleAPIResponse(result: result))
         }
@@ -123,11 +123,11 @@ public extension Playlist {
             return
         }
 
-        let request = Request(url: url, method: .PUT, parameters: JSONEncoded, headers: ["Content-Type": "application/json"], parse: {
+        let request = Request(url: url, method: .put, parameters: JSONEncoded, headers: ["Content-Type": "application/json"], parse: {
             if let playlist = Playlist(JSON: $0) {
-                return .Success(playlist)
+                return .success(playlist)
             }
-            return .Failure(.parsing)
+            return .failure(.parsing)
         }) { result in
             completion(SimpleAPIResponse(result: result))
         }

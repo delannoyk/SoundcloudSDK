@@ -8,10 +8,12 @@
 
 #if os(OSX)
     import AppKit
+
     public typealias ViewController = NSViewController
 #else
     import UIKit
     import OnePasswordExtension
+
     public typealias ViewController = UIViewController
 #endif
 
@@ -34,24 +36,25 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
 
         #if os(iOS)
         //Right button is OnePassword if available
-        if OnePasswordExtension.sharedExtension().isAppExtensionAvailable() {
-            let bundle = NSBundle(forClass: OnePasswordExtension.self)
-            if let path = bundle.pathForResource("OnePasswordExtensionResources", ofType: "bundle") {
-                let resourceBundle = NSBundle(path: path)
+        if OnePasswordExtension.shared().isAppExtensionAvailable() {
+            let bundle = Bundle(for: OnePasswordExtension.self)
+            if let path = bundle.path(forResource: "OnePasswordExtensionResources", ofType: "bundle") {
+                let resourceBundle = Bundle(path: path)
                 let image = UIImage(
-                    named: "onepassword-navbar", inBundle: resourceBundle,
-                    compatibleWithTraitCollection: nil)
+                    named: "onepassword-navbar",
+                    in: resourceBundle,
+                    compatibleWith: nil)
 
                 navigationItem.rightBarButtonItem = UIBarButtonItem(
-                    image: image, style: .Plain, target: self,
-                    action: #selector(SoundcloudWebViewController.buttonOnePasswordPressed(_:)))
+                    image: image, style: .plain, target: self,
+                    action: #selector(SoundcloudWebViewController.buttonOnePasswordPressed(sender:)))
             }
         }
 
         //Left button is a Cancel button
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .Cancel, target: self,
-            action: #selector(SoundcloudWebViewController.buttonCancelPressed(_:)))
+            barButtonSystemItem: .cancel, target: self,
+            action: #selector(SoundcloudWebViewController.buttonCancelPressed(sender:)))
         #endif
     }
 
@@ -64,14 +67,14 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
     #if os(iOS)
     @objc private func buttonCancelPressed(sender: AnyObject) {
         onDismiss?(nil)
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
     @objc private func buttonOnePasswordPressed(sender: AnyObject) {
-        if OnePasswordExtension.sharedExtension().isAppExtensionAvailable() {
-            OnePasswordExtension.sharedExtension().fillItemIntoWebView(
-                webView,
-                forViewController: self,
+        if OnePasswordExtension.shared().isAppExtensionAvailable() {
+            OnePasswordExtension.shared().fillItem(
+                intoWebView: webView,
+                for: self,
                 sender: sender,
                 showOnlyLogins: true) { success, error in }
         }
@@ -86,11 +89,11 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
 
     var url: URL? {
         get {
-            return urlRequest?.URL
+            return urlRequest?.url
         }
         set {
-            if let URL = newValue {
-                urlRequest = URLRequest(URL: URL)
+            if let url = newValue {
+                urlRequest = URLRequest(url: url)
             }
             else {
                 urlRequest = nil
@@ -101,7 +104,7 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
     var urlRequest: URLRequest? {
         didSet {
             if let urlRequest = urlRequest {
-                webView.loadRequest(urlRequest)
+                webView.load(urlRequest)
             }
             else {
                 webView.loadHTMLString("", baseURL: nil)
@@ -119,19 +122,18 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
     // MARK: WKNavigationDelegate
     ////////////////////////////////////////////////////////////////////////////
 
-    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-        if navigationAction.request.URL?.scheme == autoDismissScheme {
-            decisionHandler(.Cancel)
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.request.url?.scheme == autoDismissScheme {
+            decisionHandler(.cancel)
 
-            onDismiss?(navigationAction.request.URL)
+            onDismiss?(navigationAction.request.url)
             #if os(OSX)
                 dismissViewController(self)
             #else
-                dismissViewControllerAnimated(true, completion: nil)
+                dismiss(animated: true, completion: nil)
             #endif
-        }
-        else {
-            decisionHandler(.Allow)
+        } else {
+            decisionHandler(.allow)
         }
     }
 

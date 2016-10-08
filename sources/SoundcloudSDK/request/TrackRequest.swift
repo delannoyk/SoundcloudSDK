@@ -26,11 +26,11 @@ public extension Track {
         let url = BaseURL.appendingPathComponent("\(identifier).json")
         let parameters = ["client_id": clientIdentifier]
 
-        let request = Request(url: url, method: .GET, parameters: parameters, parse: {
+        let request = Request(url: url, method: .get, parameters: parameters, parse: {
             if let track = Track(JSON: $0) {
-                return .Success(track)
+                return .success(track)
             }
-            return .Failure(.parsing)
+            return .failure(.parsing)
         }) { result in
             completion(SimpleAPIResponse(result: result))
         }
@@ -50,11 +50,11 @@ public extension Track {
         }
 
         let parameters = ["client_id": clientIdentifier, "ids": identifiers.map { "\($0)" }.joined(separator: ",")]
-        let request = Request(url: BaseURL, method: .GET, parameters: parameters, parse: {
+        let request = Request(url: BaseURL, method: .get, parameters: parameters, parse: {
             guard let tracks = $0.flatMap(transform: { Track(JSON: $0) }) else {
-                return .Failure(.parsing)
+                return .failure(.parsing)
             }
-            return .Success(tracks)
+            return .success(tracks)
         }) { result in
             completion(SimpleAPIResponse(result: result))
         }
@@ -75,16 +75,16 @@ public extension Track {
 
         let parse = { (JSON: JSONObject) -> Result<[Track], SoundcloudError> in
             guard let tracks = JSON.flatMap(transform: { Track(JSON: $0) }) else {
-                return .Failure(.parsing)
+                return .failure(.parsing)
             }
-            return .Success(tracks)
+            return .success(tracks)
         }
 
         var parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
         queries.map { $0.query }.forEach { parameters[$0.0] = $0.1 }
 
-        let request = Request(url: BaseURL, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Track>, SoundcloudError> in
-            return .Success(PaginatedAPIResponse(JSON: JSON, parse: parse))
+        let request = Request(url: BaseURL, method: .get, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Track>, SoundcloudError> in
+            return .success(PaginatedAPIResponse(JSON: JSON, parse: parse))
         }) { result in
             completion(result.result!)
         }
@@ -105,16 +105,16 @@ public extension Track {
 
         let parse = { (JSON: JSONObject) -> Result<[Comment], SoundcloudError> in
             guard let comments = JSON.flatMap(transform: { Comment(JSON: $0) }) else {
-                return .Failure(.parsing)
+                return .failure(.parsing)
             }
-            return .Success(comments)
+            return .success(comments)
         }
 
         let url = BaseURL.appendingPathComponent("\(trackIdentifier)/comments.json")
         let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
 
-        let request = Request(url: url, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Comment>, SoundcloudError> in
-            return .Success(PaginatedAPIResponse(JSON: JSON, parse: parse))
+        let request = Request(url: url, method: .get, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Comment>, SoundcloudError> in
+            return .success(PaginatedAPIResponse(JSON: JSON, parse: parse))
         }) { result in
             completion(result.result!)
         }
@@ -160,11 +160,11 @@ public extension Track {
             "comment[timestamp]": "\(timestamp)",
             "oauth_token": oauthToken]
 
-        let request = Request(url: url, method: .POST, parameters: parameters, parse: {
+        let request = Request(url: url, method: .post, parameters: parameters, parse: {
             if let comments = Comment(JSON: $0) {
-                return .Success(comments)
+                return .success(comments)
             }
-            return .Failure(.parsing)
+            return .failure(.parsing)
         }) { result in
             completion(SimpleAPIResponse(result: result))
         }
@@ -205,13 +205,13 @@ public extension Track {
 
         let parse = { (JSON: JSONObject) -> Result<[User], SoundcloudError> in
             guard let users = JSON.flatMap(transform: { User(JSON: $0) }) else {
-                return .Failure(.parsing)
+                return .failure(.parsing)
             }
-            return .Success(users)
+            return .success(users)
         }
 
-        let request = Request(url: url, method: .GET, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<User>, SoundcloudError> in
-            return .Success(PaginatedAPIResponse(JSON: JSON, parse: parse))
+        let request = Request(url: url, method: .get, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<User>, SoundcloudError> in
+            return .success(PaginatedAPIResponse(JSON: JSON, parse: parse))
         }) { result in
             completion(result.result!)
         }
@@ -303,8 +303,8 @@ public extension Track {
             .appendingPathComponent("me/favorites/\(trackIdentifier).json")
             .appendingQueryString(parameters.queryString)
 
-        let request = Request(url: url, method: favorite ? .PUT : .DELETE, parameters: nil, parse: { _ in
-            return .Success(true)
+        let request = Request(url: url, method: favorite ? .put : .delete, parameters: nil, parse: { _ in
+            return .success(true)
         }) { result in
             completion(SimpleAPIResponse(result: result))
         }
@@ -327,11 +327,11 @@ public extension Track {
         let url = BaseURL.appendingPathComponent("\(identifier)/related")
         let parameters = ["client_id": clientIdentifier]
 
-        let request = Request(url: url, method: .GET, parameters: parameters, parse: {
+        let request = Request(url: url, method: .get, parameters: parameters, parse: {
             guard let tracks = $0.flatMap(transform: { Track(JSON: $0) }) else {
-                return .Failure(.parsing)
+                return .failure(.parsing)
             }
-            return .Success(tracks)
+            return .success(tracks)
         }) { result in
             completion(SimpleAPIResponse(result: result))
         }
