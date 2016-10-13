@@ -11,7 +11,6 @@ import Foundation
 
 class RequestTests: XCTestCase {
     // MARK: HTTPParametersConvertible
-    ////////////////////////////////////////////////////////////////////////////
 
     func testGETString() {
         let method = HTTPMethod.get
@@ -59,11 +58,7 @@ class RequestTests: XCTestCase {
         XCTAssert(urlRequest.httpBody == expectedValue, "Test failed: URLRequest.HTTPBody isn't what it's supposed to be.")
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-
-
     // MARK: URL Encode
-    ////////////////////////////////////////////////////////////////////////////
 
     func testURLEncoding() {
         let parameters = [
@@ -80,6 +75,4 @@ class RequestTests: XCTestCase {
         XCTAssert(parameters["4"]!.urlEncodedValue == "4%40", "4@ should be transformed to 4%40")
         XCTAssert(parameters["5"]!.urlEncodedValue == "%25%40%20%26%20test%20%3D", "%@ should be transformed to %25%40%20%26%20test%20%3D")
     }
-
-    ////////////////////////////////////////////////////////////////////////////
 }

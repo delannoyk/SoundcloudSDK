@@ -24,7 +24,6 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
     private lazy var webView = WKWebView()
 
     // MARK: View loading
-    ////////////////////////////////////////////////////////////////////////////
 
     override func loadView() {
         webView.navigationDelegate = self
@@ -58,11 +57,7 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
         #endif
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-
-
     // MARK: Actions
-    ////////////////////////////////////////////////////////////////////////////
 
     #if os(iOS)
     @objc private func buttonCancelPressed(sender: AnyObject) {
@@ -81,11 +76,7 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
     }
     #endif
 
-    ////////////////////////////////////////////////////////////////////////////
-
-
     // MARK: Properties
-    ////////////////////////////////////////////////////////////////////////////
 
     var url: URL? {
         get {
@@ -116,11 +107,7 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
 
     var onDismiss: ((URL?) -> Void)?
 
-    ////////////////////////////////////////////////////////////////////////////
-
-
     // MARK: WKNavigationDelegate
-    ////////////////////////////////////////////////////////////////////////////
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if navigationAction.request.url?.scheme == autoDismissScheme {
@@ -136,6 +123,4 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
             decisionHandler(.allow)
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////
 }

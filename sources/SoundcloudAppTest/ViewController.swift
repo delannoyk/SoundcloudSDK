@@ -17,62 +17,53 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var user: User?
 
     // MARK: IBAction
-    ////////////////////////////////////////////////////////////////////////////
 
     @IBAction func buttonLoginPressed(_: AnyObject) {
-        Session.login(self, completion: { result in
-        })
+        Soundcloud.login(in: self) { _ in }
     }
 
     @IBAction func buttonLoadMePressed(_: AnyObject) {
-        Soundcloud.session?.me({ result in
-            self.user = result.response.result
+        Soundcloud.session?.me { [weak self] result in
+            self?.user = result.response.result
 
-            if let user = result.response.result {
-                print(user)
-            }
-        })
+            print(result.response.result)
+            print(result.response.error)
+        }
     }
 
     @IBAction func buttonFollowPressed(_: AnyObject) {
-        user?.follow(Int(textFieldUserIdentifier.text!)!, completion: { result in
+        user?.follow(userIdentifier: Int(textFieldUserIdentifier.text!)!) { result in
             print(result.response.result)
             print(result.response.error)
 
-            self.user?.unfollow(Int(self.textFieldUserIdentifier.text!)!, completion: { result in
+            self.user?.unfollow(userIdentifier: Int(self.textFieldUserIdentifier.text!)!) { result in
                 print(result.response.result)
                 print(result.response.error)
-            })
-        })
+            }
+        }
     }
 
     @IBAction func buttonFavoritePressed(_: AnyObject) {
-        Track.track(Int(textFieldTrackIdentifier.text!)!, completion: { result in
-            result.response.result?.favorite(self.user!.identifier, completion: { result in
+        Track.track(identifier: Int(textFieldTrackIdentifier.text!)!) { result in
+            result.response.result?.favorite { result in
                 print(result.response.result)
                 print(result.response.error)
-            })
-        })
+            }
+        }
     }
 
     @IBAction func buttonSearchPressed(_: AnyObject) {
-        Track.search([.QueryString(textFieldSearchText.text!)], completion: { result in
+        Track.search(queries: [.queryString(textFieldSearchText.text!)]) { result in
             print(result.response.result)
             print(result.response.error)
-        })
+        }
     }
-
-    ////////////////////////////////////////////////////////////////////////////
 
 
     // MARK: UITextFieldDelegate
-    ////////////////////////////////////////////////////////////////////////////
 
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
     }
-
-    ////////////////////////////////////////////////////////////////////////////
 }
-

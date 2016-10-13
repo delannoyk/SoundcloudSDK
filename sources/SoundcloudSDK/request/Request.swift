@@ -76,8 +76,6 @@ extension JSONObject {
     }
 }
 
-// MARK: - DateFormatter
-
 extension DateFormatter {
     private static var dateFormatters = [String: DateFormatter]()
 
@@ -125,19 +123,13 @@ public enum Result<T, E> {
     }
 }
 
-////////////////////////////////////////////////////////////////////////////
-
-
-// MARK: - HTTPMethod
-////////////////////////////////////////////////////////////////////////////
-
 enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
     case put = "PUT"
     case delete = "DELETE"
 
-    func URLRequest(url: URL, parameters: HTTPParametersConvertible? = nil, headers: [String: String]? = nil) -> URLRequest {
+    func urlRequest(url: URL, parameters: HTTPParametersConvertible? = nil, headers: [String: String]? = nil) -> URLRequest {
         let URLRequestInfo: (url: URL, HTTPBody: Data?) = {
             if let parameters = parameters {
                 if self == .get {
@@ -158,22 +150,10 @@ enum HTTPMethod: String {
     }
 }
 
-////////////////////////////////////////////////////////////////////////////
-
-
-// MARK: - Parameters
-////////////////////////////////////////////////////////////////////////////
-
 protocol HTTPParametersConvertible {
     var queryStringValue: String { get }
     var formDataValue: Data { get }
 }
-
-////////////////////////////////////////////////////////////////////////////
-
-
-// MARK: - Errors
-////////////////////////////////////////////////////////////////////////////
 
 protocol RequestError {
     init(networkError: Error)
@@ -181,17 +161,11 @@ protocol RequestError {
     init?(httpURLResponse: HTTPURLResponse)
 }
 
-////////////////////////////////////////////////////////////////////////////
-
-
-// MARK: - Request
-////////////////////////////////////////////////////////////////////////////
-
 struct Request<T, E: RequestError> {
     private let dataTask: URLSessionDataTask
 
     init(url: URL, method: HTTPMethod, parameters: HTTPParametersConvertible?, headers: [String: String]? = nil, parse: @escaping (JSONObject) -> Result<T, E>, completion: @escaping (Result<T, E>) -> Void) {
-        let URLRequest = method.URLRequest(url: url, parameters: parameters, headers: headers)
+        let URLRequest = method.urlRequest(url: url, parameters: parameters, headers: headers)
 
         dataTask = URLSession.shared.dataTask(with: URLRequest) { data, response, error in
             if let response = response as? HTTPURLResponse, let error = E(httpURLResponse: response) {
@@ -211,8 +185,7 @@ struct Request<T, E: RequestError> {
                     DispatchQueue.main.async {
                         completion(result)
                     }
-                }
-                else if let error = error {
+                } else if let error = error {
                     DispatchQueue.main.async {
                         completion(.failure(E(networkError: error)))
                     }
@@ -229,5 +202,3 @@ struct Request<T, E: RequestError> {
         dataTask.suspend()
     }
 }
-
-////////////////////////////////////////////////////////////////////////////

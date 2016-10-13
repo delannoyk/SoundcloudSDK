@@ -9,6 +9,7 @@
 import Foundation
 
 // MARK: - URL Encoding
+
 extension String {
     var urlEncodedValue: String {
         let allowedSet = CharacterSet(charactersIn: "=\"#%/<>?@\\^`{|}&: ").inverted
@@ -18,6 +19,7 @@ extension String {
 }
 
 // MARK: - Query String
+
 extension Dictionary {
     var queryString: String {
         let parts = map { (key, value) -> String in
@@ -30,6 +32,7 @@ extension Dictionary {
 }
 
 // MARK: - HTTPParametersConvertible
+
 extension Dictionary: HTTPParametersConvertible {
     var queryStringValue: String {
         return queryString
