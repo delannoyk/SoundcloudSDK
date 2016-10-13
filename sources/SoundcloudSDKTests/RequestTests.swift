@@ -16,7 +16,7 @@ class RequestTests: XCTestCase {
         let method = HTTPMethod.get
         let url = URL(string: "http://github.com")!
         let parameters = "test=123"
-        let urlRequest = method.URLRequest(url: url, parameters: parameters)
+        let urlRequest = method.urlRequest(url: url, parameters: parameters)
 
         let expectedValue = url.absoluteString + "?" + parameters
 
@@ -27,7 +27,7 @@ class RequestTests: XCTestCase {
         let method = HTTPMethod.get
         let url = URL(string: "http://github.com")!
         let parameters = ["test": "123"]
-        let urlRequest = method.URLRequest(url: url, parameters: parameters)
+        let urlRequest = method.urlRequest(url: url, parameters: parameters)
 
         let expectedValue = url.absoluteString + "?" + parameters.queryString
 
@@ -38,7 +38,7 @@ class RequestTests: XCTestCase {
         let method = HTTPMethod.post
         let url = URL(string: "http://github.com")!
         let parameters = "test=123"
-        let urlRequest = method.URLRequest(url: url, parameters: parameters)
+        let urlRequest = method.urlRequest(url: url, parameters: parameters)
 
         let expectedValue = parameters.data(using: .utf8)!
 
@@ -50,7 +50,7 @@ class RequestTests: XCTestCase {
         let method = HTTPMethod.post
         let url = URL(string: "http://github.com")!
         let parameters = ["test": "123"]
-        let urlRequest = method.URLRequest(url: url, parameters: parameters)
+        let urlRequest = method.urlRequest(url: url, parameters: parameters)
 
         let expectedValue = parameters.queryString.data(using: .utf8)!
 
