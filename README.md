@@ -10,13 +10,13 @@ SoundcloudSDK is a framework written in Swift over Soundcloud API.
 
 ## Installation
 
-### Swift 2.2
-* Cocoapods: `pod 'Soundcloud'`
+### Swift 3.0
+* CocoaPods: `pod 'Soundcloud'`
 * Carthage: `github "delannoyk/SoundcloudSDK"`
 
-### Swift 3.0 (1st preview)
-* Cocoapods: `pod 'Soundcloud', :git => 'https://github.com/delannoyk/SoundcloudSDK', :branch => 'develop'`
-* Carthage: `github "delannoyk/SoundcloudSDK" "develop"`
+### Swift 2.3
+* CocoaPods: `pod 'Soundcloud', '~> 0.9.2'`
+* Carthage: `github "delannoyk/SoundcloudSDK" == 0.9.2`
 
 ## Usage
 
@@ -55,7 +55,7 @@ After that, you're good to go.
     let track: Track
     track.favoriters(completion: PaginatedAPIResponse<User> -> Void)
     ```
-    
+
 * Search tracks
 
     ```swift
@@ -67,7 +67,7 @@ After that, you're good to go.
     ]
     Track.search(queries, completion: PaginatedAPIResponse<Track> -> Void)
     ```
-    
+
 * Relative tracks
     ```swift
     Track.relatedTracks(identifier: Int, completion: SimpleAPIResponse<[Track]> -> Void)
