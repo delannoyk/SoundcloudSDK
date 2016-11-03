@@ -38,6 +38,34 @@ public extension User {
     }
 
     /**
+     Search users that fit requested name.
+
+     - parameter query:      The query to run.
+     - parameter completion: The closure that will be called when users are loaded or upon error.
+     */
+    public static func search(query: String, completion: @escaping (PaginatedAPIResponse<User>) -> Void) {
+        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+            completion(PaginatedAPIResponse(error: .credentialsNotSet))
+            return
+        }
+
+        let parse = { (JSON: JSONObject) -> Result<[User], SoundcloudError> in
+            guard let users = JSON.flatMap(transform: { User(JSON: $0) }) else {
+                return .failure(.parsing)
+            }
+            return .success(users)
+        }
+
+        let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true", "q": query]
+        let request = Request(url: BaseURL, method: .get, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<User>, SoundcloudError> in
+            return .success(PaginatedAPIResponse(JSON: JSON, parse: parse))
+        }) { result in
+            completion(result.result!)
+        }
+        request.start()
+    }
+
+    /**
      Loads tracks the user uploaded to Soundcloud
 
      - parameter completion: The closure that will be called when tracks are loaded or upon error
