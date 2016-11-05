@@ -408,7 +408,7 @@ public class Soundcloud: NSObject {
                           "response_type": "code"]
 
         let web = SoundcloudWebViewController()
-        web.autoDismissScheme = URL(string: redirectURI)?.scheme
+        web.autoDismissURI = redirectURI
         web.url = url.appendingQueryString(parameters.queryString)
         web.onDismiss = { url in
             if let accessCode = url?.query?.queryDictionary["code"] {

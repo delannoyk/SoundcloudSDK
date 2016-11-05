@@ -103,14 +103,20 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
         }
     }
 
-    var autoDismissScheme: String?
+    var autoDismissURI: String?
 
     var onDismiss: ((URL?) -> Void)?
+
+    // MARK: Dismiss utils
+
+    private func shouldDismiss(on url: URL?) -> Bool {
+        return autoDismissURI.flatMap { url?.absoluteString.hasPrefix($0) } ?? false
+    }
 
     // MARK: WKNavigationDelegate
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if navigationAction.request.url?.scheme == autoDismissScheme {
+        if shouldDismiss(on: navigationAction.request.url) {
             decisionHandler(.cancel)
 
             onDismiss?(navigationAction.request.url)
