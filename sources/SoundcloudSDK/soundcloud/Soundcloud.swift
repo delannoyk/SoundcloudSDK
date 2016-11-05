@@ -13,6 +13,11 @@ import Foundation
 
 // MARK: - Errors
 
+public struct BasicError {
+    public let code: String
+    public let description: String
+}
+
 public enum SoundcloudError: Error {
     case credentialsNotSet
     case notFound
@@ -22,6 +27,7 @@ public enum SoundcloudError: Error {
     case network(Error)
     #if os(iOS) || os(OSX)
     case needsLogin
+    case loginError(BasicError)
     #endif
 }
 
@@ -408,8 +414,10 @@ public class Soundcloud: NSObject {
             if let accessCode = url?.query?.queryDictionary["code"] {
                 let session = Session(authorizationCode: accessCode)
                 completion(SimpleAPIResponse(value: session))
-            }
-            else {
+            } else if let code = url?.query?.queryDictionary["error"],
+                let description = url?.query?.queryDictionary["error_description"] {
+                completion(SimpleAPIResponse(error: .loginError(BasicError(code: code, description: description))))
+            } else {
                 completion(SimpleAPIResponse(error: .needsLogin))
             }
         }
