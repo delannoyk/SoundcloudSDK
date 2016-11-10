@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: Properties
+
 /// Your Soundcloud app client identifier
 public var clientIdentifier: String? {
 get {
@@ -51,6 +53,8 @@ public func configure(clientIdentifier: String?, clientSecret: String?, redirect
     SessionManager.redirectURI = redirectURI
 }
 
+// MARK: Session Management
+
 /**
  Logs a user in. This method will present an UIViewController over `displayViewController`
  that will load a web view so that user is available to log in
@@ -72,4 +76,19 @@ public var session: Session? {
  */
 public func destroySession() {
     SessionManager.destroySession()
+}
+
+// MARK: Resolve
+
+/// A resolve response can either be a/some User(s) or a/some Track(s) or a Playlist.
+public typealias ResolveResponse = (users: [User]?, tracks: [Track]?, playlist: Playlist?)
+
+/**
+ Resolve allows you to lookup and access API resources when you only know the SoundCloud.com URL.
+
+ - parameter URI:        The URI to lookup
+ - parameter completion: The closure that will be called when the result is ready or upon error
+ */
+public func resolve(URI: String, completion: @escaping (SimpleAPIResponse<ResolveResponse>) -> Void) {
+    SessionManager.resolve(URI: URI, completion: completion)
 }
