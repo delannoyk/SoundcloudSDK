@@ -55,6 +55,8 @@ public func configure(clientIdentifier: String?, clientSecret: String?, redirect
 
 // MARK: Session Management
 
+#if os(iOS) || os(OSX)
+
 /**
  Logs a user in. This method will present an UIViewController over `displayViewController`
  that will load a web view so that user is available to log in
@@ -77,6 +79,8 @@ public var session: Session? {
 public func destroySession() {
     SessionManager.destroySession()
 }
+
+#endif
 
 // MARK: Resolve
 
