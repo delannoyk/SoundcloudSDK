@@ -1,5 +1,5 @@
 //
-//  Soundcloud.swift
+//  SessionManager.swift
 //  Soundcloud
 //
 //  Created by Kevin DELANNOY on 25/04/15.
@@ -168,9 +168,9 @@ extension Session {
     - parameter displayViewController: An UIViewController that is in the view hierarchy
     - parameter completion:            The closure that will be called when the user is logged in or upon error
     */
-    @available(*, deprecated: 0.9, message: "Login has been moved to Soundcloud. Please use `Soundcloud.login().`")
+    @available(*, deprecated: 0.9, message: "Login has been moved to SessionManager. Please use `SessionManager.login().`")
     public static func login(in displayViewController: ViewController, completion: @escaping (SimpleAPIResponse<Session>) -> Void) {
-        Soundcloud.login(in: displayViewController, completion: completion)
+        SessionManager.login(in: displayViewController, completion: completion)
     }
 
     /**
@@ -182,7 +182,7 @@ extension Session {
     public func refreshSession(completion: @escaping (SimpleAPIResponse<Session>) -> Void) {
         _refreshToken { result in
             if let session = result.response.result {
-                Soundcloud.session = session
+                SessionManager.session = session
             }
             completion(result)
         }
@@ -191,9 +191,9 @@ extension Session {
     /**
     Logs out the current user. This is a straight-forward call.
     */
-    @available(*, deprecated: 0.9, message: "Logout has been moved to Soundcloud. Please use `Soundcloud.destroySession()`.")
+    @available(*, deprecated: 0.9, message: "Logout has been moved to SessionManager. Please use `SessionManager.destroySession()`.")
     public func destroy() {
-        Soundcloud.destroySession()
+        SessionManager.destroySession()
     }
 
     /**
@@ -204,7 +204,7 @@ extension Session {
     - parameter completion: The closure that will be called when the profile is loaded or upon error
     */
     public func me(completion: @escaping (SimpleAPIResponse<User>) -> Void) {
-        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+        guard let clientIdentifier = SessionManager.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -236,7 +236,7 @@ extension Session {
      - parameter completion: The closure that will be called when the activities are loaded or upon error
      */
     public func activities(completion: @escaping (PaginatedAPIResponse<Activity>) -> Void) {
-        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+        guard let clientIdentifier = SessionManager.clientIdentifier else {
             completion(PaginatedAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -267,9 +267,9 @@ extension Session {
     // MARK: Token
 
     func getToken(completion: @escaping (SimpleAPIResponse<Session>) -> Void) {
-        guard let clientId = Soundcloud.clientIdentifier,
-            let clientSecret = Soundcloud.clientSecret,
-            let redirectURI = Soundcloud.redirectURI else {
+        guard let clientId = SessionManager.clientIdentifier,
+            let clientSecret = SessionManager.clientSecret,
+            let redirectURI = SessionManager.redirectURI else {
                 completion(SimpleAPIResponse(error: .credentialsNotSet))
                 return
         }
@@ -284,9 +284,9 @@ extension Session {
     }
 
     func _refreshToken(completion: @escaping (SimpleAPIResponse<Session>) -> Void) {
-        guard let clientId = Soundcloud.clientIdentifier,
-            let clientSecret = Soundcloud.clientSecret,
-            let redirectURI = Soundcloud.redirectURI else {
+        guard let clientId = SessionManager.clientIdentifier,
+            let clientSecret = SessionManager.clientSecret,
+            let redirectURI = SessionManager.redirectURI else {
                 completion(SimpleAPIResponse(error: .credentialsNotSet))
                 return
         }
@@ -327,9 +327,9 @@ extension Session {
 }
 #endif
 
-// MARK: - Soundcloud
+// MARK: - SessionManager
 
-public class Soundcloud: NSObject {
+public class SessionManager: NSObject {
     // MARK: Properties
 
     /// Your Soundcloud app client identifier
@@ -379,7 +379,7 @@ public class Soundcloud: NSObject {
         authorize(in: displayViewController) { result in
             if let session = result.response.result {
                 session.getToken { result in
-                    Soundcloud.session = result.response.result
+                    SessionManager.session = result.response.result
                     completion(result)
                 }
             } else {
@@ -392,11 +392,11 @@ public class Soundcloud: NSObject {
      Logs out the current user. This is a straight-forward call.
      */
     public static func destroySession() {
-        Soundcloud.session = nil
+        SessionManager.session = nil
     }
 
     static func authorize(in displayViewController: ViewController, completion: @escaping (SimpleAPIResponse<Session>) -> Void) {
-        guard let clientIdentifier = Soundcloud.clientIdentifier, let redirectURI = Soundcloud.redirectURI else {
+        guard let clientIdentifier = SessionManager.clientIdentifier, let redirectURI = SessionManager.redirectURI else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -450,7 +450,7 @@ public class Soundcloud: NSObject {
     - parameter completion: The closure that will be called when the result is ready or upon error
     */
     public static func resolve(URI: String, completion: @escaping (SimpleAPIResponse<ResolveResponse>) -> Void) {
-        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+        guard let clientIdentifier = SessionManager.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -487,4 +487,72 @@ public class Soundcloud: NSObject {
         }
         request.start()
     }
+}
+
+// MARK: - Soundcloud
+
+/// Your Soundcloud app client identifier
+public var clientIdentifier: String? {
+    get {
+        return SessionManager.clientIdentifier
+    }
+    set {
+        SessionManager.clientIdentifier = clientIdentifier
+    }
+}
+
+/// Your Soundcloud app client secret
+public var clientSecret: String? {
+    get {
+        return SessionManager.clientSecret
+    }
+    set {
+        SessionManager.clientSecret = clientSecret
+    }
+}
+
+/// Your Soundcloud redirect URI
+public var redirectURI: String? {
+    get {
+        return SessionManager.redirectURI
+    }
+    set {
+        SessionManager.redirectURI = redirectURI
+    }
+}
+
+/**
+ Convience method to set Soundcloud app credentials
+
+ - parameter clientIdentifier:  Your Soundcloud app client identifier
+ - parameter clientSecret:      Your Soundcloud app client secret
+ - parameter redirectURI:       Your Soundcloud redirect URI
+ */
+public func configure(clientIdentifier: String?, clientSecret: String?, redirectURI: String?) {
+    SessionManager.clientIdentifier = clientIdentifier
+    SessionManager.clientSecret = clientSecret
+    SessionManager.redirectURI = redirectURI
+}
+
+/**
+ Logs a user in. This method will present an UIViewController over `displayViewController`
+ that will load a web view so that user is available to log in
+
+ - parameter displayViewController: An UIViewController that is in the view hierarchy
+ - parameter completion:            The closure that will be called when the user is logged in or upon error
+ */
+public func login(in displayViewController: ViewController, completion: @escaping (SimpleAPIResponse<Session>) -> Void) {
+    SessionManager.login(in: displayViewController, completion: completion)
+}
+
+/// The session property is only set when a user has logged in.
+public var session: Session? {
+    return SessionManager.session
+}
+
+/**
+ Logs out the current user. This is a straight-forward call.
+ */
+public func destroySession() {
+    SessionManager.destroySession()
 }

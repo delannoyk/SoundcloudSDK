@@ -18,7 +18,7 @@ public extension User {
      - parameter completion: The closure that will be called when user profile is loaded or upon error
      */
     public static func user(identifier: Int, completion: @escaping (SimpleAPIResponse<User>) -> Void) {
-        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+        guard let clientIdentifier = SessionManager.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -44,7 +44,7 @@ public extension User {
      - parameter completion: The closure that will be called when users are loaded or upon error.
      */
     public static func search(query: String, completion: @escaping (PaginatedAPIResponse<User>) -> Void) {
-        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+        guard let clientIdentifier = SessionManager.clientIdentifier else {
             completion(PaginatedAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -81,7 +81,7 @@ public extension User {
      - parameter completion:     The closure that will be called when tracks are loaded or upon error
      */
     public static func tracks(from userIdentifier: Int, completion: @escaping (PaginatedAPIResponse<Track>) -> Void) {
-        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+        guard let clientIdentifier = SessionManager.clientIdentifier else {
             completion(PaginatedAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -120,7 +120,7 @@ public extension User {
      - parameter completion:     The closure that will be called when the comments are loaded or upon error
      */
     public static func comments(from userIdentifier: Int, completion: @escaping (PaginatedAPIResponse<Comment>) -> Void) {
-        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+        guard let clientIdentifier = SessionManager.clientIdentifier else {
             completion(PaginatedAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -159,7 +159,7 @@ public extension User {
      - parameter completion:     The closure that will be called when tracks are loaded or upon error
      */
     public static func favorites(from userIdentifier: Int, completion: @escaping (PaginatedAPIResponse<Track>) -> Void) {
-        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+        guard let clientIdentifier = SessionManager.clientIdentifier else {
             completion(PaginatedAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -198,7 +198,7 @@ public extension User {
      - parameter completion: The closure that will be called when followers are loaded or upon error
      */
     public static func followers(from userIdentifier: Int, completion: @escaping (PaginatedAPIResponse<User>) -> Void) {
-        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+        guard let clientIdentifier = SessionManager.clientIdentifier else {
             completion(PaginatedAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -237,7 +237,7 @@ public extension User {
      - parameter completion: The closure that will be called when followed users are loaded or upon error
      */
     public static func followings(from userIdentifier: Int, completion: @escaping (PaginatedAPIResponse<User>) -> Void) {
-        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+        guard let clientIdentifier = SessionManager.clientIdentifier else {
             completion(PaginatedAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -323,12 +323,12 @@ public extension User {
     @available(tvOS, unavailable)
     static func changeFollowStatus(follow: Bool, userIdentifier: Int, completion: @escaping (SimpleAPIResponse<Bool>) -> Void) {
         #if !os(tvOS)
-        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+        guard let clientIdentifier = SessionManager.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
 
-        guard let oauthToken = Soundcloud.session?.accessToken else {
+        guard let oauthToken = SessionManager.session?.accessToken else {
             completion(SimpleAPIResponse(error: .needsLogin))
             return
         }
@@ -364,7 +364,7 @@ public extension User {
      - parameter completion: The closure that will be called when playlists has been loaded or upon error
      */
     public static func playlists(from userIdentifier: Int, completion: @escaping (PaginatedAPIResponse<Playlist>) -> Void) {
-        guard let clientIdentifier = Soundcloud.clientIdentifier else {
+        guard let clientIdentifier = SessionManager.clientIdentifier else {
             completion(PaginatedAPIResponse(error: .credentialsNotSet))
             return
         }
