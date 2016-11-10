@@ -4,7 +4,8 @@ Pod::Spec.new do |s|
   s.license      =  { :type => 'MIT' }
   s.homepage     = 'https://github.com/delannoyk/SoundcloudSDK'
   s.authors      = {
-    'Kevin Delannoy' => 'delannoyk@gmail.com'
+    'Kevin Delannoy' => 'delannoyk@gmail.com',
+    'Benjamin Chrobot' => 'benjamin.blair.chrobot@gmail.com'
   }
   s.summary      = 'SoundcloudSDK is a framework written in Swift over Soundcloud API.'
 
