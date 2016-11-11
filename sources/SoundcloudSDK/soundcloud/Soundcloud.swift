@@ -15,8 +15,8 @@ public var clientIdentifier: String? {
     get {
         return SoundcloudClient.clientIdentifier
     }
-    set {
-        SoundcloudClient.clientIdentifier = clientIdentifier
+    set(newClientIdentifier) {
+        SoundcloudClient.clientIdentifier = newClientIdentifier
     }
 }
 
@@ -25,8 +25,8 @@ public var clientSecret: String? {
     get {
         return SoundcloudClient.clientSecret
     }
-    set {
-        SoundcloudClient.clientSecret = clientSecret
+    set(newClientSecret) {
+        SoundcloudClient.clientSecret = newClientSecret
     }
 }
 
@@ -35,8 +35,8 @@ public var redirectURI: String? {
     get {
         return SoundcloudClient.redirectURI
     }
-    set {
-        SoundcloudClient.redirectURI = redirectURI
+    set(newRedirectURI) {
+        SoundcloudClient.redirectURI = newRedirectURI
     }
 }
 
