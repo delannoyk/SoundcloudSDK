@@ -1,5 +1,5 @@
 //
-//  SoundcloudClient.swift
+//  Soundcloud.swift
 //  Soundcloud
 //
 //  Created by Benjamin Chrobot on 11/9/16.
