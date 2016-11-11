@@ -1,5 +1,5 @@
 //
-//  SouncloudClient.swift
+//  SoundcloudClient.swift
 //  Soundcloud
 //
 //  Created by Benjamin Chrobot on 11/9/16.
@@ -13,30 +13,30 @@ import Foundation
 /// Your Soundcloud app client identifier
 public var clientIdentifier: String? {
     get {
-        return SouncloudClient.clientIdentifier
+        return SoundcloudClient.clientIdentifier
     }
     set {
-        SouncloudClient.clientIdentifier = clientIdentifier
+        SoundcloudClient.clientIdentifier = clientIdentifier
     }
 }
 
 /// Your Soundcloud app client secret
 public var clientSecret: String? {
     get {
-        return SouncloudClient.clientSecret
+        return SoundcloudClient.clientSecret
     }
     set {
-        SouncloudClient.clientSecret = clientSecret
+        SoundcloudClient.clientSecret = clientSecret
     }
 }
 
 /// Your Soundcloud redirect URI
 public var redirectURI: String? {
     get {
-        return SouncloudClient.redirectURI
+        return SoundcloudClient.redirectURI
     }
     set {
-        SouncloudClient.redirectURI = redirectURI
+        SoundcloudClient.redirectURI = redirectURI
     }
 }
 
@@ -48,9 +48,9 @@ public var redirectURI: String? {
  - parameter redirectURI:       Your Soundcloud redirect URI
  */
 public func configure(clientIdentifier: String?, clientSecret: String?, redirectURI: String?) {
-    SouncloudClient.clientIdentifier = clientIdentifier
-    SouncloudClient.clientSecret = clientSecret
-    SouncloudClient.redirectURI = redirectURI
+    SoundcloudClient.clientIdentifier = clientIdentifier
+    SoundcloudClient.clientSecret = clientSecret
+    SoundcloudClient.redirectURI = redirectURI
 }
 
 // MARK: Session Management
@@ -65,19 +65,19 @@ public func configure(clientIdentifier: String?, clientSecret: String?, redirect
  - parameter completion:            The closure that will be called when the user is logged in or upon error
  */
 public func login(in displayViewController: ViewController, completion: @escaping (SimpleAPIResponse<Session>) -> Void) {
-    SouncloudClient.login(in: displayViewController, completion: completion)
+    SoundcloudClient.login(in: displayViewController, completion: completion)
 }
 
 /// The session property is only set when a user has logged in.
 public var session: Session? {
-    return SouncloudClient.session
+    return SoundcloudClient.session
 }
 
 /**
  Logs out the current user. This is a straight-forward call.
  */
 public func destroySession() {
-    SouncloudClient.destroySession()
+    SoundcloudClient.destroySession()
 }
 
 #endif
@@ -94,5 +94,5 @@ public typealias ResolveResponse = (users: [User]?, tracks: [Track]?, playlist: 
  - parameter completion: The closure that will be called when the result is ready or upon error
  */
 public func resolve(URI: String, completion: @escaping (SimpleAPIResponse<ResolveResponse>) -> Void) {
-    SouncloudClient.resolve(URI: URI, completion: completion)
+    SoundcloudClient.resolve(URI: URI, completion: completion)
 }

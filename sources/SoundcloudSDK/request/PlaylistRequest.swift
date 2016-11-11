@@ -19,7 +19,7 @@ public extension Playlist {
     - parameter completion:  The closure that will be called when playlist is loaded or upon error
     */
     public static func playlist(identifier: Int, secretToken: String? = nil, completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) {
-        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
+        guard let clientIdentifier = SoundcloudClient.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -51,12 +51,12 @@ public extension Playlist {
      - parameter completion:    The closure that will be called when playlist is created or upon error
      */
     public static func create(name: String, sharingAccess: SharingAccess, completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) {
-        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
+        guard let clientIdentifier = SoundcloudClient.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
 
-        guard let oauthToken = SouncloudClient.session?.accessToken else {
+        guard let oauthToken = SoundcloudClient.session?.accessToken else {
             completion(SimpleAPIResponse(error: .needsLogin))
             return
         }
@@ -98,12 +98,12 @@ public extension Playlist {
     }
 
     private func updateTracks(withNewTracklist identifiers: [Int], completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) {
-        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
+        guard let clientIdentifier = SoundcloudClient.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
 
-        guard let oauthToken = SouncloudClient.session?.accessToken else {
+        guard let oauthToken = SoundcloudClient.session?.accessToken else {
             completion(SimpleAPIResponse(error: .needsLogin))
             return
         }
