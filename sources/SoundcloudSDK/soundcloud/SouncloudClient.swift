@@ -1,5 +1,5 @@
 //
-//  SessionManager.swift
+//  SouncloudClient.swift
 //  Soundcloud
 //
 //  Created by Kevin DELANNOY on 25/04/15.
@@ -170,7 +170,7 @@ extension Session {
     */
     @available(*, deprecated: 0.9, message: "Login has been moved to Soundcloud. Please use `Soundcloud.login().`")
     public static func login(in displayViewController: ViewController, completion: @escaping (SimpleAPIResponse<Session>) -> Void) {
-        SessionManager.login(in: displayViewController, completion: completion)
+        SouncloudClient.login(in: displayViewController, completion: completion)
     }
 
     /**
@@ -182,7 +182,7 @@ extension Session {
     public func refreshSession(completion: @escaping (SimpleAPIResponse<Session>) -> Void) {
         _refreshToken { result in
             if let session = result.response.result {
-                SessionManager.session = session
+                SouncloudClient.session = session
             }
             completion(result)
         }
@@ -193,7 +193,7 @@ extension Session {
     */
     @available(*, deprecated: 0.9, message: "Logout has been moved to Soundcloud. Please use `Soundcloud.destroySession()`.")
     public func destroy() {
-        SessionManager.destroySession()
+        SouncloudClient.destroySession()
     }
 
     /**
@@ -204,7 +204,7 @@ extension Session {
     - parameter completion: The closure that will be called when the profile is loaded or upon error
     */
     public func me(completion: @escaping (SimpleAPIResponse<User>) -> Void) {
-        guard let clientIdentifier = SessionManager.clientIdentifier else {
+        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -236,7 +236,7 @@ extension Session {
      - parameter completion: The closure that will be called when the activities are loaded or upon error
      */
     public func activities(completion: @escaping (PaginatedAPIResponse<Activity>) -> Void) {
-        guard let clientIdentifier = SessionManager.clientIdentifier else {
+        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
             completion(PaginatedAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -267,9 +267,9 @@ extension Session {
     // MARK: Token
 
     func getToken(completion: @escaping (SimpleAPIResponse<Session>) -> Void) {
-        guard let clientId = SessionManager.clientIdentifier,
-            let clientSecret = SessionManager.clientSecret,
-            let redirectURI = SessionManager.redirectURI else {
+        guard let clientId = SouncloudClient.clientIdentifier,
+            let clientSecret = SouncloudClient.clientSecret,
+            let redirectURI = SouncloudClient.redirectURI else {
                 completion(SimpleAPIResponse(error: .credentialsNotSet))
                 return
         }
@@ -284,9 +284,9 @@ extension Session {
     }
 
     func _refreshToken(completion: @escaping (SimpleAPIResponse<Session>) -> Void) {
-        guard let clientId = SessionManager.clientIdentifier,
-            let clientSecret = SessionManager.clientSecret,
-            let redirectURI = SessionManager.redirectURI else {
+        guard let clientId = SouncloudClient.clientIdentifier,
+            let clientSecret = SouncloudClient.clientSecret,
+            let redirectURI = SouncloudClient.redirectURI else {
                 completion(SimpleAPIResponse(error: .credentialsNotSet))
                 return
         }
@@ -327,9 +327,9 @@ extension Session {
 }
 #endif
 
-// MARK: - SessionManager
+// MARK: - SouncloudClient
 
-public class SessionManager: NSObject {
+public class SouncloudClient: NSObject {
     // MARK: Properties
 
     /// Your Soundcloud app client identifier
@@ -379,7 +379,7 @@ public class SessionManager: NSObject {
         authorize(in: displayViewController) { result in
             if let session = result.response.result {
                 session.getToken { result in
-                    SessionManager.session = result.response.result
+                    SouncloudClient.session = result.response.result
                     completion(result)
                 }
             } else {
@@ -392,11 +392,11 @@ public class SessionManager: NSObject {
      Logs out the current user. This is a straight-forward call.
      */
     public static func destroySession() {
-        SessionManager.session = nil
+        SouncloudClient.session = nil
     }
 
     static func authorize(in displayViewController: ViewController, completion: @escaping (SimpleAPIResponse<Session>) -> Void) {
-        guard let clientIdentifier = SessionManager.clientIdentifier, let redirectURI = SessionManager.redirectURI else {
+        guard let clientIdentifier = SouncloudClient.clientIdentifier, let redirectURI = SouncloudClient.redirectURI else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -450,7 +450,7 @@ public class SessionManager: NSObject {
     - parameter completion: The closure that will be called when the result is ready or upon error
     */
     public static func resolve(URI: String, completion: @escaping (SimpleAPIResponse<ResolveResponse>) -> Void) {
-        guard let clientIdentifier = SessionManager.clientIdentifier else {
+        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }

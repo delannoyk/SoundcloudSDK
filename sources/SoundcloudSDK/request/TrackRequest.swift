@@ -18,7 +18,7 @@ public extension Track {
      - parameter completion: The closure that will be called when track is loaded or upon error
      */
     public static func track(identifier: Int, completion: @escaping (SimpleAPIResponse<Track>) -> Void) {
-        guard let clientIdentifier = SessionManager.clientIdentifier else {
+        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -44,7 +44,7 @@ public extension Track {
      - parameter completion:  The closure that will be called when tracks are loaded or upon error
      */
     public static func tracks(identifiers: [Int], completion: @escaping (SimpleAPIResponse<[Track]>) -> Void) {
-        guard let clientIdentifier = SessionManager.clientIdentifier else {
+        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -68,7 +68,7 @@ public extension Track {
      - parameter completion: The closure that will be called when tracks are loaded or upon error
      */
     public static func search(queries: [SearchQueryOptions], completion: @escaping (PaginatedAPIResponse<Track>) -> Void) {
-        guard let clientIdentifier = SessionManager.clientIdentifier else {
+        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
             completion(PaginatedAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -98,7 +98,7 @@ public extension Track {
      - parameter completion:      The closure that will be called when the comments are loaded or upon error
      */
     public static func comments(on trackIdentifier: Int, completion: @escaping (PaginatedAPIResponse<Comment>) -> Void) {
-        guard let clientIdentifier = SessionManager.clientIdentifier else {
+        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
             completion(PaginatedAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -143,12 +143,12 @@ public extension Track {
     @available(tvOS, unavailable)
     public static func comment(on trackIdentifier: Int, body: String, timestamp: TimeInterval, completion: @escaping (SimpleAPIResponse<Comment>) -> Void) {
         #if !os(tvOS)
-        guard let clientIdentifier = SessionManager.clientIdentifier else {
+        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
 
-        guard let oauthToken = SessionManager.session?.accessToken else {
+        guard let oauthToken = SouncloudClient.session?.accessToken else {
             completion(SimpleAPIResponse(error: .needsLogin))
             return
         }
@@ -195,7 +195,7 @@ public extension Track {
      - parameter completion:      The closure that will be called when users are loaded or upon error
      */
     public static func favoriters(of trackIdentifier: Int, completion: @escaping (PaginatedAPIResponse<User>) -> Void) {
-        guard let clientIdentifier = SessionManager.clientIdentifier else {
+        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
             completion(PaginatedAPIResponse(error: .credentialsNotSet))
             return
         }
@@ -288,12 +288,12 @@ public extension Track {
     @available(tvOS, unavailable)
     private static func changeFavoriteStatus(of trackIdentifier: Int, favorite: Bool, completion: @escaping (SimpleAPIResponse<Bool>) -> Void) {
         #if !os(tvOS)
-        guard let clientIdentifier = SessionManager.clientIdentifier else {
+        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
 
-        guard let oauthToken = SessionManager.session?.accessToken else {
+        guard let oauthToken = SouncloudClient.session?.accessToken else {
             completion(SimpleAPIResponse(error: .needsLogin))
             return
         }
@@ -319,7 +319,7 @@ public extension Track {
      - parameter completion: The closure that will be called when tracks are loaded or upon error
      */
     public static func relatedTracks(identifier: Int, completion: @escaping (SimpleAPIResponse<[Track]>) -> Void) {
-        guard let clientIdentifier = SessionManager.clientIdentifier else {
+        guard let clientIdentifier = SouncloudClient.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return
         }
