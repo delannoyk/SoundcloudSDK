@@ -48,7 +48,10 @@ class UserViewController: UIViewController {
 
         trackResponse = nil
         activityIndicator?.startAnimating()
-        user?.tracks { [weak self] response in
+
+        //Now we have to unwrap the optional because of https://bugs.swift.org/browse/SR-1681
+        guard let user = user else { return }
+        user.tracks { [weak self] response in
             self?.activityIndicator?.stopAnimating()
 
             switch response.response {
@@ -87,11 +90,15 @@ class UserViewController: UIViewController {
         if segue.identifier == "Tracks" {
             trackListViewController = segue.destination as? TrackListViewController
         } else if segue.identifier == "Followers" {
-            user?.followers { response in
+            //Now we have to unwrap the optional because of https://bugs.swift.org/browse/SR-1681
+            guard let user = user else { return }
+            user.followers { response in
                 (segue.destination as? UserListViewController)?.userResponse = response
             }
         } else if segue.identifier == "Followings" {
-            user?.followings { response in
+            //Now we have to unwrap the optional because of https://bugs.swift.org/browse/SR-1681
+            guard let user = user else { return }
+            user.followings { response in
                 (segue.destination as? UserListViewController)?.userResponse = response
             }
         }

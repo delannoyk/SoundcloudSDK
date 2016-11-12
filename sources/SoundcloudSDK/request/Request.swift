@@ -121,6 +121,15 @@ public enum Result<T, E> {
             return nil
         }
     }
+
+    public func recover(_ transform: (E) -> T) -> T {
+        switch self {
+        case .success(let result):
+            return result
+        case .failure(let error):
+            return transform(error)
+        }
+    }
 }
 
 enum HTTPMethod: String {
@@ -161,7 +170,11 @@ protocol RequestError {
     init?(httpURLResponse: HTTPURLResponse)
 }
 
-struct Request<T, E: RequestError> {
+public protocol CancelableOperation {
+    func cancel()
+}
+
+struct Request<T, E: RequestError>: CancelableOperation {
     private let dataTask: URLSessionDataTask
 
     init(url: URL, method: HTTPMethod, parameters: HTTPParametersConvertible?, headers: [String: String]? = nil, parse: @escaping (JSONObject) -> Result<T, E>, completion: @escaping (Result<T, E>) -> Void) {
@@ -198,7 +211,7 @@ struct Request<T, E: RequestError> {
         dataTask.resume()
     }
 
-    func stop() {
-        dataTask.suspend()
+    func cancel() {
+        dataTask.cancel()
     }
 }

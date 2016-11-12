@@ -54,7 +54,10 @@ extension UserListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == users?.count && !loading {
             loading = true
-            lastUserResponse?.fetchNextPage { [weak self] response in
+
+            //Now we have to unwrap the optional because of https://bugs.swift.org/browse/SR-1681
+            guard let lastUserResponse = lastUserResponse else { return }
+            lastUserResponse.fetchNextPage { [weak self] response in
                 self?.loading = false
 
                 if case .success(let users) = response.response {

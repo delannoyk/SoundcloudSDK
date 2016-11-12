@@ -56,7 +56,8 @@ public struct PaginatedAPIResponse<T>: APIResponse {
         return (nextPageURL != nil)
     }
 
-    public func fetchNextPage(completion: @escaping (PaginatedAPIResponse<T>) -> Void) {
+    @discardableResult
+    public func fetchNextPage(completion: @escaping (PaginatedAPIResponse<T>) -> Void) -> CancelableOperation? {
         if let nextPageURL = nextPageURL {
             let request = Request(
                 url: nextPageURL,
@@ -65,9 +66,11 @@ public struct PaginatedAPIResponse<T>: APIResponse {
                 parse: { JSON -> Result<PaginatedAPIResponse, SoundcloudError> in
                     return .success(PaginatedAPIResponse(JSON: JSON, parse: self.parse))
             }) { result in
-                completion(result.result!)
+                completion(result.recover { PaginatedAPIResponse(error: $0) })
             }
             request.start()
+            return request
         }
+        return nil
     }
 }

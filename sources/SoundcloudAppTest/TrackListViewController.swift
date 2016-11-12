@@ -44,7 +44,10 @@ extension TrackListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == tracks?.count && !loading {
             loading = true
-            lastTrackResponse?.fetchNextPage { [weak self] response in
+
+            //Now we have to unwrap the optional because of https://bugs.swift.org/browse/SR-1681
+            guard let lastTrackResponse = lastTrackResponse else { return }
+            lastTrackResponse.fetchNextPage { [weak self] response in
                 self?.loading = false
 
                 if case .success(let tracks) = response.response {

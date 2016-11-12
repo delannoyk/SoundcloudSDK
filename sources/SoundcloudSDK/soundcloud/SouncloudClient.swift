@@ -259,7 +259,7 @@ extension Session {
         let request = Request(url: url, method: .get, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Activity>, SoundcloudError> in
             return .success(PaginatedAPIResponse(JSON: JSON, parse: parse))
         }) { result in
-            completion(result.result!)
+            completion(result.recover { PaginatedAPIResponse(error: $0) })
         }
         request.start()
     }

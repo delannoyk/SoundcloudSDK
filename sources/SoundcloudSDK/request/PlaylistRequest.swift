@@ -18,10 +18,11 @@ public extension Playlist {
     - parameter secretToken: The secret token to access the playlist or nil
     - parameter completion:  The closure that will be called when playlist is loaded or upon error
     */
-    public static func playlist(identifier: Int, secretToken: String? = nil, completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) {
+    @discardableResult
+    public static func playlist(identifier: Int, secretToken: String? = nil, completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) -> CancelableOperation? {
         guard let clientIdentifier = SoundcloudClient.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
-            return
+            return nil
         }
 
         let url = BaseURL.appendingPathComponent("\(identifier)")
@@ -40,6 +41,7 @@ public extension Playlist {
             completion(SimpleAPIResponse(result: result))
         }
         request.start()
+        return request
     }
 
     #if os(iOS) || os(OSX)
@@ -50,15 +52,16 @@ public extension Playlist {
      - parameter sharingAccess: The required sharing access
      - parameter completion:    The closure that will be called when playlist is created or upon error
      */
-    public static func create(name: String, sharingAccess: SharingAccess, completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) {
+    @discardableResult
+    public static func create(name: String, sharingAccess: SharingAccess, completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) -> CancelableOperation? {
         guard let clientIdentifier = SoundcloudClient.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
-            return
+            return nil
         }
 
         guard let oauthToken = SoundcloudClient.session?.accessToken else {
             completion(SimpleAPIResponse(error: .needsLogin))
-            return
+            return nil
         }
 
         let queryStringParameters = ["client_id": clientIdentifier, "oauth_token": oauthToken]
@@ -77,35 +80,40 @@ public extension Playlist {
             completion(SimpleAPIResponse(result: result))
         }
         request.start()
+        return request
     }
 
-    public func addTrack(with identifier: Int, completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) {
-        addTracks(with: [identifier], completion: completion)
+    @discardableResult
+    public func addTrack(with identifier: Int, completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) -> CancelableOperation? {
+        return addTracks(with: [identifier], completion: completion)
     }
 
-    public func addTracks(with identifiers: [Int], completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) {
-        updateTracks(withNewTracklist: tracks.map { $0.identifier } + identifiers, completion: completion)
+    @discardableResult
+    public func addTracks(with identifiers: [Int], completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) -> CancelableOperation? {
+        return updateTracks(withNewTracklist: tracks.map { $0.identifier } + identifiers, completion: completion)
     }
 
-    public func removeTrack(with identifier: Int, completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) {
-        removeTracks(with: [identifier], completion: completion)
+    @discardableResult
+    public func removeTrack(with identifier: Int, completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) -> CancelableOperation? {
+        return removeTracks(with: [identifier], completion: completion)
     }
 
-    public func removeTracks(with identifiers: [Int], completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) {
-        updateTracks(withNewTracklist: tracks
+    @discardableResult
+    public func removeTracks(with identifiers: [Int], completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) -> CancelableOperation? {
+        return updateTracks(withNewTracklist: tracks
             .map { $0.identifier }
             .filter { !identifiers.contains($0) }, completion: completion)
     }
 
-    private func updateTracks(withNewTracklist identifiers: [Int], completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) {
+    private func updateTracks(withNewTracklist identifiers: [Int], completion: @escaping (SimpleAPIResponse<Playlist>) -> Void) -> CancelableOperation? {
         guard let clientIdentifier = SoundcloudClient.clientIdentifier else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
-            return
+            return nil
         }
 
         guard let oauthToken = SoundcloudClient.session?.accessToken else {
             completion(SimpleAPIResponse(error: .needsLogin))
-            return
+            return nil
         }
 
         let queryStringParameters = ["client_id": clientIdentifier, "oauth_token": oauthToken]
@@ -120,7 +128,7 @@ public extension Playlist {
         ]
         guard let JSONEncoded = try? JSONSerialization.data(withJSONObject: parameters, options: []) else {
             completion(SimpleAPIResponse(error: .parsing))
-            return
+            return nil
         }
 
         let request = Request(url: url, method: .put, parameters: JSONEncoded, headers: ["Content-Type": "application/json"], parse: {
@@ -132,6 +140,7 @@ public extension Playlist {
             completion(SimpleAPIResponse(result: result))
         }
         request.start()
+        return request
     }
     #endif
 }
