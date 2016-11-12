@@ -11,7 +11,7 @@ import XCTest
 class SoundcloudTests: XCTestCase {
     func testCredentialsError() {
         let resolveExpectation = expectation(description: "Waiting for `resolve` response")
-        Soundcloud.resolve(URI: "") { response in
+        SoundcloudClient.resolve(URI: "") { response in
             XCTAssertFalse(response.response.isSuccessful, "The result should be a .failure")
             XCTAssert(response.response.error! == SoundcloudError.credentialsNotSet, "Errors should be about Credentials")
             resolveExpectation.fulfill()

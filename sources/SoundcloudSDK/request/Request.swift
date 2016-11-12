@@ -65,7 +65,7 @@ extension JSONObject {
     }
 
     var urlValue: URL? {
-        return (value as? String).map { URL(string: $0)?.appendingQueryString("client_id=\(Soundcloud.clientIdentifier!)") } ?? nil
+        return (value as? String).map { URL(string: $0)?.appendingQueryString("client_id=\(SoundcloudClient.clientIdentifier!)") } ?? nil
     }
 
     func dateValue(format: String) -> Date? {
