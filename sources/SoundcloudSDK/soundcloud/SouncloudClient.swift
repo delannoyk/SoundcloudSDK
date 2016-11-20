@@ -100,16 +100,16 @@ extension PaginatedAPIResponse {
 #if os(iOS) || os(OSX)
 public class Session: NSObject, NSCoding, NSCopying {
     //First session info
-    var authorizationCode: String
+    public private(set) var authorizationCode: String
 
     //Token
-    var accessToken: String?
-    var accessTokenExpireDate: NSDate?
+    public private(set) var accessToken: String?
+    public private(set) var accessTokenExpireDate: NSDate?
 
-    var scope: String?
+    public private(set) var scope: String?
 
     //Future session
-    var refreshToken: String?
+    public private(set) var refreshToken: String?
 
     // MARK: Initialization
 
