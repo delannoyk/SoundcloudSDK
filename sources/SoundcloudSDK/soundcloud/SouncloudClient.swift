@@ -100,16 +100,16 @@ extension PaginatedAPIResponse {
 #if os(iOS) || os(OSX)
 public class Session: NSObject, NSCoding, NSCopying {
     //First session info
-    var authorizationCode: String
+    public private(set) var authorizationCode: String
 
     //Token
-    var accessToken: String?
-    var accessTokenExpireDate: NSDate?
+    public fileprivate(set) var accessToken: String?
+    public fileprivate(set) var accessTokenExpireDate: Date?
 
-    var scope: String?
+    public fileprivate(set) var scope: String?
 
     //Future session
-    var refreshToken: String?
+    public fileprivate(set) var refreshToken: String?
 
     // MARK: Initialization
 
@@ -132,7 +132,7 @@ public class Session: NSObject, NSCoding, NSCopying {
 
         authorizationCode = authCode
         accessToken = aDecoder.decodeObject(forKey: Session.accessTokenKey) as? String
-        accessTokenExpireDate = aDecoder.decodeObject(forKey: Session.accessTokenExpireDateKey) as? NSDate
+        accessTokenExpireDate = aDecoder.decodeObject(forKey: Session.accessTokenExpireDateKey) as? Date
         scope = aDecoder.decodeObject(forKey: Session.scopeKey) as? String
         refreshToken = aDecoder.decodeObject(forKey: Session.refreshTokenKey) as? String
     }
@@ -310,10 +310,12 @@ extension Session {
         let url = URL(string: "https://api.soundcloud.com/oauth2/token")!
 
         let request = Request(url: url, method: .post, parameters: parameters, parse: {
-            if let accessToken = $0["access_token"].stringValue, let expires = $0["expires_in"].doubleValue, let scope = $0["scope"].stringValue {
+            if let accessToken = $0["access_token"].stringValue,
+                let expires = $0["expires_in"].doubleValue,
+                let scope = $0["scope"].stringValue {
                 let newSession = self.copy() as! Session
                 newSession.accessToken = accessToken
-                newSession.accessTokenExpireDate = NSDate(timeIntervalSinceNow: expires)
+                newSession.accessTokenExpireDate = Date(timeIntervalSinceNow: expires)
                 newSession.scope = scope
                 newSession.refreshToken = $0["refresh_token"].stringValue
                 return .success(newSession)
