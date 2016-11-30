@@ -355,15 +355,17 @@ public class SoundcloudClient: NSObject {
 
 
     /// The session property is only set when a user has logged in.
-    public fileprivate(set) static var session: Session? = {
-        if let data = keychain[data: sessionKey],
-            let session = NSKeyedUnarchiver.unarchiveObject(with: data) as? Session {
-            return session
+    public fileprivate(set) static var session: Session? {
+        get {
+            if let data = keychain[data: sessionKey],
+                let session = NSKeyedUnarchiver.unarchiveObject(with: data) as? Session {
+                return session
+            }
+            return nil
         }
-        return nil
-    }() {
-        didSet {
-            if let session = session {
+
+        set(newSession) {
+            if let session = newSession {
                 let data = NSKeyedArchiver.archivedData(withRootObject: session)
                 keychain[data: sessionKey] = data
             } else {
@@ -442,7 +444,7 @@ public class SoundcloudClient: NSObject {
     #endif
 
 
-    // MARK: Resolve 
+    // MARK: Resolve
 
     /// A resolve response can either be a/some User(s) or a/some Track(s) or a Playlist.
     public typealias ResolveResponse = (users: [User]?, tracks: [Track]?, playlist: Playlist?)
