@@ -1,6 +1,0 @@
-framework module UICKeyChainStore {
-  umbrella header "UICKeyChainStore-iOS8.4-umbrella.h"
-
-  export *
-  module * { export * }
-}

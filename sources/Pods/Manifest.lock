@@ -1,15 +1,15 @@
 PODS:
   - 1PasswordExtension (1.8.3)
-  - UICKeyChainStore (2.0.7)
+  - KeychainAccess (3.0.1)
 
 DEPENDENCIES:
   - 1PasswordExtension (~> 1.8.3)
-  - UICKeyChainStore (~> 2.0.6)
+  - KeychainAccess (~> 3.0)
 
 SPEC CHECKSUMS:
   1PasswordExtension: 8757dc3302353731dd3e678e63b5023a708783cb
-  UICKeyChainStore: 696cd35083f7c8fb5e201d909b7e6aea6b478575
+  KeychainAccess: 017ea25e313a49eda10bb19b0bb0760fb1edfe1a
 
-PODFILE CHECKSUM: 68e38dda0afd75e8844ea115f13a8d6ae9c24b7d
+PODFILE CHECKSUM: 8b4bdda45da2b21a64957a8a4432411f528ddb28
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

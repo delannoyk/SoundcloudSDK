@@ -1,8 +1,11 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/1PasswordExtension-iOS8.4" "$PODS_CONFIGURATION_BUILD_DIR/UICKeyChainStore-iOS8.4"
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+EMBEDDED_CONTENT_CONTAINS_SWIFT = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/1PasswordExtension" "$PODS_CONFIGURATION_BUILD_DIR/KeychainAccess-iOS"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/1PasswordExtension-iOS8.4/OnePasswordExtension.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/UICKeyChainStore-iOS8.4/UICKeyChainStore.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "OnePasswordExtension" -framework "UICKeyChainStore"
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/1PasswordExtension/OnePasswordExtension.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/KeychainAccess-iOS/KeychainAccess.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "KeychainAccess" -framework "OnePasswordExtension"
+OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_ROOT = ${SRCROOT}/Pods
