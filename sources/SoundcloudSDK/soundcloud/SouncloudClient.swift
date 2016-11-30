@@ -8,7 +8,7 @@
 
 import Foundation
 #if os(iOS) || os(OSX)
-    import UICKeyChainStore
+    import KeychainAccess
 #endif
 
 // MARK: - Errors
@@ -350,12 +350,13 @@ public class SoundcloudClient: NSObject {
 
     private static let sessionKey = "sessionKey"
 
-    private static let keychain = UICKeyChainStore(server: URL(string: "https://soundcloud.com")!,
-        protocolType: .HTTPS)
+    private static let keychain = Keychain(server: "https://soundcloud.com", protocolType: .https)
+
 
     /// The session property is only set when a user has logged in.
     public fileprivate(set) static var session: Session? = {
-        if let data = keychain.data(forKey: sessionKey), let session = NSKeyedUnarchiver.unarchiveObject(with: data) as? Session {
+        if let data = keychain[data: sessionKey],
+            let session = NSKeyedUnarchiver.unarchiveObject(with: data) as? Session {
             return session
         }
         return nil
@@ -363,9 +364,9 @@ public class SoundcloudClient: NSObject {
         didSet {
             if let session = session {
                 let data = NSKeyedArchiver.archivedData(withRootObject: session)
-                keychain.setData(data, forKey: sessionKey)
+                keychain[data: sessionKey] = data
             } else {
-                keychain.removeItem(forKey: sessionKey)
+                keychain[sessionKey] = nil
             }
         }
     }
