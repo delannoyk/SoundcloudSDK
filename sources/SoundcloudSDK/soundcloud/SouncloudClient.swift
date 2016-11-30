@@ -98,6 +98,7 @@ extension PaginatedAPIResponse {
 // MARK: - Session
 
 #if os(iOS) || os(OSX)
+@objc(SoundcloudSession)
 public class Session: NSObject, NSCoding, NSCopying {
     //First session info
     public private(set) var authorizationCode: String
