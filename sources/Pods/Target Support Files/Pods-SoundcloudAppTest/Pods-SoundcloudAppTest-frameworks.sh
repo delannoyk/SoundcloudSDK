@@ -84,10 +84,10 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "$BUILT_PRODUCTS_DIR/1PasswordExtension-iOS8.4/OnePasswordExtension.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/UICKeyChainStore-iOS8.4/UICKeyChainStore.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/1PasswordExtension/OnePasswordExtension.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/KeychainAccess-iOS/KeychainAccess.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "$BUILT_PRODUCTS_DIR/1PasswordExtension-iOS8.4/OnePasswordExtension.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/UICKeyChainStore-iOS8.4/UICKeyChainStore.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/1PasswordExtension/OnePasswordExtension.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/KeychainAccess-iOS/KeychainAccess.framework"
 fi
