@@ -1,2 +1,2 @@
-github "kishikawakatsumi/UICKeyChainStore" == 2.0.6
+github "kishikawakatsumi/KeychainAccess"
 github "AgileBits/onepassword-extension" "add-framework-support"
