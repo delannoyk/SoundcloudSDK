@@ -355,16 +355,14 @@ public class SoundcloudClient: NSObject {
 
 
     /// The session property is only set when a user has logged in.
-    public fileprivate(set) static var session: Session? {
-        get {
-            if let data = keychain[data: sessionKey],
-                let session = NSKeyedUnarchiver.unarchiveObject(with: data) as? Session {
-                return session
-            }
-            return nil
+    public fileprivate(set) static var session: Session? = {
+        if let data = keychain[data: sessionKey],
+            let session = NSKeyedUnarchiver.unarchiveObject(with: data) as? Session {
+            return session
         }
-
-        set(newSession) {
+        return nil
+    }() {
+        willSet(newSession) {
             if let session = newSession {
                 let data = NSKeyedArchiver.archivedData(withRootObject: session)
                 keychain[data: sessionKey] = data
