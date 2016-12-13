@@ -98,6 +98,7 @@ extension PaginatedAPIResponse {
 // MARK: - Session
 
 #if os(iOS) || os(OSX)
+@objc(SoundcloudSession)
 public class Session: NSObject, NSCoding, NSCopying {
     //First session info
     public private(set) var authorizationCode: String
@@ -361,8 +362,8 @@ public class SoundcloudClient: NSObject {
         }
         return nil
     }() {
-        didSet {
-            if let session = session {
+        willSet(newSession) {
+            if let session = newSession {
                 let data = NSKeyedArchiver.archivedData(withRootObject: session)
                 keychain[data: sessionKey] = data
             } else {
@@ -441,7 +442,7 @@ public class SoundcloudClient: NSObject {
     #endif
 
 
-    // MARK: Resolve 
+    // MARK: Resolve
 
     /// A resolve response can either be a/some User(s) or a/some Track(s) or a Playlist.
     public typealias ResolveResponse = (users: [User]?, tracks: [Track]?, playlist: Playlist?)
