@@ -18,8 +18,6 @@ SoundcloudSDK is a framework written in Swift over Soundcloud API.
 * CocoaPods: `pod 'Soundcloud', '~> 0.9.2'`
 * Carthage: `github "delannoyk/SoundcloudSDK" == 0.9.2`
 
-## Usage
-
 ### Configuration
 
 First step to use the SDK is to configure it to use your application credentials:
@@ -29,156 +27,36 @@ Soundcloud.clientIdentifier = "YOUR_CLIENT_IDENTIFIER"
 Soundcloud.clientSecret  = "YOUR_CLIENT_SECRET"
 Soundcloud.redirectURI = "YOUR_REDIRECT_URI"
 ```
+
 After that, you're good to go.
 
-### Track
+## Usage
 
-* Load track by identifier
+For full usage please see the [documentation](docs/).
 
-    ```swift
-    Tracks.track(identifier: Int, completion: SimpleAPIResponse<Track> -> Void)
-    ```
-* Load tracks by identifiers
+**Examples**
 
-    ```swift
-    Tracks.tracks(identifiers: [Int], completion: SimpleAPIResponse<[Track]> -> Void)
-    ```
-* Get list of comments
+You can search for tracks like this:
+```swift
+let queries: [SearchQueryOptions] = [
+    .QueryString("The text to search"),
+    .Tags(["list", "of", "tags", "to", "search", "for"]),
+    .Genres(["punk", "rock", "..."]),
+    .Types([TrackType.Live, TrackType.Demo])
+]
+Track.search(queries, completion: PaginatedAPIResponse<Track> -> Void)
+```
 
-    ```swift
-    let track: Track
-    track.comments(completion: PaginatedAPIResponse<Comment> -> Void)
-    ```
-* Get list of favoriters
-
-    ```swift
-    let track: Track
-    track.favoriters(completion: PaginatedAPIResponse<User> -> Void)
-    ```
-
-* Search tracks
-
-    ```swift
-    let queries: [SearchQueryOptions] = [
-        .QueryString("The text to search"),
-        .Tags(["list", "of", "tags", "to", "search", "for"]),
-        .Genres(["punk", "rock", "..."]),
-        .Types([TrackType.Live, TrackType.Demo])
-    ]
-    Track.search(queries, completion: PaginatedAPIResponse<Track> -> Void)
-    ```
-
-* Relative tracks
-    ```swift
-    Track.relatedTracks(identifier: Int, completion: SimpleAPIResponse<[Track]> -> Void)
-    ```
-
-### User
-
-* Load user by identifier
-
-    ```swift
-    User.user(identifier: Int, completion: SimpleAPIResponse<User> -> Void)
-    ```
-* Load list of user's tracks
-
-    ```swift
-    let user: User
-    user.tracks(completion: PaginatedAPIResponse<Track> -> Void)
-    ```
-* Load list of user's comments
-
-    ```swift
-    let user: User
-    user.comments(completion: PaginatedAPIResponse<Comment> -> Void)
-    ```
-* Load list of user's favorite tracks
-
-    ```swift
-    let user: User
-    user.favorites(completion: PaginatedAPIResponse<Track> -> Void)
-    ```
-* Load list of user's followers
-
-    ```swift
-    let user: User
-    user.followers(completion: PaginatedAPIResponse<User> -> Void)
-    ```
-* Load list of user's followings
-
-    ```swift
-    let user: User
-    user.followings(completion: PaginatedAPIResponse<User> -> Void)
-    ```
-
-### Resolve
+If your client is logged in, you could favorite one of those tracks on their behalf like this:
 
 ```swift
-Soundcloud.resolve(URI: String, completion: SimpleAPIResponse<ResolveResponse> -> Void)
+let track: Track
+track.favorite(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void)
 ```
-where `ResolveResponse`is a typealias for `ResolveResponse = (users: [User]?, tracks: [Track]?, playlist: Playlist?)`
 
-### Login
+## Example App
 
-The login method implements the standard OAuth2 of Soundcloud. Some private methods requires the user to be logged in. These are listed below.
-
-#### Session
-
-* Login
-
-    ```swift
-    Session.login(displayViewController: UIViewController, completion: SimpleAPIResponse<Session> -> Void)
-    ```
-* Refresh token
-
-    ```swift
-    let session = Soundcloud.session
-    session?.refreshSession(completion: SimpleAPIResponse<Session> -> Void)
-    ```
-* Logout
-
-    ```swift
-    let session = Soundcloud.session
-    session?.destroy()
-    ```
-
-#### Methods that require a Session
-* User's profile
-
-    ```swift
-    let session = Soundcloud.session
-    session?.me(completion: SimpleAPIResponse<User> -> Void)
-    ```
-* Comment a track
-
-    ```swift
-    let track: Track
-    track.comment(body: String, timestamp: NSTimeInterval, completion: SimpleAPIResponse<Comment> -> Void)
-    ```
-* Favorite a track
-
-    ```swift
-    let track: Track
-    track.favorite(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void)
-    ```
-* Unfavorite a track
-
-    ```swift
-    let track: Track
-    track.unfavorite(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void)
-    ```
-* Follow a user
-
-    ```swift
-    let user: User
-    user.follow(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void)
-    ```
-* Unfollow a user
-
-    ```swift
-    let user: User
-    user.unfollow(userIdentifier: Int, completion: SimpleAPIResponse<Bool> -> Void)
-    ```
+An example application is included in `source/SoundcloudAppTest`. Be sure to set your own SoundCloud app values in `AppDelegate`.
 
 ## Next steps
 
