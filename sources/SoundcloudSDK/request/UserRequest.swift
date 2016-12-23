@@ -95,7 +95,7 @@ public extension User {
         let url = BaseURL.appendingPathComponent("\(userIdentifier)/tracks.json")
         var parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
         #if !os(tvOS)
-            if let oauthToken = Soundcloud.session?.accessToken {
+            if let oauthToken = SoundcloudClient.session?.accessToken {
                 parameters["oauth_token"] = oauthToken
             }
         #endif
@@ -413,7 +413,7 @@ public extension User {
         let url = BaseURL.appendingPathComponent("\(userIdentifier)/playlists.json")
         var parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
         #if !os(tvOS)
-            if let oauthToken = Soundcloud.session?.accessToken {
+            if let oauthToken = SoundcloudClient.session?.accessToken {
                 parameters["oauth_token"] = oauthToken
             }
         #endif
