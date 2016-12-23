@@ -93,7 +93,12 @@ public extension User {
         }
 
         let url = BaseURL.appendingPathComponent("\(userIdentifier)/tracks.json")
-        let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
+        var parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
+        #if !os(tvOS)
+            if let oauthToken = Soundcloud.session?.accessToken {
+                parameters["oauth_token"] = oauthToken
+            }
+        #endif
 
         let parse = { (JSON: JSONObject) -> Result<[Track], SoundcloudError> in
             guard let tracks = JSON.flatMap(transform: { Track(JSON: $0) }) else {
@@ -406,7 +411,12 @@ public extension User {
         }
 
         let url = BaseURL.appendingPathComponent("\(userIdentifier)/playlists.json")
-        let parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
+        var parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
+        #if !os(tvOS)
+            if let oauthToken = Soundcloud.session?.accessToken {
+                parameters["oauth_token"] = oauthToken
+            }
+        #endif
 
         let parse = { (JSON: JSONObject) -> Result<[Playlist], SoundcloudError> in
             guard let playlists = JSON.flatMap(transform: { Playlist(JSON: $0) }) else {
