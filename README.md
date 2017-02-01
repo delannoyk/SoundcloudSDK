@@ -23,9 +23,9 @@ SoundcloudSDK is a framework written in Swift over Soundcloud API.
 First step to use the SDK is to configure it to use your application credentials:
 
 ```swift
-Soundcloud.clientIdentifier = "YOUR_CLIENT_IDENTIFIER"
-Soundcloud.clientSecret  = "YOUR_CLIENT_SECRET"
-Soundcloud.redirectURI = "YOUR_REDIRECT_URI"
+SoundcloudClient.clientIdentifier = "YOUR_CLIENT_IDENTIFIER"
+SoundcloudClient.clientSecret  = "YOUR_CLIENT_SECRET"
+SoundcloudClient.redirectURI = "YOUR_REDIRECT_URI"
 ```
 
 After that, you're good to go.
