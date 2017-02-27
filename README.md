@@ -5,6 +5,7 @@ SoundcloudSDK
 ![Cocoapods Compatible](https://img.shields.io/cocoapods/v/Soundcloud.svg)
 ![Platform iOS | tvOS](https://img.shields.io/badge/platform-iOS%20%7C%20tvOS%20%7C%20OSX-lightgrey.svg)
 [![Contact](https://img.shields.io/badge/contact-%40kdelannoy-blue.svg)](https://twitter.com/kdelannoy)
+[![API Testing](https://img.shields.io/badge/API%20Test-RapidAPI-blue.svg)](https://rapidapi.com/package/Soundcloud/functions?utm_source=SoundcloudGithub&utm_medium=button&utm_content=Vender_GitHub)
 
 SoundcloudSDK is a framework written in Swift over Soundcloud API.
 
