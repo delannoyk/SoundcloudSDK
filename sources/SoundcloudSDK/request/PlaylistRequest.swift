@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension Playlist {
+extension Playlist {
     static let BaseURL = URL(string: "https://api.soundcloud.com/playlists")!
 
     /**

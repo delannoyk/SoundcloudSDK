@@ -1,6 +1,0 @@
-framework module KeychainAccess {
-  umbrella header "KeychainAccess-OSX-umbrella.h"
-
-  export *
-  module * { export * }
-}

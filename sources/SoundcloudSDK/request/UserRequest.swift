@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension User {
+extension User {
     static let BaseURL = URL(string: "https://api.soundcloud.com/users")!
 
     /**

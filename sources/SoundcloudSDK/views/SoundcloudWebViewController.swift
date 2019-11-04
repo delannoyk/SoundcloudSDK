@@ -12,7 +12,6 @@
     public typealias ViewController = NSViewController
 #else
     import UIKit
-    import OnePasswordExtension
 
     public typealias ViewController = UIViewController
 #endif
@@ -34,22 +33,6 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
         super.viewDidLoad()
 
         #if os(iOS)
-        //Right button is OnePassword if available
-        if OnePasswordExtension.shared().isAppExtensionAvailable() {
-            let bundle = Bundle(for: OnePasswordExtension.self)
-            if let path = bundle.path(forResource: "OnePasswordExtensionResources", ofType: "bundle") {
-                let resourceBundle = Bundle(path: path)
-                let image = UIImage(
-                    named: "onepassword-navbar",
-                    in: resourceBundle,
-                    compatibleWith: nil)
-
-                navigationItem.rightBarButtonItem = UIBarButtonItem(
-                    image: image, style: .plain, target: self,
-                    action: #selector(SoundcloudWebViewController.buttonOnePasswordPressed(sender:)))
-            }
-        }
-
         //Left button is a Cancel button
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel, target: self,
@@ -63,16 +46,6 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
     @objc private func buttonCancelPressed(sender: AnyObject) {
         onDismiss?(nil)
         dismiss(animated: true, completion: nil)
-    }
-
-    @objc private func buttonOnePasswordPressed(sender: AnyObject) {
-        if OnePasswordExtension.shared().isAppExtensionAvailable() {
-            OnePasswordExtension.shared().fillItem(
-                intoWebView: webView,
-                for: self,
-                sender: sender,
-                showOnlyLogins: true) { success, error in }
-        }
     }
     #endif
 
@@ -121,7 +94,7 @@ class SoundcloudWebViewController: ViewController, WKNavigationDelegate {
 
             onDismiss?(navigationAction.request.url)
             #if os(OSX)
-                dismissViewController(self)
+                dismiss(self)
             #else
                 dismiss(animated: true, completion: nil)
             #endif

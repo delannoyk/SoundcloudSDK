@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension Track {
+extension Track {
     static let BaseURL = URL(string: "https://api.soundcloud.com/tracks")!
 
     /**

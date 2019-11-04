@@ -33,7 +33,7 @@ class JSONObject {
 
     func flatMap<U>(transform: (JSONObject) -> U?) -> [U]? {
         if let value = value as? [Any] {
-            return value.flatMap { transform(JSONObject($0)) }
+            return value.compactMap { transform(JSONObject($0)) }
         }
         return nil
     }

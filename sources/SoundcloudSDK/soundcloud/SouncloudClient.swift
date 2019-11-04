@@ -169,7 +169,7 @@ extension Session {
     - parameter displayViewController: An UIViewController that is in the view hierarchy
     - parameter completion:            The closure that will be called when the user is logged in or upon error
     */
-    @available(*, deprecated: 0.9, message: "Login has been moved to Soundcloud. Please use `Soundcloud.login().`")
+    @available(*, deprecated, message: "Login has been moved to Soundcloud. Please use `Soundcloud.login().`")
     public static func login(in displayViewController: ViewController, completion: @escaping (SimpleAPIResponse<Session>) -> Void) {
         SoundcloudClient.login(in: displayViewController, completion: completion)
     }
@@ -192,7 +192,7 @@ extension Session {
     /**
     Logs out the current user. This is a straight-forward call.
     */
-    @available(*, deprecated: 0.9, message: "Logout has been moved to Soundcloud. Please use `Soundcloud.destroySession()`.")
+    @available(*, deprecated, message: "Logout has been moved to Soundcloud. Please use `Soundcloud.destroySession()`.")
     public func destroy() {
         SoundcloudClient.destroySession()
     }
@@ -430,7 +430,7 @@ public class SoundcloudClient: NSObject {
             web.title = "Soundcloud"
             web.preferredContentSize = displayViewController.view.bounds.size
 
-            displayViewController.presentViewControllerAsSheet(web)
+            displayViewController.presentAsSheet(web)
         #else
             web.navigationItem.title = "Soundcloud"
 
