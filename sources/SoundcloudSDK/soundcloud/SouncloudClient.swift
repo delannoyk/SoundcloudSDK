@@ -336,14 +336,13 @@ public class SoundcloudClient: NSObject {
     // MARK: Properties
 
     /// Your Soundcloud app client identifier
-    public static var clientIdentifier: String?
+    static var clientIdentifier: String?
 
     /// Your Soundcloud app client secret
-    public static var clientSecret: String?
+    static var clientSecret: String?
 
     /// Your Soundcloud redirect URI
-    public static var redirectURI: String?
-
+    static var redirectURI: String?
 
     // MARK: Session Management
 
@@ -351,8 +350,9 @@ public class SoundcloudClient: NSObject {
 
     private static let sessionKey = "sessionKey"
 
-    private static let keychain = Keychain(server: "https://soundcloud.com", protocolType: .https)
+    private static let tokenKey = "tokenKey"
 
+    private static let keychain = Keychain(server: "https://soundcloud.com", protocolType: .https)
 
     /// The session property is only set when a user has logged in.
     public fileprivate(set) static var session: Session? = {
@@ -370,6 +370,28 @@ public class SoundcloudClient: NSObject {
                 keychain[sessionKey] = nil
             }
         }
+    }
+
+    private(set) static var accessToken: String?
+
+    public static func start(clientIdentifier: String, clientSecret: String, redirectURI: String?, completion: @escaping (SimpleAPIResponse<Void>) -> Void) {
+        self.clientIdentifier = clientIdentifier
+        self.clientSecret = clientSecret
+        self.redirectURI = redirectURI
+
+        let url = URL(string: "https://api.soundcloud.com/oauth2/token")!
+        let parameters = [
+            "client_id": clientIdentifier,
+            "client_secret": clientSecret,
+            "grant_type": "client_credentials"
+        ]
+        let request = Request(url: url, method: .post, parameters: parameters, headers: ["Content-Type": "application/x-www-form-urlencoded"]) { json in
+            self.accessToken = json["access_token"].stringValue
+            return .success(())
+        } completion: { result in
+            completion(SimpleAPIResponse(result: result))
+        }
+        request.start()
     }
 
     /**
@@ -440,7 +462,6 @@ public class SoundcloudClient: NSObject {
     }
 
     #endif
-
 
     // MARK: Resolve
 

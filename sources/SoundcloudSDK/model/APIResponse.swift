@@ -63,6 +63,7 @@ public struct PaginatedAPIResponse<T>: APIResponse {
                 url: nextPageURL,
                 method: .get,
                 parameters: nil,
+                headers: SoundcloudClient.accessToken.map { ["Authorization": "OAuth \($0)" ] },
                 parse: { JSON -> Result<PaginatedAPIResponse, SoundcloudError> in
                     return .success(PaginatedAPIResponse(JSON: JSON, parse: self.parse))
             }) { result in

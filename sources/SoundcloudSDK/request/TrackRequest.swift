@@ -47,13 +47,13 @@ extension Track {
      */
     @discardableResult
     public static func tracks(identifiers: [Int], completion: @escaping (SimpleAPIResponse<[Track]>) -> Void) -> CancelableOperation? {
-        guard let clientIdentifier = SoundcloudClient.clientIdentifier else {
+        guard let accessToken = SoundcloudClient.accessToken else {
             completion(SimpleAPIResponse(error: .credentialsNotSet))
             return nil
         }
 
-        let parameters = ["client_id": clientIdentifier, "ids": identifiers.map { "\($0)" }.joined(separator: ",")]
-        let request = Request(url: BaseURL, method: .get, parameters: parameters, parse: {
+        let parameters = ["ids": identifiers.map { "\($0)" }.joined(separator: ",")]
+        let request = Request(url: BaseURL, method: .get, parameters: parameters, headers: ["Authorization": "OAuth \(accessToken)"], parse: {
             guard let tracks = $0.flatMap(transform: { Track(JSON: $0) }) else {
                 return .failure(.parsing)
             }
@@ -73,7 +73,7 @@ extension Track {
      */
     @discardableResult
     public static func search(queries: [SearchQueryOptions], completion: @escaping (PaginatedAPIResponse<Track>) -> Void) -> CancelableOperation? {
-        guard let clientIdentifier = SoundcloudClient.clientIdentifier else {
+        guard let accessToken = SoundcloudClient.accessToken else {
             completion(PaginatedAPIResponse(error: .credentialsNotSet))
             return nil
         }
@@ -85,10 +85,10 @@ extension Track {
             return .success(tracks)
         }
 
-        var parameters = ["client_id": clientIdentifier, "linked_partitioning": "true"]
+        var parameters = ["linked_partitioning": "true"]
         queries.map { $0.query }.forEach { parameters[$0.0] = $0.1 }
 
-        let request = Request(url: BaseURL, method: .get, parameters: parameters, parse: { JSON -> Result<PaginatedAPIResponse<Track>, SoundcloudError> in
+        let request = Request(url: BaseURL, method: .get, parameters: parameters, headers: ["Authorization": "OAuth \(accessToken)"], parse: { JSON -> Result<PaginatedAPIResponse<Track>, SoundcloudError> in
             return .success(PaginatedAPIResponse(JSON: JSON, parse: parse))
         }) { result in
             completion(result.recover { PaginatedAPIResponse(error: $0) })
